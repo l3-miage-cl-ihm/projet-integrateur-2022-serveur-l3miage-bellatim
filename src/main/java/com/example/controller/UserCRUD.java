@@ -72,16 +72,26 @@ public class UserCRUD {
             ResultSet rs = stmt.executeQuery();
             Chami chami = new Chami();
 
-            while(rs.next()){
+            if(rs.next()){
                 chami.setLogin(rs.getString("login")); 
                 chami.setAge(rs.getInt("age")); 
-            }
+                return chami;
 
-            return chami;
+            }
+            else{
+                response.setStatus(404);
+                try{
+                    response.getOutputStream().print("l'utilisateur n'existe pas");
+                } catch(Exception e2){
+                    System.err.println(e2.getMessage());
+                }
+                return null;
+
+            }
 
         } catch(Exception e){
             // throw new ResponseStatusException(NOT_FOUND, "Unable to find resource");
-            response.setStatus(404);
+            response.setStatus(405);
             try{
                 response.getOutputStream().print(e.getMessage());
             } catch(Exception e2){
@@ -141,6 +151,50 @@ public class UserCRUD {
         }
     }
 
-    // @PostMapping("/{userId}")
-    // public 
+
+    @PutMapping("/{userId}")
+    public Chami update(@PathVariable(value="userId") String id, @RequestBody Chami chami, HttpServletResponse response){
+        if(id.equals(chami.getLogin())){
+
+            try(Connection connection = dataSource.getConnection()){
+                PreparedStatement stmt = connection.prepareStatement("SELECT * FROM chamis WHERE login= ? ");
+                stmt.setString(1,id);
+                ResultSet rs = stmt.executeQuery();
+                if(rs.first()){
+                    PreparedStatement stmtPut = connection.prepareStatement("UPDATE chamis SET login = ?, age = ? WHERE login = ");
+                    stmtPut.setString(1, chami.getLogin());
+                    stmtPut.setInt(2, chami.getAge());
+                    stmtPut.setString(3, id);
+                    return chami;    
+                }
+                else{
+                    response.setStatus(404);
+                    try{
+                        response.getOutputStream().print("l'utilisateur n'existe pas");
+                    } catch(Exception e2){
+                        System.err.println(e2.getMessage());
+                    }
+                    return null;
+                }
+            } catch(Exception e){
+                response.setStatus(405);
+                try{
+                    response.getOutputStream().print(e.getMessage());
+                } catch(Exception e2){
+                    System.err.println(e2.getMessage());
+                }
+                return null;
+            }
+        }
+        else{
+            response.setStatus(412);
+                try{
+                    response.getOutputStream().print("l'utilisateur est different");
+                } catch(Exception e2){
+                    System.err.println(e2.getMessage());
+                }
+                return null;
+        }
+    }
+
 }
