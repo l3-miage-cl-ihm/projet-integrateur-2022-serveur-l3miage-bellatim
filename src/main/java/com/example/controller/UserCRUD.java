@@ -197,4 +197,32 @@ public class UserCRUD {
         }
     }
 
+
+    @DeleteMapping("/{userId}")
+    public void delete(@PathVariable(value="userId") String id, HttpServletResponse response){
+        try(Connection connection = dataSource.getConnection()){
+            PreparedStatement stmt = connection.prepareStatement("SELECT * FROM chamis WHERE login= ? ");
+            stmt.setString(1,id);
+            ResultSet rs = stmt.executeQuery();
+            if(rs.first()){
+                PreparedStatement stmtPut = connection.prepareStatement("DELETE FROM chamis  WHERE login = ");
+                stmtPut.setString(1, id);  
+            }
+            else{
+                response.setStatus(404);
+                try{
+                    response.getOutputStream().print("l'utilisateur n'existe pas");
+                } catch(Exception e2){
+                    System.err.println(e2.getMessage());
+                }
+            }
+        } catch(Exception e){
+            response.setStatus(405);
+            try{
+                response.getOutputStream().print(e.getMessage());
+            } catch(Exception e2){
+                System.err.println(e2.getMessage());
+            }
+        }
+    }
 }
