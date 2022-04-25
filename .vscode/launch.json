@@ -1,0 +1,15 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Spring Boot-RestServer<java-getting-started>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "console": "internalConsole",
+            "mainClass": "com.example.RestServer",
+            "projectName": "java-getting-started",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env"
+        }
+    ]
+}
