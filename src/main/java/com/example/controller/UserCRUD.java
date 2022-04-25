@@ -19,7 +19,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping; 
 import org.springframework.web.bind.annotation.PutMapping; 
 import org.springframework.web.bind.annotation.RequestBody; 
-import org.springframework.web.bind.annotation.RequestMapping; 
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException; 
 
@@ -33,8 +34,10 @@ public class UserCRUD {
     @Autowired
     private DataSource dataSource;
 
+    //404 si pas de slash
     @GetMapping("/")
     public ArrayList<Chami> allUsers(HttpServletResponse response) throws SQLException{
+        System.out.println("test");
         try (Connection connection = dataSource.getConnection()){
             Statement stmt = connection.createStatement();
             ResultSet rs = stmt.executeQuery("SELECT * FROM Chamis");
@@ -64,7 +67,7 @@ public class UserCRUD {
     public Chami read(@PathVariable(value="userId") String id, HttpServletResponse response) throws SQLException{
         try(Connection connection = dataSource.getConnection()){
             // Statement stmt = connection.createStatement();
-            PreparedStatement stmt = connection.prepareStatement("SELECT * FROM Chamis WHERE login= ? ");
+            PreparedStatement stmt = connection.prepareStatement("SELECT * FROM chamis WHERE login= ? ");
             stmt.setString(1,id);
             ResultSet rs = stmt.executeQuery();
             Chami chami = new Chami();
@@ -89,4 +92,55 @@ public class UserCRUD {
         
     }
 
+    @PostMapping("/{userId}")
+    public Chami create(@PathVariable(value="userId")String id, @RequestBody Chami chami,  HttpServletResponse response) throws SQLException{
+        if(id.equals(chami.getLogin())){
+            
+            try(Connection connection = dataSource.getConnection()){
+                //on verifie quil nexiste pas d'abord
+                PreparedStatement stmt = connection.prepareStatement("SELECT * FROM chamis WHERE login= ? ");
+                stmt.setString(1,id);
+                ResultSet rs = stmt.executeQuery();
+                Chami chamiTest = new Chami();
+                if(!rs.first()){
+                    PreparedStatement stmtInsert = connection.prepareStatement("INSERT INTO chamis (login, age) VALUES (?,?)");
+                    stmtInsert.setString(1, chami.getLogin());
+                    stmtInsert.setInt(2, chami.getAge());
+                    int row = stmt.executeUpdate();
+                    return chami;
+                }
+                else{
+                    response.setStatus(403);
+                    try{
+                        response.getOutputStream().print("l'utilisateur existe déjà");
+                    }catch(Exception e2){
+                        System.err.println(e2.getMessage());
+                    }
+                    return null;
+                }         
+            }
+            catch(Exception e){    
+                response.setStatus(405);
+                System.err.println(e.getMessage());
+                // try{
+                //     response.getOutputStream().print("l'utilisateur existe déjà");
+                // }catch(Exception e2){
+                //     System.err.println(e2.getMessage());
+                // }
+                return null;
+            }
+        }
+        else{
+            response.setStatus(412);
+            try{
+                response.getOutputStream().print("l'id ne correspond pas");
+            }catch(Exception e2){
+                System.err.println(e2.getMessage());
+            }
+            return null;
+        }
+    }
+
+    // @PostMapping("/{userId}")
+    // public 
 }
