@@ -38,14 +38,14 @@ public class DefiController {
     private DataSource dataSource;
 
     // 404 si pas de slash
-    /*@GetMapping("/")
+    @GetMapping("/")
     public ArrayList<Defi> allDefis(HttpServletResponse response) throws SQLException {
 
         System.out.println("test");
 
         try (Connection connection = dataSource.getConnection()) {
             Statement stmt = connection.createStatement();
-            ResultSet rs = stmt.executeQuery("SELECT * FROM lesDefis");
+            ResultSet rs = stmt.executeQuery("SELECT * FROM lesDefis D JOIN lesChamis C ON C.login = D.auteur");
 
             ArrayList<Defi> lesDefis = new ArrayList<Defi>();
 
@@ -55,14 +55,10 @@ public class DefiController {
                 Timestamp timeStamp = rs.getTimestamp("dateDeCreation");
                 LocalDateTime dateDeCreation = timeStamp.toLocalDateTime();
                 String description = rs.getString("description");
+                String login = rs.getString("login");
+                int age = rs.getInt("age");
 
-                PreparedStatement stmt2 = connection.prepareStatement("SELECT * FROM lesChamis WHERE login = ?");
-                stmt2.setString(1, id);
-                ResultSet res = stmt2.executeQuery();
-                String login = res.getString("login");
-                int age = res.getInt("age");
                 Chami chami = new Chami(login, age);
-
                 Defi d = new Defi(id, titre, dateDeCreation, description, chami);
 
                 lesDefis.add(d);
@@ -85,7 +81,7 @@ public class DefiController {
         
         try (Connection connection = dataSource.getConnection()) {
             // Statement stmt = connection.createStatement();
-            PreparedStatement stmt = connection.prepareStatement("SELECT * FROM lesDefis WHERE id = ? ");
+            PreparedStatement stmt = connection.prepareStatement("SELECT * FROM lesDefis D JOIN lesChamis C ON C.login = D.auteur WHERE id = ? ");
             stmt.setString(1, id);
             ResultSet rs = stmt.executeQuery();
 
@@ -95,14 +91,10 @@ public class DefiController {
                 Timestamp timeStamp = rs.getTimestamp("dateDeCreation");
                 LocalDateTime dateDeCreation = timeStamp.toLocalDateTime();
                 String description = rs.getString("description");
-                
-                PreparedStatement stmt2 = connection.prepareStatement("SELECT * FROM lesChamis WHERE login = ?");
-                stmt2.setString(1, id);
-                ResultSet res = stmt2.executeQuery();
-                String login = res.getString("login");
-                int age = res.getInt("age");
-                Chami chami = new Chami(login, age);
+                String login = rs.getString("login");
+                int age = rs.getInt("age");
 
+                Chami chami = new Chami(login, age);
                 Defi defi  = new Defi(idDefi, titre, dateDeCreation, description, chami);
 
                 return defi;
@@ -253,5 +245,5 @@ public class DefiController {
                 System.err.println(e2.getMessage());
             }
         }
-    }*/
+    }
 }

@@ -142,7 +142,6 @@ public class ChamiCRUD {
                 PreparedStatement stmt = connection.prepareStatement("SELECT * FROM lesChamis WHERE login= ? ");
                 stmt.setString(1,id);
                 ResultSet rs = stmt.executeQuery();
-                Chami chamiTest = new Chami();
                 if(!rs.first()){
                     PreparedStatement stmtInsert = connection.prepareStatement("INSERT INTO lesChamis (login, age) VALUES (?,?)");
                     stmtInsert.setString(1, chami.getLogin());

@@ -2,8 +2,6 @@ package com.example.model;
 
 import java.time.LocalDateTime;
 
-import com.google.api.client.util.DateTime;
-
 public class Defi {
 
     private String id;
