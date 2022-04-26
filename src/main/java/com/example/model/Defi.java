@@ -2,6 +2,8 @@ package com.example.model;
 
 import java.time.LocalDateTime;
 
+import com.google.api.client.util.DateTime;
+
 public class Defi {
 
     private String id;
@@ -19,16 +21,18 @@ public class Defi {
         this.titre = titre;
         this.dateDeCreation = dateDeCreation;
         this.description = description;
+
         this.auteur = auteur;
+        //auteur.addDefis(this);    
     }
 
     public String getId() {
         return this.id;
     }
 
-    public void setId(String id) {
+    /*public void setId(String id) {
         this.id = id;
-    }
+    }*/
 
     public String getTitre() {
         return this.titre;
@@ -37,14 +41,14 @@ public class Defi {
     public void setTitre(String titre) {
         this.id = titre;
     }
-
+    
     public LocalDateTime getDateDeCreation() {
         return this.dateDeCreation;
     }
 
-    public void setDateDeCreation(LocalDateTime dateDeCreation) {
+    /*public void setDateDeCreation(LocalDateTime dateDeCreation) {
         this.dateDeCreation = dateDeCreation;
-    }
+    }*/
 
     public String getDescription() {
         return this.description;
@@ -58,7 +62,12 @@ public class Defi {
         return this.auteur;
     }
 
-    public void setAuteur(String auteur) {
+    /*public void setAuteur(Chami auteur) {
         this.auteur = auteur;
+        auteur.addDefisSimple(this);
     }
+
+    public void setSimpleAuteur(Chami auteur) {
+        this.auteur = auteur;
+    }*/
 }

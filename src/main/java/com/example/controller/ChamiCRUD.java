@@ -32,8 +32,8 @@ import org.springframework.http.HttpStatus;
 @RestController
 @CrossOrigin
 @RequestMapping("/api/users")
-public class ChamiController {
-
+public class ChamiCRUD {
+    
     @Autowired
     private DataSource dataSource;
 
@@ -64,10 +64,10 @@ public class ChamiController {
                     java.sql.Timestamp dateDeCreation = result.getTimestamp("dateDeCreation");
                     String description = result.getString("description");
 
-                    Defi def = new Defi(id, titre, dateDeCreation.toLocalDateTime(), description, c);
+                    Defi def = new Defi(id, titre, dateDeCreation.toLocalDateTime(), description, c.getLogin());
                     c.addDefis(def);
                 }            
-                L.add(c);
+                lesChamis.add(c);
             }
             return lesChamis;
 
@@ -102,7 +102,7 @@ public class ChamiController {
                     java.sql.Timestamp dateDeCreation = result.getTimestamp("dateDeCreation");
 
                     String description = result.getString("description");
-                    Defi def = new Defi(idDefi, titre, dateDeCreation.toLocalDateTime(), description, chami);
+                    Defi def = new Defi(idDefi, titre, dateDeCreation.toLocalDateTime(), description, chami.getLogin());
                     chami.addDefis(def);
                 }    
                 return chami;

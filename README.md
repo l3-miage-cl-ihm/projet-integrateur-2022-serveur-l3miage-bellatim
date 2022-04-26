@@ -1,3 +1,25 @@
+# Doc
+
+## Peuplement de la base de données
+
+Un script sql est à disposition dans /src/main/resources/population.sql
+Pour peupler votre base, entrez
+`sudo psql <UTILISATEUR> -d <BASE_DE_DONNÉES> -f src/main/resources/population.sql`
+
+/!\ Si l'utilisateur de la base PostGreSQL a un nom différent de votre utilisateur UNIX, vous allez obtenir un message du type
+```
+psql: erreur : la connexion au serveur sur le socket « /var/run/postgresql/.s.PGSQL.5432 » a échoué : FATAL:  authentification peer échouée pour l'utilisateur « <UTILISATEUR> »
+```
+
+Pour y remédier, éditez en mode administrateur le fichier `/etc/postgresql/14/main/pg_hba.conf`.
+À la ligne
+```
+# "local" is for Unix domain socket connections only
+local   all             all                                     peer
+```
+remplacez `peer` par `password` pour activer l'identification par mot de passe.
+
+___________
 [![Open in Visual Studio Code](https://classroom.github.com/assets/open-in-vscode-c66648af7eb3fe8bc4f294546bfd86ef473780cde1dea487d3c4ff354943c9ae.svg)](https://classroom.github.com/online_ide?assignment_repo_id=7711717&assignment_repo_type=AssignmentRepo)
 # l3m-PI-serveur : Partie serveur du Projet Intégrateur L3 MIAGE 2020-2021
 
