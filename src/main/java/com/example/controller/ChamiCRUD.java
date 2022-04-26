@@ -39,37 +39,39 @@ public class ChamiCRUD {
 
     // 404 si pas de slash
     @GetMapping("/")
-    public ArrayList<Chami> allUsers(HttpServletResponse response) throws SQLException {
-
-        System.out.println("test");
-
-        try (Connection connection = dataSource.getConnection()) {
+    public ArrayList<Chami> allUsers(HttpServletResponse response) throws SQLException{
+        try (Connection connection = dataSource.getConnection()){
             Statement stmt = connection.createStatement();
             ResultSet rs = stmt.executeQuery("SELECT * FROM lesChamis");
 
-            ArrayList<Chami> lesChamis = new ArrayList<Chami>();
-
-            while (rs.next()) {
+            ArrayList<Chami> L = new ArrayList<Chami>();
+            while(rs.next()){
                 Chami c = new Chami();
-                c.setLogin(rs.getString("login")); 
-                c.setAge(rs.getInt("age")); 
+                String login = rs.getString("login");
+                int age = rs.getInt("age");
+                c.setLogin(login); 
+                c.setAge(age); 
 
                 PreparedStatement prep = connection.prepareStatement("SELECT * FROM lesDefis WHERE auteur= ? ");
-                prep.setString(1,c.getLogin());
-                ResultSet result = prep.executeQuery();   
+                prep.setString(1, login);
+                ResultSet result = prep.executeQuery();  
+
                 while(result.next()){
+
                     String titre = result.getString("titre");
                     String id = result.getString("id");
-                    
+
                     java.sql.Timestamp dateDeCreation = result.getTimestamp("dateDeCreation");
                     String description = result.getString("description");
 
-                    Defi def = new Defi(id, titre, dateDeCreation.toLocalDateTime(), description, c);
+                    Defi def = new Defi(id, titre, dateDeCreation.toLocalDateTime(), description, null);
+
                     c.addDefis(def);
+
                 }            
-                lesChamis.add(c);
+                L.add(c);
             }
-            return lesChamis;
+            return L;
 
         } catch (Exception e) {
             response.setStatus(500);
@@ -187,7 +189,7 @@ public class ChamiCRUD {
                 stmt.setString(1,id);
                 ResultSet rs = stmt.executeQuery();
                 if(rs.first()){
-                    PreparedStatement stmtPut = connection.prepareStatement("UPDATE lesChamis SET login = ?, age = ? WHERE login = ?");
+                    PreparedStatement stmtPut = connection.prepareStatement("UPDATE lesChamis SET login = ?, age = ? WHERE login = ? ");
                     stmtPut.setString(1, chami.getLogin());
                     stmtPut.setInt(2, chami.getAge());
                     stmtPut.setString(3, id);

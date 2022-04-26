@@ -38,7 +38,7 @@ public class DefiController {
     private DataSource dataSource;
 
     // 404 si pas de slash
-    @GetMapping("/")
+    /*@GetMapping("/")
     public ArrayList<Defi> allDefis(HttpServletResponse response) throws SQLException {
 
         System.out.println("test");
@@ -253,5 +253,5 @@ public class DefiController {
                 System.err.println(e2.getMessage());
             }
         }
-    }
+    }*/
 }

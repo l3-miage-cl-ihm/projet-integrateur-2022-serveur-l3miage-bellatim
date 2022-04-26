@@ -7,16 +7,17 @@ public class Chami {
 
     private String login;
     private int age;
-    private List<Defi> defisCree;
+    private ArrayList<Defi> defisCree;
 
     public Chami() {
         super();
+        defisCree = new ArrayList<Defi>();
     }
 
     public Chami(String login, int age) {
         this.login = login;
         this.age = age;
-        defisCree = new ArrayList<>();
+        defisCree = new ArrayList<Defi>();
     }
 
     public String getLogin() {
@@ -40,7 +41,9 @@ public class Chami {
     }
 
     public void addDefis(Defi defi){
+        System.out.println("++++++++++++++++++++++++++++");
         defisCree.add(defi);
+        System.out.println("///////////////////////////");
     }
 
     public void removeDefis(Defi defi){
