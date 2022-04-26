@@ -10,20 +10,20 @@ public class Defi {
     private String titre;
     private LocalDateTime dateDeCreation;
     private String description;
-    private Chami auteur;
+    private String auteur;
 
     public Defi() {
         super();
     }
 
-    public Defi(String id, String titre, LocalDateTime dateDeCreation, String description, Chami auteur) {
+    public Defi(String id, String titre, LocalDateTime dateDeCreation, String description, String auteur) {
         this.id = id;
         this.titre = titre;
         this.dateDeCreation = dateDeCreation;
         this.description = description;
 
         this.auteur = auteur;
-        auteur.addDefis(this);    
+        //auteur.addDefis(this);    
     }
 
     public String getId() {
@@ -58,7 +58,7 @@ public class Defi {
         this.description = description;
     }
 
-    public Chami getAuteur() {
+    public String getAuteur() {
         return this.auteur;
     }
 

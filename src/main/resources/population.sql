@@ -1,3 +1,8 @@
+CREATE TABLE IF NOT EXISTS LesChamis(
+    login varchar PRIMARY KEY,
+    age int
+);
+
 CREATE TABLE IF NOT EXISTS LesDefis(
     id varchar PRIMARY KEY,
     titre varchar,
@@ -5,12 +10,6 @@ CREATE TABLE IF NOT EXISTS LesDefis(
     dateDeCreation timestamp,
     description varchar
 );
-
-CREATE TABLE IF NOT EXISTS LesChamis(
-    login varchar PRIMARY KEY,
-    age int
-);
-
 
 INSERT INTO LesChamis VALUES 
 ('carobis', 21),

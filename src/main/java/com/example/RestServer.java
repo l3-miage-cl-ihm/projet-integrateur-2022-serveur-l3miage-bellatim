@@ -12,19 +12,22 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @SpringBootApplication
 public class RestServer {
     public static void main(String[] args) {
-        /*System.out.println("go Firebase");
-        try {
-            FirebaseOptions options = FirebaseOptions.builder()
-                .setCredentials(GoogleCredentials.getApplicationDefault())
-                // .setDatabaseUrl("https://<DATABASE_NAME>.firebaseio.com/")
-                .build();
+        /*
+         * System.out.println("go Firebase");
+         * try {
+         * FirebaseOptions options = FirebaseOptions.builder()
+         * .setCredentials(GoogleCredentials.getApplicationDefault())
+         * // .setDatabaseUrl("https://<DATABASE_NAME>.firebaseio.com/")
+         * .build();
+         * 
+         * FirebaseApp.initializeApp(options);
+         * System.out.println("banco pour Firebase");
+         * } catch (IOException e) {
+         * System.err.println( "error: " + e.getLocalizedMessage() );
+         * }
+         */
 
-            FirebaseApp.initializeApp(options);
-            System.out.println("banco pour Firebase");
-        } catch (IOException e) {
-            System.err.println( "error: " + e.getLocalizedMessage() );
-        }
-        */
+        // Lancement de Spring Boot
         SpringApplication.run(RestServer.class, args);
     }
 
