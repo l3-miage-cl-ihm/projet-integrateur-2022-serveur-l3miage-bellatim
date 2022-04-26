@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import javax.servlet.http.HttpServletResponse;
 import javax.sql.DataSource;
 
+import com.example.model.Chami;
 import com.example.model.Defi;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,7 +43,7 @@ public class DefiController {
 
         try (Connection connection = dataSource.getConnection()) {
             Statement stmt = connection.createStatement();
-            ResultSet rs = stmt.executeQuery("SELECT * FROM lesDefis");
+            ResultSet rs = stmt.executeQuery("SELECT * FROM lesDefis D JOIN lesChamis C ON C.login = D.auteur");
 
             ArrayList<Defi> lesDefis = new ArrayList<Defi>();
 
@@ -52,9 +53,11 @@ public class DefiController {
                 Timestamp timeStamp = rs.getTimestamp("dateDeCreation");
                 LocalDateTime dateDeCreation = timeStamp.toLocalDateTime();
                 String description = rs.getString("description");
-                String auteur = rs.getString("auteur");
+                String login = rs.getString("login");
+                int age = rs.getInt("age");
 
-                Defi d = new Defi(id, titre, dateDeCreation, description, auteur);
+                Chami chami = new Chami(login, age);
+                Defi d = new Defi(id, titre, dateDeCreation, description, chami);
 
                 lesDefis.add(d);
             }
@@ -76,7 +79,7 @@ public class DefiController {
         
         try (Connection connection = dataSource.getConnection()) {
             // Statement stmt = connection.createStatement();
-            PreparedStatement stmt = connection.prepareStatement("SELECT * FROM lesDefis WHERE id = ? ");
+            PreparedStatement stmt = connection.prepareStatement("SELECT * FROM lesDefis D JOIN lesChamis C ON C.login = D.auteur WHERE id = ? ");
             stmt.setString(1, id);
             ResultSet rs = stmt.executeQuery();
 
@@ -86,9 +89,11 @@ public class DefiController {
                 Timestamp timeStamp = rs.getTimestamp("dateDeCreation");
                 LocalDateTime dateDeCreation = timeStamp.toLocalDateTime();
                 String description = rs.getString("description");
-                String auteur = rs.getString("auteur");
+                String login = rs.getString("login");
+                int age = rs.getInt("age");
 
-                Defi defi  = new Defi(idDefi, titre, dateDeCreation, description, auteur);
+                Chami chami = new Chami(login, age);
+                Defi defi  = new Defi(idDefi, titre, dateDeCreation, description, chami);
 
                 return defi;
 
@@ -132,7 +137,7 @@ public class DefiController {
                     stmtInsert.setString(2, defi.getTitre());
                     stmtInsert.setTimestamp(3, Timestamp.valueOf(defi.getDateDeCreation()));
                     stmtInsert.setString(4, defi.getDescription());
-                    stmtInsert.setString(5, defi.getAuteur());
+                    stmtInsert.setString(5, defi.getAuteur().getLogin());
                     int row = stmt.executeUpdate();
                     return defi;
                 } else {
@@ -181,7 +186,7 @@ public class DefiController {
                     stmtPut.setString(2, defi.getTitre());
                     stmtPut.setTimestamp(3, Timestamp.valueOf(defi.getDateDeCreation()));
                     stmtPut.setString(4, defi.getDescription());
-                    stmtPut.setString(5, defi.getAuteur());
+                    stmtPut.setString(5, defi.getAuteur().getLogin());
                     stmtPut.setString(6, id);
                     return defi;
                 } else {
