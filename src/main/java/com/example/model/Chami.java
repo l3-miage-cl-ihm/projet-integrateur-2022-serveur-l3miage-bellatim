@@ -1,12 +1,13 @@
 package com.example.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Chami {
 
     private String login;
     private int age;
-    private List<Defi> lesDefis;
+    private List<Defi> defisCree;
 
     public Chami() {
         super();
@@ -15,7 +16,7 @@ public class Chami {
     public Chami(String login, int age) {
         this.login = login;
         this.age = age;
-
+        defisCree = new ArrayList<>();
     }
 
     public String getLogin() {
@@ -35,10 +36,18 @@ public class Chami {
     }
 
     public List<Defi> getDefis(){
-        return lesDefis;
+        return defisCree;
     }
 
     public void addDefis(Defi defi){
-        lesDefis.add(defi);
+        defisCree.add(defi);
     }
+
+    public void removeDefis(Defi defi){
+        defisCree.remove(defi);
+    }
+
+    /*public void addDefisSimple(Defi defi){
+        defisCree.add(defi);
+    }*/
 }

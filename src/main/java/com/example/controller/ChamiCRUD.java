@@ -3,18 +3,18 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement; 
-import java.util.ArrayList; 
+import java.sql.Statement;
+import java.util.ArrayList;
+
 import javax.servlet.http.HttpServletResponse; 
 import javax.sql.DataSource;
 
-import com.example.User;
 import com.example.model.Chami;
 import com.example.model.Defi;
-import java.util.List;
-import com.google.api.services.storage.Storage.BucketAccessControls.List;
 
-import org.springframework.beans.factory.annotation.Autowired; 
+//import com.google.api.services.storage.Storage.BucketAccessControls.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin; 
 import org.springframework.web.bind.annotation.DeleteMapping; 
 import org.springframework.web.bind.annotation.GetMapping; 
@@ -56,12 +56,15 @@ public class ChamiCRUD {
                 prep.setString(1,c.getLogin());
                 ResultSet result = prep.executeQuery();   
                 while(result.next()){
+                    String titre = result.getString("titre");
+                    String id = result.getString("id");
                     
-                    c.addDefis(defi);
+                    java.sql.Timestamp dateDeCreation = result.getTimestamp("dateDeCreation");
+                    String description = result.getString("description");
+
+                    Defi def = new Defi(id, titre, dateDeCreation.toLocalDateTime(), description, c);
+                    c.addDefis(def);
                 }            
-
-
-
                 L.add(c);
             }
             return L;
@@ -80,7 +83,6 @@ public class ChamiCRUD {
     @GetMapping("/{userId}")
     public Chami read(@PathVariable(value="userId") String id, HttpServletResponse response) throws SQLException{
         try(Connection connection = dataSource.getConnection()){
-            // Statement stmt = connection.createStatement();
             PreparedStatement stmt = connection.prepareStatement("SELECT * FROM lesChamis WHERE login= ? ");
             stmt.setString(1,id);
             ResultSet rs = stmt.executeQuery();
@@ -89,6 +91,18 @@ public class ChamiCRUD {
             if(rs.next()){
                 chami.setLogin(rs.getString("login")); 
                 chami.setAge(rs.getInt("age")); 
+                PreparedStatement prep = connection.prepareStatement("SELECT * FROM lesDefis WHERE auteur= ? ");
+                prep.setString(1,chami.getLogin());
+                ResultSet result = prep.executeQuery();   
+                while(result.next()){
+                    String titre = result.getString("titre");
+                    String idDefi = result.getString("id");
+                    java.sql.Timestamp dateDeCreation = result.getTimestamp("dateDeCreation");
+
+                    String description = result.getString("description");
+                    Defi def = new Defi(idDefi, titre, dateDeCreation.toLocalDateTime(), description, chami);
+                    chami.addDefis(def);
+                }    
                 return chami;
 
             }
