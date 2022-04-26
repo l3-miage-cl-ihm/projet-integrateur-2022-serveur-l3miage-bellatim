@@ -30,17 +30,15 @@ import org.springframework.http.HttpStatus;
 
 @RestController
 @CrossOrigin
-@RequestMapping("/api/users")
+@RequestMapping("/api/defis")
 public class DefiController {
 
     @Autowired
     private DataSource dataSource;
 
     // 404 si pas de slash
-    /*@GetMapping("/")
+    @GetMapping("/")
     public ArrayList<Defi> allDefis(HttpServletResponse response) throws SQLException {
-
-        System.out.println("test");
 
         try (Connection connection = dataSource.getConnection()) {
             Statement stmt = connection.createStatement();
@@ -240,5 +238,5 @@ public class DefiController {
                 System.err.println(e2.getMessage());
             }
         }
-    }*/
+    }
 }

@@ -142,12 +142,12 @@ public class ChamiCRUD {
                 PreparedStatement stmt = connection.prepareStatement("SELECT * FROM lesChamis WHERE login= ? ");
                 stmt.setString(1,id);
                 ResultSet rs = stmt.executeQuery();
-                Chami chamiTest = new Chami();
-                if(!rs.first()){
+
+                if(!rs.next()){
                     PreparedStatement stmtInsert = connection.prepareStatement("INSERT INTO lesChamis (login, age) VALUES (?,?)");
                     stmtInsert.setString(1, chami.getLogin());
                     stmtInsert.setInt(2, chami.getAge());
-                    int row = stmt.executeUpdate();
+                    stmtInsert.execute();
                     return chami;
                 } else {
                     response.setStatus(403);
@@ -182,17 +182,42 @@ public class ChamiCRUD {
     @PutMapping("/{userId}")
     public Chami update(@PathVariable(value = "userId") String id, @RequestBody Chami chami,
             HttpServletResponse response) {
-        if (id.equals(chami.getLogin())) {
+        //if (id.equals(chami.getLogin())) {
 
             try(Connection connection = dataSource.getConnection()){
                 PreparedStatement stmt = connection.prepareStatement("SELECT * FROM lesChamis WHERE login= ? ");
                 stmt.setString(1,id);
                 ResultSet rs = stmt.executeQuery();
-                if(rs.first()){
+                if(rs.next()){
+
+                    //il faut modifier mettre le nom du créateur à null a cause de la clé primaire
+                    /*PreparedStatement statDefis = connection.prepareStatement("select * from lesDefis where auteur = ? ");
+                    statDefis.setString(1, id);
+                    ResultSet resultDefis = statDefis.executeQuery();
+                    while(resultDefis.next()){*/
+                        PreparedStatement statModifDefi = connection.prepareStatement("UPDATE lesDefis SET auteur = null where auteur = ? ");
+                        statModifDefi.setString(1, id);
+                        statModifDefi.execute();
+                    //} 
+
+                    //Modifier le login du chamis
                     PreparedStatement stmtPut = connection.prepareStatement("UPDATE lesChamis SET login = ?, age = ? WHERE login = ? ");
                     stmtPut.setString(1, chami.getLogin());
                     stmtPut.setInt(2, chami.getAge());
                     stmtPut.setString(3, id);
+                    stmtPut.execute();
+
+                    //Changer le nom du créateur des defis
+                    //PreparedStatement statDefisFinal = connection.prepareStatement("select * from lesDefis where auteur = null ");
+                    //statDefisFinal.setString(1, id);
+                    //ResultSet resultDefisFinal = statDefisFinal.executeQuery();
+                    //while(resultDefisFinal.next()){
+                    PreparedStatement statModifDefiFinal = connection.prepareStatement("UPDATE lesDefis SET auteur = ? where auteur is NULL");
+                    statModifDefiFinal.setString(1, chami.getLogin());
+                    statModifDefiFinal.execute();
+                    //} 
+
+
                     return chami;
                 } else {
                     response.setStatus(404);
@@ -212,7 +237,7 @@ public class ChamiCRUD {
                 }
                 return null;
             }
-        } else {
+        /*} else {
             response.setStatus(412);
             try {
                 response.getOutputStream().print("l'utilisateur est different");
@@ -220,18 +245,25 @@ public class ChamiCRUD {
                 System.err.println(e2.getMessage());
             }
             return null;
-        }
+        }*/
     }
 
     @DeleteMapping("/{userId}")
     public void delete(@PathVariable(value="userId") String id, HttpServletResponse response){
         try(Connection connection = dataSource.getConnection()){
-            PreparedStatement stmt = connection.prepareStatement("SELECT * FROM lesChamis WHERE login= ? ");
+            PreparedStatement stmt = connection.prepareStatement("SELECT * FROM lesChamis WHERE login = ? ");
             stmt.setString(1,id);
             ResultSet rs = stmt.executeQuery();
-            if(rs.first()){
-                PreparedStatement stmtPut = connection.prepareStatement("DELETE FROM lesChamis  WHERE login = ");
+            if(rs.next()){
+                //supprimer les défis qu'il a créé a cause de la clé étrangère
+                PreparedStatement statModifDefi = connection.prepareStatement("DELETE FROM lesDefis where auteur = ?");
+                statModifDefi.setString(1, id);
+                statModifDefi.execute();
+
+                //supprimer le chamis
+                PreparedStatement stmtPut = connection.prepareStatement("DELETE FROM lesChamis WHERE login = ? ");
                 stmtPut.setString(1, id);  
+                stmtPut.execute();
             }
             else{
                 response.setStatus(404);
