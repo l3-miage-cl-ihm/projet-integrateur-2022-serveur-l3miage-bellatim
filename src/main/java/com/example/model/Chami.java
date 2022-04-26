@@ -15,7 +15,6 @@ public class Chami {
     public Chami(String login, int age) {
         this.login = login;
         this.age = age;
-
     }
 
     public String getLogin() {

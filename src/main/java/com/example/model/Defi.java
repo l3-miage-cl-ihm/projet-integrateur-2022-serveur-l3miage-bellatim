@@ -1,20 +1,20 @@
 package com.example.model;
 
-import com.google.api.client.util.DateTime;
+import java.time.LocalDateTime;
 
 public class Defi {
 
     private String id;
     private String titre;
-    private DateTime dateDeCreation;
+    private LocalDateTime dateDeCreation;
     private String description;
-    private Chami auteur;
+    private String auteur;
 
     public Defi() {
         super();
     }
 
-    public Defi(String id, String titre, DateTime dateDeCreation, String description, Chami auteur) {
+    public Defi(String id, String titre, LocalDateTime dateDeCreation, String description, String auteur) {
         this.id = id;
         this.titre = titre;
         this.dateDeCreation = dateDeCreation;
@@ -34,15 +34,15 @@ public class Defi {
         return this.titre;
     }
 
-    public void setTItre(String titre) {
+    public void setTitre(String titre) {
         this.id = titre;
     }
-    
-    public DateTime getDateDeCreation() {
+
+    public LocalDateTime getDateDeCreation() {
         return this.dateDeCreation;
     }
 
-    public void setDateDeCreation(DateTime dateDeCreation) {
+    public void setDateDeCreation(LocalDateTime dateDeCreation) {
         this.dateDeCreation = dateDeCreation;
     }
 
@@ -54,11 +54,11 @@ public class Defi {
         this.description = description;
     }
 
-    public Chami getAuteur() {
+    public String getAuteur() {
         return this.auteur;
     }
 
-    public void setId(Chami auteur) {
+    public void setAuteur(String auteur) {
         this.auteur = auteur;
     }
 }
