@@ -1,6 +1,6 @@
 package com.example.model;
 import java.util.*;
 
-public class Defis {
+public class Defi {
     
 }

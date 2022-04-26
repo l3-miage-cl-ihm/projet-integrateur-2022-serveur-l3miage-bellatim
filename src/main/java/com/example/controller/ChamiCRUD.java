@@ -29,7 +29,7 @@ import org.springframework.http.HttpStatus;
 @RestController
 @CrossOrigin
 @RequestMapping("/api/users")
-public class UserCRUD {
+public class ChamiCRUD {
     
     @Autowired
     private DataSource dataSource;
