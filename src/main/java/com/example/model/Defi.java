@@ -23,7 +23,7 @@ public class Defi {
         this.description = description;
 
         this.auteur = auteur;
-        auteur.addDefis(this);    
+        //auteur.addDefis(this);    
     }
 
     public String getId() {
