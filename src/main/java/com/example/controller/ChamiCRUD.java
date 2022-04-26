@@ -10,6 +10,9 @@ import javax.sql.DataSource;
 
 import com.example.User;
 import com.example.model.Chami;
+import com.example.model.Defi;
+import java.util.List;
+import com.google.api.services.storage.Storage.BucketAccessControls.List;
 
 import org.springframework.beans.factory.annotation.Autowired; 
 import org.springframework.web.bind.annotation.CrossOrigin; 
@@ -40,7 +43,7 @@ public class ChamiCRUD {
         System.out.println("test");
         try (Connection connection = dataSource.getConnection()){
             Statement stmt = connection.createStatement();
-            ResultSet rs = stmt.executeQuery("SELECT * FROM Chamis");
+            ResultSet rs = stmt.executeQuery("SELECT * FROM lesChamis");
 
             ArrayList<Chami> L = new ArrayList<Chami>();
 
@@ -48,6 +51,17 @@ public class ChamiCRUD {
                 Chami c = new Chami();
                 c.setLogin(rs.getString("login")); 
                 c.setAge(rs.getInt("age")); 
+
+                PreparedStatement prep = connection.prepareStatement("SELECT * FROM lesDefis WHERE auteur= ? ");
+                prep.setString(1,c.getLogin());
+                ResultSet result = prep.executeQuery();   
+                while(result.next()){
+                    
+                    c.addDefis(defi);
+                }            
+
+
+
                 L.add(c);
             }
             return L;
@@ -67,7 +81,7 @@ public class ChamiCRUD {
     public Chami read(@PathVariable(value="userId") String id, HttpServletResponse response) throws SQLException{
         try(Connection connection = dataSource.getConnection()){
             // Statement stmt = connection.createStatement();
-            PreparedStatement stmt = connection.prepareStatement("SELECT * FROM chamis WHERE login= ? ");
+            PreparedStatement stmt = connection.prepareStatement("SELECT * FROM lesChamis WHERE login= ? ");
             stmt.setString(1,id);
             ResultSet rs = stmt.executeQuery();
             Chami chami = new Chami();
@@ -108,12 +122,12 @@ public class ChamiCRUD {
             
             try(Connection connection = dataSource.getConnection()){
                 //on verifie quil nexiste pas d'abord
-                PreparedStatement stmt = connection.prepareStatement("SELECT * FROM chamis WHERE login= ? ");
+                PreparedStatement stmt = connection.prepareStatement("SELECT * FROM lesChamis WHERE login= ? ");
                 stmt.setString(1,id);
                 ResultSet rs = stmt.executeQuery();
                 Chami chamiTest = new Chami();
                 if(!rs.first()){
-                    PreparedStatement stmtInsert = connection.prepareStatement("INSERT INTO chamis (login, age) VALUES (?,?)");
+                    PreparedStatement stmtInsert = connection.prepareStatement("INSERT INTO lesChamis (login, age) VALUES (?,?)");
                     stmtInsert.setString(1, chami.getLogin());
                     stmtInsert.setInt(2, chami.getAge());
                     int row = stmt.executeUpdate();
@@ -157,11 +171,11 @@ public class ChamiCRUD {
         if(id.equals(chami.getLogin())){
 
             try(Connection connection = dataSource.getConnection()){
-                PreparedStatement stmt = connection.prepareStatement("SELECT * FROM chamis WHERE login= ? ");
+                PreparedStatement stmt = connection.prepareStatement("SELECT * FROM lesChamis WHERE login= ? ");
                 stmt.setString(1,id);
                 ResultSet rs = stmt.executeQuery();
                 if(rs.first()){
-                    PreparedStatement stmtPut = connection.prepareStatement("UPDATE chamis SET login = ?, age = ? WHERE login = ");
+                    PreparedStatement stmtPut = connection.prepareStatement("UPDATE lesChamis SET login = ?, age = ? WHERE login = ");
                     stmtPut.setString(1, chami.getLogin());
                     stmtPut.setInt(2, chami.getAge());
                     stmtPut.setString(3, id);
@@ -201,11 +215,11 @@ public class ChamiCRUD {
     @DeleteMapping("/{userId}")
     public void delete(@PathVariable(value="userId") String id, HttpServletResponse response){
         try(Connection connection = dataSource.getConnection()){
-            PreparedStatement stmt = connection.prepareStatement("SELECT * FROM chamis WHERE login= ? ");
+            PreparedStatement stmt = connection.prepareStatement("SELECT * FROM lesChamis WHERE login= ? ");
             stmt.setString(1,id);
             ResultSet rs = stmt.executeQuery();
             if(rs.first()){
-                PreparedStatement stmtPut = connection.prepareStatement("DELETE FROM chamis  WHERE login = ");
+                PreparedStatement stmtPut = connection.prepareStatement("DELETE FROM lesChamis  WHERE login = ");
                 stmtPut.setString(1, id);  
             }
             else{
