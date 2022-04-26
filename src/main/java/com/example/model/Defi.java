@@ -46,19 +46,19 @@ public class Defi {
         this.dateDeCreation = dateDeCreation;
     }
 
-    public String getId() {
-        return this.id;
+    public String getDescription() {
+        return this.description;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
-    public String getId() {
-        return this.id;
+    public Chami getAuteur() {
+        return this.auteur;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void setId(Chami auteur) {
+        this.auteur = auteur;
     }
 }
