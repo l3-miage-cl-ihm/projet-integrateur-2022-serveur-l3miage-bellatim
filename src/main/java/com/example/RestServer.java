@@ -10,7 +10,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class ServerApplication {
+public class RestServer {
     public static void main(String[] args) {
         /*
          * System.out.println("go Firebase");
@@ -28,7 +28,7 @@ public class ServerApplication {
          */
 
         // Lancement de Spring Boot
-        SpringApplication.run(ServerApplication.class, args);
+        SpringApplication.run(RestServer.class, args);
     }
 
 }

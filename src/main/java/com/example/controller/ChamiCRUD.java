@@ -187,7 +187,7 @@ public class ChamiCRUD {
                 stmt.setString(1,id);
                 ResultSet rs = stmt.executeQuery();
                 if(rs.first()){
-                    PreparedStatement stmtPut = connection.prepareStatement("UPDATE lesChamis SET login = ?, age = ? WHERE login = ");
+                    PreparedStatement stmtPut = connection.prepareStatement("UPDATE lesChamis SET login = ?, age = ? WHERE login = ?");
                     stmtPut.setString(1, chami.getLogin());
                     stmtPut.setInt(2, chami.getAge());
                     stmtPut.setString(3, id);
