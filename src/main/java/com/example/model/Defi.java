@@ -58,7 +58,7 @@ public class Defi {
         return this.auteur;
     }
 
-    public void setId(Chami auteur) {
+    public void setAuteur(Chami auteur) {
         this.auteur = auteur;
     }
 }
