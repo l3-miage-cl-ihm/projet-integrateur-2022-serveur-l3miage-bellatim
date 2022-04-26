@@ -64,7 +64,7 @@ public class ChamiCRUD {
                     java.sql.Timestamp dateDeCreation = result.getTimestamp("dateDeCreation");
                     String description = result.getString("description");
 
-                    Defi def = new Defi(id, titre, dateDeCreation.toLocalDateTime(), description, c.getLogin());
+                    Defi def = new Defi(id, titre, dateDeCreation.toLocalDateTime(), description, c);
                     c.addDefis(def);
                 }            
                 lesChamis.add(c);
@@ -102,7 +102,7 @@ public class ChamiCRUD {
                     java.sql.Timestamp dateDeCreation = result.getTimestamp("dateDeCreation");
 
                     String description = result.getString("description");
-                    Defi def = new Defi(idDefi, titre, dateDeCreation.toLocalDateTime(), description, chami.getLogin());
+                    Defi def = new Defi(idDefi, titre, dateDeCreation.toLocalDateTime(), description, chami);
                     chami.addDefis(def);
                 }    
                 return chami;
