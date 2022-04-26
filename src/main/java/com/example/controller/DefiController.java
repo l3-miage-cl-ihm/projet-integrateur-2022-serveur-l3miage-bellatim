@@ -7,7 +7,6 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import javax.servlet.http.HttpServletResponse;
 import javax.sql.DataSource;
@@ -24,10 +23,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.server.ResponseStatusException;
-import org.springframework.http.HttpStatus;
 
 @RestController
 @CrossOrigin
@@ -138,7 +134,7 @@ public class DefiController {
                     stmtInsert.setString(4, defi.getDescription());
                     stmtInsert.setString(5, defi.getAuteur().getLogin());
                     
-                    boolean row = stmtInsert.execute();
+                    stmtInsert.execute();
                     
                     return defi;
                 } else {
