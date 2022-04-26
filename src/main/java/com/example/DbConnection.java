@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class DbConnection {
+    
     @Value("${spring.datasource.url}")
     private String dbUrl;
 
