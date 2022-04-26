@@ -125,22 +125,23 @@ public class DefiController {
 
     @PostMapping("/{defiId}")
     public Defi create(@PathVariable(value = "defiId") String id, @RequestBody Defi defi, HttpServletResponse response) throws SQLException {
-
         if (id.equals(defi.getId())) {
             try (Connection connection = dataSource.getConnection()) {
                 // on verifie quil nexiste pas d'abord
                 PreparedStatement stmt = connection.prepareStatement("SELECT * FROM lesDefis WHERE id = ? ");
                 stmt.setString(1, id);
                 ResultSet rs = stmt.executeQuery();
-                if (!rs.first()) {
+                if (!rs.next()) {
                     PreparedStatement stmtInsert = connection
-                            .prepareStatement("INSERT INTO defi (id, titre, dateDeCreation, description, auteur) VALUES (?,?,?,?,?)");
+                            .prepareStatement("INSERT INTO lesDefis (id, titre, dateDeCreation, description, auteur) VALUES (?,?,?,?,?)");
                     stmtInsert.setString(1, defi.getId());
                     stmtInsert.setString(2, defi.getTitre());
                     stmtInsert.setTimestamp(3, Timestamp.valueOf(defi.getDateDeCreation()));
                     stmtInsert.setString(4, defi.getDescription());
                     stmtInsert.setString(5, defi.getAuteur().getLogin());
-                    int row = stmt.executeUpdate();
+                    
+                    boolean row = stmtInsert.execute();
+                    
                     return defi;
                 } else {
                     response.setStatus(403);
@@ -176,12 +177,11 @@ public class DefiController {
     public Defi update(@PathVariable(value = "defiId") String id, @RequestBody Defi defi,
             HttpServletResponse response) {
         if (id.equals(defi.getId())) {
-
             try (Connection connection = dataSource.getConnection()) {
                 PreparedStatement stmt = connection.prepareStatement("SELECT * FROM lesDefis WHERE id = ? ");
                 stmt.setString(1, id);
                 ResultSet rs = stmt.executeQuery();
-                if (rs.first()) {
+                if (rs.next()) {
                     PreparedStatement stmtPut = connection
                             .prepareStatement("UPDATE lesDefis SET id = ?, titre = ?, dateDeCreation = ?, description = ?, auteur = ? WHERE id = ?");
                     stmtPut.setString(1, defi.getId());
@@ -190,6 +190,7 @@ public class DefiController {
                     stmtPut.setString(4, defi.getDescription());
                     stmtPut.setString(5, defi.getAuteur().getLogin());
                     stmtPut.setString(6, id);
+                    stmtPut.execute();
                     return defi;
                 } else {
                     response.setStatus(404);
@@ -226,9 +227,10 @@ public class DefiController {
             PreparedStatement stmt = connection.prepareStatement("SELECT * FROM lesDefis WHERE id = ? ");
             stmt.setString(1, id);
             ResultSet rs = stmt.executeQuery();
-            if (rs.first()) {
-                PreparedStatement stmtPut = connection.prepareStatement("DELETE FROM lesDefis WHERE id = ");
+            if (rs.next()) {                
+                PreparedStatement stmtPut = connection.prepareStatement("DELETE FROM lesDefis WHERE id = ?");
                 stmtPut.setString(1, id);
+                stmtPut.execute();
             } else {
                 response.setStatus(404);
                 try {

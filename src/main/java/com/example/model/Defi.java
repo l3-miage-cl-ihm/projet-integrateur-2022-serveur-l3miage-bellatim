@@ -37,7 +37,7 @@ public class Defi {
     }
 
     public void setTitre(String titre) {
-        this.id = titre;
+        this.titre = titre;
     }
     
     public LocalDateTime getDateDeCreation() {
