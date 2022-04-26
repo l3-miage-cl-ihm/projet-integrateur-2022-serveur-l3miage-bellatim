@@ -41,8 +41,6 @@ public class DefiController {
     @GetMapping("/")
     public ArrayList<Defi> allDefis(HttpServletResponse response) throws SQLException {
 
-        System.out.println("test");
-
         try (Connection connection = dataSource.getConnection()) {
             Statement stmt = connection.createStatement();
             ResultSet rs = stmt.executeQuery("SELECT * FROM lesDefis D JOIN lesChamis C ON C.login = D.auteur");
