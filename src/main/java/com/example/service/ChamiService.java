@@ -26,7 +26,7 @@ public class ChamiService {
         return chamiRepository.findAll();
     }
 
-    public void deleteEmployee(final String login) {
+    public void deleteChami(final String login) {
         chamiRepository.deleteById(login);
     }
 
@@ -34,5 +34,6 @@ public class ChamiService {
         return chamiRepository.save(chami);
     }
 
+   
     
 }
