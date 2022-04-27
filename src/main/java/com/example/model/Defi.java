@@ -1,21 +1,13 @@
 package com.example.model;
 
-import javax.persistence.*;
 import java.time.LocalDateTime;
 
-@Entity
-@Table(name="defi")
 public class Defi {
 
-    @Id
-    @GeneratedValue(strategy=GenerationType.AUTO)
     private String id;
-
     private String titre;
     private LocalDateTime dateDeCreation;
     private String description;
-
-    @ManyToOne
     private Chami auteur;
 
     public Defi() {
