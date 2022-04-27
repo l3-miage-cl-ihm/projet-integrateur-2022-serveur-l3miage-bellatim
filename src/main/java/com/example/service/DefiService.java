@@ -14,7 +14,7 @@ import java.util.List;
 
 
 @Service
-public class DefisRepository {
+public class DefiService {
     
     @Autowired
     private DefiRepository defiRepository;
