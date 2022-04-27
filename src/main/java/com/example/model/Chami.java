@@ -3,10 +3,20 @@ package com.example.model;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.*;
+
+//ajouter lambok
+@Entity
+@Table(name="chami")
 public class Chami {
 
+    @Id
     private String login;
+
+    @Column
     private int age;
+
+    @OneToMany(mappedBy="auteur")
     private ArrayList<Defi> defisCree;
 
     public Chami() {
@@ -26,8 +36,8 @@ public class Chami {
 
     public void setLogin(String login) {
         this.login = login;
+        
     }
-
     public void setAge(int age) {
         this.age = age;
     }
