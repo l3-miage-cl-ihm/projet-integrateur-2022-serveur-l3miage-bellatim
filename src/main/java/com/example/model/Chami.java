@@ -17,7 +17,7 @@ public class Chami {
     private int age;
 
     @OneToMany(mappedBy="auteur")
-    private ArrayList<Defi> defisCree;
+    private List<Defi> defisCree;
 
     public Chami() {
         super();
@@ -51,9 +51,7 @@ public class Chami {
     }
 
     public void addDefis(Defi defi){
-        System.out.println("++++++++++++++++++++++++++++");
         defisCree.add(defi);
-        System.out.println("///////////////////////////");
     }
 
     public void removeDefis(Defi defi){
