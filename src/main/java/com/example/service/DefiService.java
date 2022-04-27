@@ -19,15 +19,15 @@ public class DefiService {
     @Autowired
     private DefiRepository defiRepository;
 
-    public Optional<Defi> getDefi(final int id) {
+    public Optional<Defi> getDefi(final String id) {
         return defiRepository.findById(id);
     }
 
-    public List<Defi> getAllDefi() {
+    public List<Defi> getAllDefis() {
         return defiRepository.findAll();
     }
 
-    public void deleteDefi(final int id) {
+    public void deleteDefi(final String id) {
         defiRepository.deleteById(id);
     }
 

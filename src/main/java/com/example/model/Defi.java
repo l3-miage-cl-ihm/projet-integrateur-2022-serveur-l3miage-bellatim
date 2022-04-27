@@ -4,15 +4,20 @@ import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name="defi")
+@Table(name="lesDefis")
 public class Defi {
 
     @Id
     @GeneratedValue(strategy=GenerationType.AUTO)
     private String id;
 
+    @Column
     private String titre;
+
+    @Column
     private LocalDateTime dateDeCreation;
+
+    @Column
     private String description;
 
     @ManyToOne

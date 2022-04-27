@@ -7,7 +7,7 @@ import javax.persistence.*;
 
 //ajouter lambok
 @Entity
-@Table(name="chami")
+@Table(name="lesChamis")
 public class Chami {
 
     @Id
