@@ -6,12 +6,7 @@ import java.util.List;
 import javax.persistence.*;
 
 //ajouter lambok
-@Entity
-<<<<<<< HEAD
-@Table(name="leschamis")
-=======
-@Table(name="chamis", schema="public")
->>>>>>> 4969e52a57ba00fa78860d1e842e12f9f91ac9d9
+@Entity@Table(name="chamis", schema="public")
 public class Chami {
 
     @Id
@@ -29,6 +24,7 @@ public class Chami {
     }
 
     public Chami(String login, int age) {
+        super(); // XXX ajout
         this.login = login;
         this.age = age;
         defisCree = new ArrayList<Defi>();

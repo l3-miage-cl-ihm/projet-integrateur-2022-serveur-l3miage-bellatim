@@ -36,7 +36,10 @@ public class DefiController {
         if (lesDefis.size() == 0) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Il n'y a pas de défis.");
         }*/
-
+//il est écrit dans l'énoncé de lever une erreur
+// OK mais alors une erreur au sens HTTP...
+// Vérifiez que vous arrivez à peupler la base avec des requêtes
+//OK
         return lesDefis;
     }
 
@@ -51,6 +54,7 @@ public class DefiController {
         return defi.get();
     }
 
+    // XXX => à tester
     @PostMapping("/{defiId}")
     public Defi create(@PathVariable(value = "defiId") String id, @RequestBody Defi defi) {
 

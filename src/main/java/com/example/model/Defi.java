@@ -3,13 +3,14 @@ import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
+public class Defi {
     @Id
     private String id;
 
     @Column
     private String titre;
 
-    @Column
+    @Column(columnDefinition = "TIMESTAMP")
     private LocalDateTime dateDeCreation;
 
     @Column
