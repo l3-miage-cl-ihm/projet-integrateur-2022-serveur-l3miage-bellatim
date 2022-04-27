@@ -12,11 +12,9 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-import lombok.Data;
 
-@Data
 @Service
-public class DefisRepository {
+public class DefiService {
     
     @Autowired
     private DefiRepository defiRepository;
