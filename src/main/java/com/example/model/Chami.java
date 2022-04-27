@@ -8,7 +8,8 @@ import javax.persistence.*;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 //ajouter lambok
-@Entity@Table(name="chamis", schema="public")
+@Entity
+@Table(name="chamis", schema="public")
 public class Chami {
 
     @Id
