@@ -8,7 +8,6 @@ import java.time.LocalDateTime;
 public class Defi {
 
     @Id
-    @GeneratedValue(strategy=GenerationType.AUTO)
     private String id;
 
     @Column
