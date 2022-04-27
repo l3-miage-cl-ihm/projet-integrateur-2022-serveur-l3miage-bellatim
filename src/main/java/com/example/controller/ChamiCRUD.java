@@ -31,7 +31,7 @@ import org.springframework.http.HttpStatus;
 
 @RestController
 @CrossOrigin
-@RequestMapping("/api/users")
+@RequestMapping("/api/chamis")
 public class ChamiCRUD {
     
     @Autowired
