@@ -5,6 +5,8 @@ import java.util.List;
 
 import javax.persistence.*;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 //ajouter lambok
 @Entity@Table(name="chamis", schema="public")
 public class Chami {
@@ -15,7 +17,8 @@ public class Chami {
     @Column
     private int age;
 
-    @OneToMany(mappedBy="auteur")
+    @OneToMany(mappedBy="auteur", cascade = CascadeType.ALL)
+    @JsonManagedReference
     private List<Defi> defisCree;
 
     public Chami() {

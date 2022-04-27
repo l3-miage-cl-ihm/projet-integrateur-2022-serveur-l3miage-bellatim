@@ -1,5 +1,8 @@
 package com.example.model;
 import javax.persistence.*;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import java.time.LocalDateTime;
 
 @Entity
@@ -16,7 +19,8 @@ public class Defi {
     @Column
     private String description;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JsonBackReference
     private Chami auteur;
 
     public Defi() {
