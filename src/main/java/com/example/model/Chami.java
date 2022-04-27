@@ -16,7 +16,7 @@ public class Chami {
     @Column
     private int age;
 
-    @OneToMany(mappedBy="auteur")
+    @OneToMany(mappedBy="auteur_login")
     private List<Defi> defisCree;
 
     public Chami() {

@@ -8,20 +8,19 @@ import java.time.LocalDateTime;
 public class Defi {
 
     @Id
-    @GeneratedValue(strategy=GenerationType.AUTO)
     private String id;
 
     @Column
     private String titre;
 
-    @Column
-    private LocalDateTime dateDeCreation;
+    @Column(columnDefinition = "TIMESTAMP")
+    private LocalDateTime date_de_creation;
 
     @Column
     private String description;
 
     @ManyToOne
-    private Chami auteur;
+    private Chami auteur_login;
 
     public Defi() {
         super();
@@ -30,10 +29,10 @@ public class Defi {
     public Defi(String id, String titre, LocalDateTime dateDeCreation, String description, Chami auteur) {
         this.id = id;
         this.titre = titre;
-        this.dateDeCreation = dateDeCreation;
+        this.date_de_creation = dateDeCreation;
         this.description = description;
 
-        this.auteur = auteur;
+        this.auteur_login = auteur;
         //auteur.addDefis(this);    
     }
 
@@ -54,7 +53,7 @@ public class Defi {
     }
     
     public LocalDateTime getDateDeCreation() {
-        return this.dateDeCreation;
+        return this.date_de_creation;
     }
 
     /*public void setDateDeCreation(LocalDateTime dateDeCreation) {
@@ -70,7 +69,7 @@ public class Defi {
     }
 
     public Chami getAuteur() {
-        return this.auteur;
+        return this.auteur_login;
     }
 
     /*public void setAuteur(Chami auteur) {
