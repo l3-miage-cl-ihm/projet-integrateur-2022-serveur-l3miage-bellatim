@@ -32,9 +32,10 @@ public class DefiController {
     public List<Defi> allDefis() {
         List<Defi> lesDefis = defiService.getAllDefis();
 
+        /* XXX Pourquoi lever une exception ???
         if (lesDefis.size() == 0) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Il n'y a pas de défis.");
-        }
+        }*/
 
         return lesDefis;
     }

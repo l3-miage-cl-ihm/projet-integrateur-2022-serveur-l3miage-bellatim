@@ -1,14 +1,9 @@
 package com.example.model;
-
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
-// @Table(name="lesdefis")
-public class Defi {
-
     @Id
-    @GeneratedValue(strategy=GenerationType.AUTO)
     private String id;
 
     @Column
