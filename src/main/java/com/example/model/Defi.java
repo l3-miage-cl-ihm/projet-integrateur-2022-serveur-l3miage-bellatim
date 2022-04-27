@@ -4,7 +4,7 @@ import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name="lesDefis")
+// @Table(name="lesdefis")
 public class Defi {
 
     @Id
@@ -28,6 +28,7 @@ public class Defi {
     }
 
     public Defi(String id, String titre, LocalDateTime dateDeCreation, String description, Chami auteur) {
+        super(); // XXX ajout
         this.id = id;
         this.titre = titre;
         this.dateDeCreation = dateDeCreation;
