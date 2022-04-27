@@ -17,7 +17,7 @@ public class Chami {
     private int age;
 
     @OneToMany(mappedBy="auteur")
-    private ArrayList<Defi> defisCree;
+    private List<Defi> defisCree;
 
     public Chami() {
         super();
