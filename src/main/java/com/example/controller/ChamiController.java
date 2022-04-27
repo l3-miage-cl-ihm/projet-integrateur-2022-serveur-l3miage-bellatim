@@ -46,9 +46,9 @@ public class ChamiController {
     public List<Chami> allUsers() {
         List<Chami> chamiList = chamiService.getAllChami();
 
-        if(chamiList.size()==0) {
+        /*if(chamiList.size()==0) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "No chami found");
-        }
+        }*/
 
         return chamiList;
     }

@@ -1,12 +1,9 @@
 package com.example.model;
-
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name="defis", schema="public")
 public class Defi {
-
     @Id
     private String id;
 
@@ -14,25 +11,26 @@ public class Defi {
     private String titre;
 
     @Column(columnDefinition = "TIMESTAMP")
-    private LocalDateTime date_de_creation;
+    private LocalDateTime dateDeCreation;
 
     @Column
     private String description;
 
     @ManyToOne
-    private Chami auteur_login;
+    private Chami auteur;
 
     public Defi() {
         super();
     }
 
     public Defi(String id, String titre, LocalDateTime dateDeCreation, String description, Chami auteur) {
+        super(); // XXX ajout
         this.id = id;
         this.titre = titre;
-        this.date_de_creation = dateDeCreation;
+        this.dateDeCreation = dateDeCreation;
         this.description = description;
 
-        this.auteur_login = auteur;
+        this.auteur = auteur;
         //auteur.addDefis(this);    
     }
 
@@ -53,7 +51,7 @@ public class Defi {
     }
     
     public LocalDateTime getDateDeCreation() {
-        return this.date_de_creation;
+        return this.dateDeCreation;
     }
 
     /*public void setDateDeCreation(LocalDateTime dateDeCreation) {
@@ -69,7 +67,7 @@ public class Defi {
     }
 
     public Chami getAuteur() {
-        return this.auteur_login;
+        return this.auteur;
     }
 
     /*public void setAuteur(Chami auteur) {

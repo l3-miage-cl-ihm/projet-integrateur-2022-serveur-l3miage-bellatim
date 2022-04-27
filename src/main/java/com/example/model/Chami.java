@@ -6,8 +6,7 @@ import java.util.List;
 import javax.persistence.*;
 
 //ajouter lambok
-@Entity
-@Table(name="chamis", schema="public")
+@Entity@Table(name="chamis", schema="public")
 public class Chami {
 
     @Id
@@ -16,7 +15,7 @@ public class Chami {
     @Column
     private int age;
 
-    @OneToMany(mappedBy="auteur_login")
+    @OneToMany(mappedBy="auteur")
     private List<Defi> defisCree;
 
     public Chami() {
@@ -25,6 +24,7 @@ public class Chami {
     }
 
     public Chami(String login, int age) {
+        super(); // XXX ajout
         this.login = login;
         this.age = age;
         defisCree = new ArrayList<Defi>();
