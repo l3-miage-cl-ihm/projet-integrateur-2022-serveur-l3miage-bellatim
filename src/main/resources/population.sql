@@ -1,13 +1,13 @@
 TRUNCATE TABLE defis CASCADE;
 TRUNCATE TABLE chamis CASCADE;
 
-INSERT INTO Chamis (login, age) VALUES 
-('carobis', 21),
-('escribis', 43),
-('momo', 38),
-('nomoldu', 20),
-('python38', 18),
-('yes4moldus', 38);
+INSERT INTO Chamis (login, age, email) VALUES 
+('carobis', 21, null),
+('escribis', 43, null),
+('momo', 38, 'mo@mo.com'),
+('nomoldu', 20, null),
+('python38', 18, null),
+('yes4moldus', 38, null);
 
 INSERT INTO Defis (id, titre, auteur, dateDeCreation, description) VALUES
 ('D127', 'Le Méchoui', 'carobis', '2021-03-15 16:03:00', 

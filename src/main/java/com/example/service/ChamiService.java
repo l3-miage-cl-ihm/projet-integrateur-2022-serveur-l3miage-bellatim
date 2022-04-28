@@ -1,3 +1,4 @@
+
 package com.example.service;
 
 import java.util.Optional;
@@ -20,6 +21,10 @@ public class ChamiService {
 
     public Optional<Chami> getChami(final String login) {
         return chamiRepository.findById(login);
+    }
+
+    public Optional<Chami> getByEmail(String email){
+        return chamiRepository.findByEmail(email);
     }
 
     public List<Chami> getAllChami() {
