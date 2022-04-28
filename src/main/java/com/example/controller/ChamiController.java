@@ -80,7 +80,8 @@ public class ChamiController {
                 throw new ResponseStatusException(HttpStatus.PRECONDITION_FAILED, "Le chami n'existe pas");
             }
             Chami chamiToUpdate = chamiOpt.get();
-            return chamiService.saveChami(chamiToUpdate);
+            chamiService.deleteChami(id);
+            return chamiService.saveChami(chami);
             }
         else{
             throw new ResponseStatusException(HttpStatus.PRECONDITION_FAILED, "Le login ne correspond pas");
