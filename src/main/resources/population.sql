@@ -1,17 +1,7 @@
-CREATE TABLE IF NOT EXISTS LesChamis(
-    login varchar PRIMARY KEY,
-    age int
-);
+TRUNCATE TABLE defis CASCADE;
+TRUNCATE TABLE chamis CASCADE;
 
-CREATE TABLE IF NOT EXISTS LesDefis(
-    id varchar PRIMARY KEY,
-    titre varchar,
-    auteur varchar REFERENCES LesChamis (login),
-    dateDeCreation timestamp,
-    description varchar
-);
-
-INSERT INTO LesChamis VALUES 
+INSERT INTO Chamis (login, age) VALUES 
 ('carobis', 21),
 ('escribis', 43),
 ('momo', 38),
@@ -19,7 +9,7 @@ INSERT INTO LesChamis VALUES
 ('python38', 18),
 ('yes4moldus', 38);
 
-INSERT INTO LesDefis VALUES
+INSERT INTO Defis (id, titre, auteur, dateDeCreation, description) VALUES
 ('D127', 'Le Méchoui', 'carobis', '2021-03-15 16:03:00', 
 '- Rendez vous à l''arrêt de bus "Maison du tourisme - Hubert Dubedout".\n- Cherche ce qu''il faut pour faire un méchoui.'),
 ('D145', 'Le vert, je le mange !', 'escribis', '2021-04-01 15:03:00', '- Rendez vous à l''arrêt de bus "Grenoble - hôtel de ville".\n
