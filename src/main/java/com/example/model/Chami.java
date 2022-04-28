@@ -8,7 +8,8 @@ import javax.persistence.*;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 //ajouter lambok
-@Entity@Table(name="chamis", schema="public")
+@Entity
+@Table(name="chamis", schema="public")
 public class Chami {
 
     @Id
@@ -19,18 +20,21 @@ public class Chami {
 
     @OneToMany(mappedBy="auteur", cascade = CascadeType.ALL)
     @JsonManagedReference
-    private List<Defi> defisCree;
+    private List<Defi> defis;
+
+    /*@Column(unique = true)
+    private String email;*/
 
     public Chami() {
         super();
-        defisCree = new ArrayList<Defi>();
+        defis = new ArrayList<Defi>();
     }
 
     public Chami(String login, int age) {
         super(); // XXX ajout
         this.login = login;
         this.age = age;
-        defisCree = new ArrayList<Defi>();
+        defis = new ArrayList<Defi>();
     }
 
     public String getLogin() {
@@ -50,15 +54,15 @@ public class Chami {
     }
 
     public List<Defi> getDefis(){
-        return defisCree;
+        return defis;
     }
 
     public void addDefis(Defi defi){
-        defisCree.add(defi);
+        defis.add(defi);
     }
 
     public void removeDefis(Defi defi){
-        defisCree.remove(defi);
+        defis.remove(defi);
     }
 
     /*public void addDefisSimple(Defi defi){
