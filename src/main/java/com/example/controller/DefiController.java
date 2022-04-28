@@ -76,15 +76,19 @@ public class DefiController {
             throw new ResponseStatusException(HttpStatus.PRECONDITION_FAILED, "L'id du défi passé en paramètre n'est pas le même que celui saisi.");
         }
         
-        Optional<Defi> leDefi = defiService.getDefi(id);
+        Optional<Defi> leDefiOpt = defiService.getDefi(id);
         
-        if (!leDefi.isPresent()) {
+        if (!leDefiOpt.isPresent()) {
            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Le défi n'existe pas.");
         }
 
-        if(leDefi.get().getAuteur().equals(defi.getAuteur())){
-            defiService.deleteDefi(id);
-            return defiService.saveDefi(defi);
+        if(leDefiOpt.get().getAuteur().getLogin().equals(defi.getAuteur().getLogin())){
+            Defi leDefis = leDefiOpt.get();
+            leDefis.setDescription(defi.getDescription());
+            leDefis.setTitre(defi.getTitre());
+            return defiService.saveDefi(leDefis);
+            //defiService.deleteDefi(id);
+            //return defiService.saveDefi(defi);
         }
         else{
             throw new ResponseStatusException(HttpStatus.PRECONDITION_FAILED,"l'auteur est différent ");
