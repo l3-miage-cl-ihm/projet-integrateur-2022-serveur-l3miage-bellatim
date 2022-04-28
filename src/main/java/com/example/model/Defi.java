@@ -22,6 +22,7 @@ public class Defi {
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JsonBackReference
+    @JoinColumn(name="auteur_login")
     private Chami auteur;
 
     public Defi() {
