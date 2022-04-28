@@ -73,12 +73,13 @@ public class DefiController {
         }
         
         Optional<Defi> leDefi = defiService.getDefi(id);
-
+        
         if (!leDefi.isPresent()) {
            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Le défi n'existe pas.");
         }
-        
-        return leDefi.get();
+        defiService.deleteDefi(id);
+        return defiService.saveDefi(defi);
+        // return leDefi.get();
     }
 
     @DeleteMapping("/{defiId}")
