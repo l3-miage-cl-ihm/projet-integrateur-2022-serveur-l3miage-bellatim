@@ -82,17 +82,17 @@ public class DefiController {
            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Le défi n'existe pas.");
         }
 
-        if(leDefiOpt.get().getAuteur().getLogin().equals(defi.getAuteur().getLogin())){
+        //if(leDefiOpt.get().getAuteur().getLogin().equals(defi.getAuteur().getLogin())){
             Defi leDefis = leDefiOpt.get();
             leDefis.setDescription(defi.getDescription());
             leDefis.setTitre(defi.getTitre());
             return defiService.saveDefi(leDefis);
             //defiService.deleteDefi(id);
             //return defiService.saveDefi(defi);
-        }
+        /*}
         else{
             throw new ResponseStatusException(HttpStatus.PRECONDITION_FAILED,"l'auteur est différent ");
-        }
+        }*/
         // return leDefi.get();
     }
 
