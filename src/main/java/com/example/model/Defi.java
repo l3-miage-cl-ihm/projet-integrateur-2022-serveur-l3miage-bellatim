@@ -6,6 +6,7 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import java.time.LocalDateTime;
 
 @Entity
+@Table(name="defis", schema="public")
 public class Defi {
     @Id
     private String id;
