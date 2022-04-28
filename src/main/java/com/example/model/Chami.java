@@ -20,6 +20,7 @@ public class Chami {
 
     @OneToMany(mappedBy="auteur", cascade = CascadeType.ALL)
     @JsonManagedReference
+    @JoinColumn(name="defis_id")
     private List<Defi> defis;
 
     @Column(unique = true)
@@ -72,5 +73,12 @@ public class Chami {
 
     public String getEmail(){
         return email;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        // TODO Auto-generated method stub
+        Chami chami = (Chami) obj;
+        return this.login.equals(chami.getLogin()) && this.age == chami.getAge() && this.email.equals(chami.getEmail());
     }
 }

@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import com.example.model.Defi;
+import com.example.service.ChamiService;
 import com.example.service.DefiService;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -65,6 +66,9 @@ public class DefiController {
         return defiService.saveDefi(defi);
     }
 
+    @Autowired
+    ChamiService chamiService;
+
     @PutMapping("/{defiId}")
     public Defi update(@PathVariable(value = "defiId") String id, @RequestBody Defi defi) {
         
@@ -72,13 +76,23 @@ public class DefiController {
             throw new ResponseStatusException(HttpStatus.PRECONDITION_FAILED, "L'id du défi passé en paramètre n'est pas le même que celui saisi.");
         }
         
-        Optional<Defi> leDefi = defiService.getDefi(id);
+        Optional<Defi> leDefiOpt = defiService.getDefi(id);
         
-        if (!leDefi.isPresent()) {
+        if (!leDefiOpt.isPresent()) {
            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Le défi n'existe pas.");
         }
-        defiService.deleteDefi(id);
-        return defiService.saveDefi(defi);
+
+        if(leDefiOpt.get().getAuteur().getLogin().equals(defi.getAuteur().getLogin())){
+            Defi leDefis = leDefiOpt.get();
+            leDefis.setDescription(defi.getDescription());
+            leDefis.setTitre(defi.getTitre());
+            return defiService.saveDefi(leDefis);
+            //defiService.deleteDefi(id);
+            //return defiService.saveDefi(defi);
+        }
+        else{
+            throw new ResponseStatusException(HttpStatus.PRECONDITION_FAILED,"l'auteur est différent ");
+        }
         // return leDefi.get();
     }
 
