@@ -22,18 +22,19 @@ public class Chami {
     @JsonManagedReference
     private List<Defi> defis;
 
-    /*@Column(unique = true)
-    private String email;*/
+    @Column(unique = true)
+    private String email;
 
     public Chami() {
         super();
         defis = new ArrayList<Defi>();
     }
 
-    public Chami(String login, int age) {
+    public Chami(String login, int age, String email) {
         super(); // XXX ajout
         this.login = login;
         this.age = age;
+        this.email = email;
         defis = new ArrayList<Defi>();
     }
 
@@ -68,4 +69,8 @@ public class Chami {
     /*public void addDefisSimple(Defi defi){
         defisCree.add(defi);
     }*/
+
+    public String getEmail(){
+        return email;
+    }
 }
