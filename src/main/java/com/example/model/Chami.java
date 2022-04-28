@@ -20,6 +20,7 @@ public class Chami {
 
     @OneToMany(mappedBy="auteur", cascade = CascadeType.ALL)
     @JsonManagedReference
+    @JoinColumn(name="defis_id")
     private List<Defi> defis;
 
     @Column(unique = true)
