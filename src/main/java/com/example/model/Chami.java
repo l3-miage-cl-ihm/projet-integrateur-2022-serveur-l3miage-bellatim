@@ -75,5 +75,10 @@ public class Chami {
         return email;
     }
 
-    
+    @Override
+    public boolean equals(Object obj) {
+        // TODO Auto-generated method stub
+        Chami chami = (Chami) obj;
+        return this.login.equals(chami.getLogin()) && this.age == chami.getAge() && this.email.equals(chami.getEmail());
+    }
 }
