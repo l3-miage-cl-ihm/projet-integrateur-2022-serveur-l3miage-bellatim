@@ -24,6 +24,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
@@ -43,15 +44,28 @@ public class ChamiController {
     private ChamiService chamiService;
 
     @GetMapping("/")
-    public List<Chami> allUsers() {
-        List<Chami> chamiList = chamiService.getAllChami();
-
+    public List<Chami> allUsers(@RequestParam(required = false) String email) {
+        List<Chami> chamiList = new ArrayList<Chami>() {
+            
+        };
+        if(email == null){
+            chamiList = chamiService.getAllChami();
+        }
+        else{
+            Optional<Chami> chami = chamiService.getByEmail(email);
+            if(chami.isPresent()){
+                chamiList.add(chami.get());
+            }
+        }
+        
         /*if(chamiList.size()==0) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "No chami found");
         }*/
 
         return chamiList;
     }
+
+    
 
     @GetMapping("/{userId}")
     public Chami read(@PathVariable(value="userId") String id){
