@@ -23,7 +23,7 @@ public class Defi// implements Comparator<Etape>{
     @Column(columnDefinition = "TIMESTAMP")         //type TIMESTAMP dans la base de données
     private LocalDateTime dateDeCreation;
 
-    @OneToMany(mappedBy = "id")
+    @OneToMany
     private List<Etape> description;
 
     @ManyToOne(cascade = CascadeType.ALL)
