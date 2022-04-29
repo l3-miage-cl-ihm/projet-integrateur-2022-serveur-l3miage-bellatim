@@ -6,8 +6,8 @@ import java.time.LocalDateTime;
 @Entity
 @Table(name="defis", schema="public")
 /*@JsonIdentityInfo(
-        generator = ObjectIdGenerators.StringIdGenerator.class,
-        property="auteur")*/
+        generator = ObjectIdGenerators.PropertyGenerator.class,
+        property="id")*/
 public class Defi {
     @Id
     private String id;
@@ -21,7 +21,7 @@ public class Defi {
     @Column
     private String description;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     private Chami auteur;
 
     public Defi() {

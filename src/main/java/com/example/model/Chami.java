@@ -11,8 +11,8 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 @Entity
 @Table(name="chamis", schema="public")
 /*@JsonIdentityInfo(
-        generator = ObjectIdGenerators.StringIdGenerator.class,
-        property="defis")*/
+        generator = ObjectIdGenerators.PropertyGenerator.class,
+        property="login")*/
 public class Chami {
 
     @Id
