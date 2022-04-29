@@ -5,17 +5,14 @@ import java.util.List;
 
 import javax.persistence.*;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 //ajouter lambok
 @Entity
 @Table(name="chamis", schema="public")
 /*@JsonIdentityInfo(
-        generator = ObjectIdGenerators.StringIdGenerator.class,
-        property="defis")*/
+        generator = ObjectIdGenerators.PropertyGenerator.class,
+        property="login")*/
 public class Chami {
 
     @Id
