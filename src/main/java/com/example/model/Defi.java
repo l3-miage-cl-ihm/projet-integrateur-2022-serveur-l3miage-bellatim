@@ -22,6 +22,7 @@ public class Defi {
     private String description;
 
     @ManyToOne(cascade = CascadeType.ALL)
+    //JoinTable
     private Chami auteur;
 
     public Defi() {
