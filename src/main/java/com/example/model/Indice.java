@@ -17,8 +17,8 @@ public class Indice extends Etape{
     @ManyToOne
     private Question question;
 
-    public Indice(int id, int rang, String label, int cout, Question question){
-        super(id, rang, label);
+    public Indice(int id, int rang, String label, int cout, Defi defi, Question question){
+        super(id, rang, label, defi);
         this.cout = cout;
         this.question = question;
     }

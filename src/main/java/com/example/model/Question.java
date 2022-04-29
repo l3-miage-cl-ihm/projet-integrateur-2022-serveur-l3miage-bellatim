@@ -23,14 +23,9 @@ public class Question extends Etape {
     @Column
     private int point;
 
-    @OneToMany(mappedBy = "id")
-    private List<Indice> indices;
-
-
-    public Question(int id, int rang, String label, int point) {
-        super(id, rang, label);
+    public Question(int id, int rang, String label, int point, Defi defi) {
+        super(id, rang, label, defi);
         this.point = point;
-        indices = new ArrayList<>();
     }
 
     public Question(){

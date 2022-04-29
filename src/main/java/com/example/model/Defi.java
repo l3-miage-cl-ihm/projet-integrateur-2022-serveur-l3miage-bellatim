@@ -3,10 +3,7 @@ import javax.persistence.*;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Comparator;
-import java.util.List;
 import java.time.LocalDateTime;
 
 @Entity
@@ -23,9 +20,6 @@ public class Defi// implements Comparator<Etape>{
     @Column(columnDefinition = "TIMESTAMP")         //type TIMESTAMP dans la base de données
     private LocalDateTime dateDeCreation;
 
-    @OneToMany(mappedBy = "id")
-    private List<Etape> description;
-
     @ManyToOne(cascade = CascadeType.ALL)
     @JsonBackReference
     @JoinColumn(name="auteur_login")    //évite de donner tout le défis. Seul le login de l'auteur est necessaire
@@ -36,7 +30,6 @@ public class Defi// implements Comparator<Etape>{
 
     public Defi() {
         super();
-        this.description = new ArrayList<Etape>();
 
     }
 
@@ -45,7 +38,6 @@ public class Defi// implements Comparator<Etape>{
         this.id = id;
         this.titre = titre;
         this.dateDeCreation = dateDeCreation;
-        this.description = new ArrayList<Etape>();
         
         this.auteur = auteur;
         //auteur.addDefis(this);    
@@ -75,7 +67,7 @@ public class Defi// implements Comparator<Etape>{
         this.dateDeCreation = dateDeCreation;
     }*/
 
-    public List<Etape> getDescription() {
+    /*public List<Etape> getDescription() {
         //getDescriptionTriee();
         return this.description;
     }
@@ -93,7 +85,7 @@ public class Defi// implements Comparator<Etape>{
 
     public void getDescriptionTriee(){
         Collections.sort(description, Etape.comparatorEtape);
-    }
+    }*/
 
     public Chami getAuteur() {
         return this.auteur;

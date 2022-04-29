@@ -80,7 +80,6 @@ public class DefiController {
 
         //if(leDefiOpt.get().getAuteur().getLogin().equals(defi.getAuteur().getLogin())){
             Defi leDefis = leDefiOpt.get();
-            leDefis.setDescription(defi.getDescription());
             leDefis.setTitre(defi.getTitre());
             return defiService.saveDefi(leDefis);
             //defiService.deleteDefi(id);

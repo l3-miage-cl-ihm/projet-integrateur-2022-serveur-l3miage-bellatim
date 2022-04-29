@@ -28,11 +28,15 @@ public class Etape {
     @Column
     private String label;    
 
-    public Etape(int id, int rang, String label){
+    @ManyToOne
+    private Defi defi;
+
+    public Etape(int id, int rang, String label, Defi defi){
         super();
         this.id = id;
         this.rang = rang;
         this.label = label;
+        this.defi = defi;
     }
 
     public Etape() {

@@ -17,18 +17,19 @@ import lombok.Setter;
 @Table(name="media", schema = "public")
 public class Media extends Etape{
 
-    public Media(int id, int rang, String label) {
-        super(id, rang, label);
-        //TODO Auto-generated constructor stub
-    }
-
-    public Media(){
-        super();
-    }
-
     @Column
     private String URL;
 
     @Column
     private TypeMEDIA typeMedia;
+
+    public Media(int id, int rang, String label, Defi defi, String url, TypeMEDIA type) {
+        super(id, rang, label, defi);
+        this.typeMedia = type;
+        this.URL = url;
+    }
+
+    public Media(){
+        super();
+    }
 }
