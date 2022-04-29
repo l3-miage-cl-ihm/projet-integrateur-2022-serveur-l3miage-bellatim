@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -44,10 +45,11 @@ public class ChamiController {
     private ChamiService chamiService;
 
     @GetMapping("/")
-    public List<Chami> allUsers(@RequestParam(required = false) String email) {
-        List<Chami> chamiList = new ArrayList<Chami>() {
-            
-        };
+    public List<Chami> allUsers(@RequestParam(required = false) String email, @RequestHeader("Authorization") String jwt) {
+        List<Chami> chamiList = new ArrayList<Chami>();
+
+        System.out.println("JWT: " + jwt);
+
         if(email == null){
             chamiList = chamiService.getAllChami();
         }
