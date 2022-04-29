@@ -1,16 +1,8 @@
 package com.example.controller;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
-import javax.servlet.http.HttpServletResponse;
-import javax.sql.DataSource;
 
 import com.example.model.Chami;
-import com.example.model.Defi;
 import com.example.service.ChamiService;
 
 //import com.google.api.services.storage.Storage.BucketAccessControls.List;
@@ -23,10 +15,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -96,7 +86,7 @@ public class ChamiController {
             if(!chamiOpt.isPresent()) {
                 throw new ResponseStatusException(HttpStatus.PRECONDITION_FAILED, "Le chami n'existe pas");
             }
-            Chami chamiToUpdate = chamiOpt.get();
+            chamiOpt.get();
             chamiService.deleteChami(id);
             return chamiService.saveChami(chami);
             }
