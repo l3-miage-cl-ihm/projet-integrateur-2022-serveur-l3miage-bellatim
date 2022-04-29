@@ -4,6 +4,9 @@ import java.util.ArrayList;
 
 import com.example.model.Chami;
 import com.example.service.ChamiService;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseAuthException;
+import com.google.firebase.auth.FirebaseToken;
 
 //import com.google.api.services.storage.Storage.BucketAccessControls.List;
 
@@ -36,21 +39,14 @@ public class ChamiController {
     private ChamiService chamiService;
 
     @GetMapping("/")
-    public List<Chami> allUsers(@RequestParam(required = false) String email, @RequestHeader("Authorization") String jwt) {
+    public List<Chami> allUsers() {
+    // public List<Chami> allUsers(@RequestHeader("Authorization") String jwt) {
         List<Chami> chamiList = new ArrayList<Chami>();
-
+        
         // String jwt = "nop";
-        System.out.println("///////////////////////////\nJWT: " + jwt);
+        // System.out.println("///////////////////////////\nJWT: " + jwt);
 
-        if(email == null){
             chamiList = chamiService.getAllChami();
-        }
-        else{
-            Optional<Chami> chami = chamiService.getByEmail(email);
-            if(chami.isPresent()){
-                chamiList.add(chami.get());
-            }
-        }
         
         /*if(chamiList.size()==0) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "No chami found");
@@ -59,7 +55,27 @@ public class ChamiController {
         return chamiList;
     }
 
-    
+    @GetMapping("/mail") //extraire le mail du token
+    public List<Chami> readByMail(@RequestParam("email") String email, @RequestHeader("Authorization") String jwt) {
+        List<Chami> chamiList = new ArrayList<Chami>();
+        try {
+            FirebaseToken decodedToken = FirebaseAuth.getInstance().verifyIdToken(jwt);
+            Optional<Chami> chami = chamiService.getByEmail(email);
+            if(chami.isPresent()){
+                chamiList.add(chami.get());
+            }
+          } catch(FirebaseAuthException e) {
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Unauthorized");
+          }
+
+        
+
+        if(chamiList.size()==0) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "No chami found");
+        }
+
+        return chamiList;
+    }
 
     @GetMapping("/{userId}")
     public Chami read(@PathVariable(value="userId") String id){
