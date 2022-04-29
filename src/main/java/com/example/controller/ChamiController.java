@@ -35,16 +35,23 @@ import java.util.Optional;
 import org.springframework.http.HttpStatus;
 
 
-@RestController
-@CrossOrigin
-@RequestMapping("/api/chamis")
+@RestController                 //type de controleur
+@CrossOrigin                    //accept toutes les connexions
+@RequestMapping("/api/chamis")  //suite de l'url après l'adresse du serveur
 public class ChamiController {
         
-    @Autowired
+    @Autowired                  //obligatoire pour spring
     private ChamiService chamiService;
 
-    @GetMapping("/")
-    public List<Chami> allUsers(@RequestParam(required = false) String email) {
+    @GetMapping("/")            //suite url pour GET
+    /*cette fonction traite deux type d'URL différent : 
+            1:  en finissant l'url avec un / 
+                        => la fonction retourne tous les utilisateurs
+            2:  en finissant l'url avec /?emai=...
+                        => en remplacant ... par l'email d'un chami
+                        => retourne le chami s'il existe avec cet email
+    */
+    public List<Chami> allUsers(@RequestParam(required = false) String email) { 
         List<Chami> chamiList = new ArrayList<Chami>() {
             
         };
@@ -67,7 +74,7 @@ public class ChamiController {
 
     
 
-    @GetMapping("/{userId}")
+    @GetMapping("/{userId}") //finir l'url par /un_login_de_chami retourne le chami à partir son login s'il existe
     public Chami read(@PathVariable(value="userId") String id){
         Optional<Chami> chami = chamiService.getChami(id);
         if(!chami.isPresent()) {
@@ -76,7 +83,8 @@ public class ChamiController {
         return chami.get();
     }
 
-    @PostMapping("/{userId}")
+    @PostMapping("/{userId}")   //finir l'url avec /un_login_de_chami créer un chami de login un_login_de_chami
+                                //pour créer le chami, il faut récupérer les données du body
     public Chami create(@PathVariable(value="userId") String id, @RequestBody Chami chami) {
         if(id.equals(chami.getLogin())){
             return chamiService.saveChami(chami);
@@ -86,14 +94,14 @@ public class ChamiController {
         }
     }
 
-    @PutMapping("/{userId}")
+    @PutMapping("/{userId}")//modifie le chami
     public Chami update(@PathVariable(value="userId") String id, @RequestBody Chami chami){
         if(id.equals(chami.getLogin())){
             Optional<Chami> chamiOpt = chamiService.getChami(id);
             if(!chamiOpt.isPresent()) {
                 throw new ResponseStatusException(HttpStatus.PRECONDITION_FAILED, "Le chami n'existe pas");
             }
-            Chami chamiToUpdate = chamiOpt.get();
+            //Chami chamiToUpdate = chamiOpt.get();
             chamiService.deleteChami(id);
             return chamiService.saveChami(chami);
             }
@@ -102,7 +110,7 @@ public class ChamiController {
         }
     }
 
-    @DeleteMapping("/{userId}")
+    @DeleteMapping("/{userId}")//supprime le chami
     public void delete(@PathVariable(value="userId") String id){
         Optional<Chami> chamiOpt = chamiService.getChami(id);
         if(!chamiOpt.isPresent()) {

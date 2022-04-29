@@ -4,7 +4,6 @@ import java.util.List;
 import java.util.Optional;
 
 import com.example.model.Defi;
-import com.example.service.ChamiService;
 import com.example.service.DefiService;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -65,9 +64,6 @@ public class DefiController {
 
         return defiService.saveDefi(defi);
     }
-
-    @Autowired
-    ChamiService chamiService;
 
     @PutMapping("/{defiId}")
     public Defi update(@PathVariable(value = "defiId") String id, @RequestBody Defi defi) {
