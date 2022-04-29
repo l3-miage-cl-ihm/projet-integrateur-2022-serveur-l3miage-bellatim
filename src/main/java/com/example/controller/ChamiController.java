@@ -45,10 +45,11 @@ public class ChamiController {
     private ChamiService chamiService;
 
     @GetMapping("/")
-    public List<Chami> allUsers(@RequestParam(required = false) String email, @RequestHeader("Authorization") String jwt) {
+    public List<Chami> allUsers(@RequestParam(required = false) String email/*, @RequestHeader("Authorization") String jwt*/) {
         List<Chami> chamiList = new ArrayList<Chami>();
 
-        System.out.println("JWT: " + jwt);
+        String jwt = "nop";
+        System.out.println("///////////////////////////\nJWT: " + jwt);
 
         if(email == null){
             chamiList = chamiService.getAllChami();
