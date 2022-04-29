@@ -2,11 +2,16 @@ package com.example.model;
 import javax.persistence.*;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import java.time.LocalDateTime;
 
 @Entity
 @Table(name="defis", schema="public")
+/*@JsonIdentityInfo(
+        generator = ObjectIdGenerators.StringIdGenerator.class,
+        property="auteur")*/
 public class Defi {
     @Id
     private String id;
@@ -21,8 +26,6 @@ public class Defi {
     private String description;
 
     @ManyToOne(cascade = CascadeType.ALL)
-    @JsonBackReference
-    @JoinColumn(name="auteur_login")
     private Chami auteur;
 
     public Defi() {

@@ -5,11 +5,17 @@ import java.util.List;
 
 import javax.persistence.*;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 //ajouter lambok
 @Entity
 @Table(name="chamis", schema="public")
+/*@JsonIdentityInfo(
+        generator = ObjectIdGenerators.StringIdGenerator.class,
+        property="defis")*/
 public class Chami {
 
     @Id
@@ -19,7 +25,7 @@ public class Chami {
     private int age;
 
     @OneToMany(mappedBy="auteur", cascade = CascadeType.ALL)
-    @JsonManagedReference
+    @JsonIgnore
     private List<Defi> defis;
 
     @Column(unique = true)
