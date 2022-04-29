@@ -1,5 +1,6 @@
 package com.example;
 
+import java.io.FileInputStream;
 import java.io.IOException;
 
 import com.google.auth.oauth2.GoogleCredentials;
@@ -22,10 +23,18 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class RestServer {
     public static void main(String[] args) {
         
-        //  System.out.println("go Firebase");
+         
+        
+
+        // Lancement de Spring Boot
+        SpringApplication.run(RestServer.class, args);
+
+        // System.out.println("go Firebase");
         //  try {
+        //     FileInputStream serviceAccount =
+        //     new FileInputStream("integrateur2022g5-firebase-adminsdk-5ncvw-49a213bd7a.json");
         //  FirebaseOptions options = FirebaseOptions.builder()
-        //  .setCredentials(GoogleCredentials.getApplicationDefault())
+        //  .setCredentials(GoogleCredentials.fromStream(serviceAccount))
         //  // .setDatabaseUrl("https://<DATABASE_NAME>.firebaseio.com/")
         //  .build();
          
@@ -34,10 +43,6 @@ public class RestServer {
         //  } catch (IOException e) {
         //  System.err.println( "error: " + e.getLocalizedMessage() );
         //  }
-        
-
-        // Lancement de Spring Boot
-        SpringApplication.run(RestServer.class, args);
     }
 
 }
