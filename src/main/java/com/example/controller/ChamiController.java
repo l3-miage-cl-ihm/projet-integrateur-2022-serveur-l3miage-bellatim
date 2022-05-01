@@ -39,21 +39,21 @@ public class ChamiController {
     private ChamiService chamiService;
 
     @GetMapping("/")
-    public List<Chami> allUsers() {
-    // public List<Chami> allUsers(@RequestHeader("Authorization") String jwt) {
-        List<Chami> chamiList = new ArrayList<Chami>();
-        
-        // String jwt = "nop";
-        // System.out.println("///////////////////////////\nJWT: " + jwt);
-
-            chamiList = chamiService.getAllChami();
+    public List<Chami> allUsers(@RequestHeader("Authorization") String jwt) {
+        try {
+            FirebaseAuth.getInstance().verifyIdToken(jwt);
+            return chamiService.getAllChami();
+        } catch (FirebaseAuthException e) {
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Unauthorized", e);
+        }
+    }
+    // public List<Chami> allUsers(@RequestHeader("Authorization") String jwt) 
         
         /*if(chamiList.size()==0) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "No chami found");
         }*/
 
-        return chamiList;
-    }
+    
 
     @GetMapping("/mail") //extraire le mail du token
     public List<Chami> readByMail(@RequestParam("email") String email, @RequestHeader("Authorization") String jwt) {
@@ -78,49 +78,71 @@ public class ChamiController {
     }
 
     @GetMapping("/{userId}")
-    public Chami read(@PathVariable(value="userId") String id){
-        Optional<Chami> chami = chamiService.getChami(id);
-        if(!chami.isPresent()) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Le chami n'existe pas");
+    public Chami read(@PathVariable(value="userId") String id, @RequestHeader("Authorization") String jwt) {
+        try{
+            FirebaseAuth.getInstance().verifyIdToken(jwt);
+            Optional<Chami> chami = chamiService.getChami(id);
+            if(!chami.isPresent()) {
+                throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Le chami n'existe pas");
+            }
+            return chami.get();
         }
-        return chami.get();
+        catch(FirebaseAuthException e) {
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Unauthorized");
+        }
     }
 
     @PostMapping("/{userId}")
-    public Chami create(@PathVariable(value="userId") String id, @RequestBody Chami chami) {
-        if(id.equals(chami.getLogin())){
-            return chamiService.saveChami(chami);
+    public Chami create(@PathVariable(value="userId") String id, @RequestBody Chami chami,@RequestHeader("Authorization") String jwt) {
+        try{
+            FirebaseAuth.getInstance().verifyIdToken(jwt);
+            if(id.equals(chami.getLogin())){
+                return chamiService.saveChami(chami);
+            }
+            else{
+                throw new ResponseStatusException(HttpStatus.PRECONDITION_FAILED, "Le login ne correspond pas");
+            }
         }
-        else{
-            throw new ResponseStatusException(HttpStatus.PRECONDITION_FAILED, "Le login ne correspond pas");
+        catch(FirebaseAuthException e) {
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Unauthorized");
         }
     }
 
     @PutMapping("/{userId}")
-    public Chami update(@PathVariable(value="userId") String id, @RequestBody Chami chami){
-        if(id.equals(chami.getLogin())){
-            Optional<Chami> chamiOpt = chamiService.getChami(id);
-            if(!chamiOpt.isPresent()) {
-                throw new ResponseStatusException(HttpStatus.PRECONDITION_FAILED, "Le chami n'existe pas");
+    public Chami update(@PathVariable(value="userId") String id, @RequestBody Chami chami,@RequestHeader("Authorization") String jwt){
+        try{
+            FirebaseAuth.getInstance().verifyIdToken(jwt);
+            if(id.equals(chami.getLogin())){
+                Optional<Chami> chamiOpt = chamiService.getChami(id);
+                if(!chamiOpt.isPresent()) {
+                    throw new ResponseStatusException(HttpStatus.PRECONDITION_FAILED, "Le chami n'existe pas");
+                }
+                chamiOpt.get();
+                chamiService.deleteChami(id);
+                return chamiService.saveChami(chami);
+                }
+            else{
+                throw new ResponseStatusException(HttpStatus.PRECONDITION_FAILED, "Le login ne correspond pas");
             }
-            chamiOpt.get();
-            chamiService.deleteChami(id);
-            return chamiService.saveChami(chami);
-            }
-        else{
-            throw new ResponseStatusException(HttpStatus.PRECONDITION_FAILED, "Le login ne correspond pas");
+        }
+        catch(FirebaseAuthException e) {
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Unauthorized");
         }
     }
 
     @DeleteMapping("/{userId}")
-    public void delete(@PathVariable(value="userId") String id){
-        Optional<Chami> chamiOpt = chamiService.getChami(id);
-        if(!chamiOpt.isPresent()) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Le chami n'existe pas");
+    public void delete(@PathVariable(value="userId") String id,@RequestHeader("Authorization") String jwt){
+        try{
+            FirebaseAuth.getInstance().verifyIdToken(jwt);
+            Optional<Chami> chamiOpt = chamiService.getChami(id);
+            if(!chamiOpt.isPresent()) {
+                throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Le chami n'existe pas");
+            }
+            chamiService.deleteChami(id);
+        } catch(FirebaseAuthException e) {
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Unauthorized");
         }
-        chamiService.deleteChami(id);
     }
-
     }
 
 
