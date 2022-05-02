@@ -3,6 +3,7 @@ package com.example.repository;
 
 import java.util.List;
 
+import com.example.model.Chami;
 import com.example.model.Defi;
 
 import org.springframework.data.jpa.repository.JpaRepository;
