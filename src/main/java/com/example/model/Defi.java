@@ -1,9 +1,13 @@
 package com.example.model;
 import javax.persistence.*;
+import javax.persistence.metamodel.PluralAttribute.CollectionType;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
+import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.List;
 import java.time.LocalDateTime;
 
 @Entity
@@ -22,22 +26,29 @@ public class Defi// implements Comparator<Etape>{
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JsonBackReference
-    @JoinColumn(name="auteur_login")    //évite de donner tout le défis. Seul le login de l'auteur est necessaire
+    @JoinColumn(name="auteur_login")    //évite de donner tout le chamis. Seul le login de l'auteur est necessaire
     private Chami auteur;
 
     @Column
+    @Enumerated(EnumType.STRING)
     private Categorie categorie;
+
+    @OneToMany(mappedBy="defi", cascade = CascadeType.ALL)
+    @JsonManagedReference
+    private List<Etape> listEtape;
 
     public Defi() {
         super();
-
+        listEtape = new ArrayList<>();
     }
 
-    public Defi(String id, String titre, LocalDateTime dateDeCreation, Chami auteur) {
+    public Defi(String id, String titre, LocalDateTime dateDeCreation, Chami auteur, Categorie cat, List<Etape> listEtape) {
         super(); 
         this.id = id;
         this.titre = titre;
         this.dateDeCreation = dateDeCreation;
+        this.listEtape = listEtape;
+        this.categorie = cat;
         
         this.auteur = auteur;
         //auteur.addDefis(this);    
@@ -63,6 +74,13 @@ public class Defi// implements Comparator<Etape>{
         return this.dateDeCreation;
     }
 
+    public List<Etape> getEtape(){
+        return listEtape;
+    }
+
+    public Categorie getCategorie(){
+        return categorie;
+    }
     /*public void setDateDeCreation(LocalDateTime dateDeCreation) {
         this.dateDeCreation = dateDeCreation;
     }*/

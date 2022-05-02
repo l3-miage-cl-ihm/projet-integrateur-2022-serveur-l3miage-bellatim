@@ -4,16 +4,11 @@ import java.util.Comparator;
 
 import javax.persistence.*;
 
-import org.springframework.context.annotation.Description;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
-import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
-
-@Data       //ces 3 lignes permettent d'avoir les getteurs et setteurs automatiquement
-@Getter
-@Setter
-@Inheritance(strategy=InheritanceType.TABLE_PER_CLASS)
+@Inheritance(strategy=InheritanceType.SINGLE_TABLE)
+@DiscriminatorColumn(name = "type_etape")
+@DiscriminatorValue("mere")
 @Entity
 @Table(name="etape", schema="public")
 public class Etape {
@@ -28,7 +23,9 @@ public class Etape {
     @Column
     private String label;    
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JsonBackReference
+    @JoinColumn(name = "defi_id")
     private Defi defi;
 
     public Etape(int id, int rang, String label, Defi defi){

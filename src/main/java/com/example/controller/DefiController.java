@@ -58,10 +58,14 @@ public class DefiController {
     @PostMapping("/{defiId}")
     public Defi create(@PathVariable(value = "defiId") String id, @RequestBody Defi defi) {
 
+
+
         if(!(defi.getId().equals(id))) {
             throw new ResponseStatusException(HttpStatus.PRECONDITION_FAILED, "L'id du défi passé en paramètre n'est pas le même que celui saisi.");
         }
 
+        System.out.println(defi.getCategorie());
+        System.out.print("_______________________________");
         return defiService.saveDefi(defi);
     }
 

@@ -25,7 +25,7 @@ public class Chami {
     @JsonManagedReference       //evite de boucler à l'infini car un chamis à des défis et un défis à un auteur qui a des défis qui a u auteur...
     private List<Defi> defis;
 
-    @Column(unique = true)  //email ets unique car il provient de firebase
+    @Column(unique = true)  //email est unique car il provient de firebase
     private String email;
 
     public Chami() {
