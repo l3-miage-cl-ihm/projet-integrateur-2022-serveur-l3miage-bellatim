@@ -11,7 +11,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface DefiRepository extends JpaRepository<Defi, String> {
     
-    List<Defi> findByAuteur(String id);
+    List<Defi> findByAuteur(Chami chami);
 }
     
 
