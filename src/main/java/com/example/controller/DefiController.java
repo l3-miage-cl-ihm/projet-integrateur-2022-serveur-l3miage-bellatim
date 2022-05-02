@@ -134,9 +134,14 @@ public class DefiController {
         Defi defi = new Defi("D135", "titre", null, chami, Categorie.CULTUREL, new ArrayList<>());
         defi.addEtape(new Media(127, "monlabeldemedia", defi, "monurl", TypeMEDIA.PHOTO));
         
-        Question question = new Question(13, "question 1", defi, 12);
+        Indice i1 = new Indice(14, "indice 1", defi, 3);
+        Indice i2 = new Indice(15, "indice 2", defi, 5);
+        List<Indice> lesIndices = new ArrayList<>();
+        lesIndices.add(i1);
+        lesIndices.add(i2);
 
-        Indice i1 = new Indice(14, "indice 1", defi, 3, question);
+        Question question = new Question(13, "question 1", defi, 12, lesIndices);
+
         defi.addEtape(question);
         defi.addEtape(i1);
         

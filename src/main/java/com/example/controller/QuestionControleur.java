@@ -4,7 +4,6 @@ import java.util.List;
 import java.util.Optional;
 
 import com.example.model.Question;
-import com.example.service.MediaService;
 import com.example.service.QuestionService;
 
 import org.springframework.beans.factory.annotation.Autowired;

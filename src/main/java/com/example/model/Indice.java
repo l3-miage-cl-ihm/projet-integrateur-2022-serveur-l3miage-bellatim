@@ -15,13 +15,10 @@ public class Indice extends Etape{
     @Column
     private int cout;
 
-    @ManyToOne
-    private Question question;
 
-    public Indice(int rang, String label, Defi def, int cout, Question question){
+    public Indice(int rang, String label, Defi def, int cout){
         super(rang, label, def);
         this.cout = cout;
-        this.question = question;
     }
 
     public Indice(){
@@ -30,10 +27,6 @@ public class Indice extends Etape{
 
     public int getCout(){
         return cout;
-    }
-
-    public Question getQuestion(){
-        return question;
     }
 
     public void setCout(int cout){
