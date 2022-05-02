@@ -35,7 +35,7 @@ public class DefiService {
     }
 
     public List<Defi> getDefisByChami(final String id){
-        return defiRepository.findByChami(id);
+        return defiRepository.findByAuteur(id);
     }
 
 
