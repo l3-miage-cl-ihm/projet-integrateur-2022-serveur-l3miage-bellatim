@@ -42,7 +42,7 @@ public class ChamiController {
 
     @GetMapping("/")
     // public List<Chami> allUsers(@RequestHeader("Authorization") String jwt) {
-    public List<Chami>allUsers(@RequestHeader("Authorization") String jwt) {
+    public List<Chami> allUsers(@RequestHeader("Authorization") String jwt) {
         try {
             FirebaseAuth.getInstance().verifyIdToken(jwt);
             List<Chami> listChami= chamiService.getAllChami();
