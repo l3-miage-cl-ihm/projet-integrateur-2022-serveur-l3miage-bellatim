@@ -23,14 +23,14 @@ public class Etape {
     @Column
     private String label;    
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    // @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @JsonBackReference
     @JoinColumn(name = "defi_id")
     private Defi defi;
 
-    public Etape(int id, int rang, String label, Defi defi){
+    public Etape(int rang, String label, Defi defi){
         super();
-        this.id = id;
         this.rang = rang;
         this.label = label;
         this.defi = defi;
@@ -61,6 +61,10 @@ public class Etape {
         return this.rang;
     }
 
+    public void setDefi(Defi defi){
+        this.defi = defi;
+    }
+
     public static Comparator<Etape> comparatorEtape = new Comparator<Etape>() {
         @Override
         public int compare(Etape e1, Etape e2){
@@ -70,4 +74,10 @@ public class Etape {
                 return e1.getRang() > e2.getRang() ? -1 : 1;
         }
     };
+
+    public String toString(){
+        return "Etape : rang : " + this.rang + " label : " + this.label;
+    }
+
+    
 }

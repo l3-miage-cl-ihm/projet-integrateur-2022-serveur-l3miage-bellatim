@@ -19,7 +19,7 @@ public class Indice extends Etape{
     private Question question;
 
     public Indice(int id, int rang, String label, Defi def, int cout, Question question){
-        super(id, rang, label, def);
+        super( rang, label, def);
         this.cout = cout;
         this.question = question;
     }

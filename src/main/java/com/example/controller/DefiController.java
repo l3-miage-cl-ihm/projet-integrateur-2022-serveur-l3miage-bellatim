@@ -43,6 +43,7 @@ public class DefiController {
         return lesDefis;
     }
 
+
     @GetMapping("/{defiId}")
     public Defi read(@PathVariable(value = "defiId") String id) {
         Optional<Defi> defi = defiService.getDefi(id);

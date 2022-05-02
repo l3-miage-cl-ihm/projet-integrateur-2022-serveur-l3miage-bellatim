@@ -19,7 +19,7 @@ public class Question extends Etape {
     private int point;
 
     public Question(int id, int rang, String label,Defi def, int point) {
-        super(id, rang, label, def);
+        super( rang, label, def);
         this.point = point;
     }
 

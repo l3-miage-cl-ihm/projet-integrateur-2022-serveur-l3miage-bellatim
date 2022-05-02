@@ -33,12 +33,23 @@ public class Defi// implements Comparator<Etape>{
     @Enumerated(EnumType.STRING)
     private Categorie categorie;
 
-    @OneToMany(mappedBy="defi", cascade = CascadeType.ALL)
+    // @OneToMany(mappedBy="defi", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy="defi")
     @JsonManagedReference
     private List<Etape> listEtape;
 
     public Defi() {
         super();
+        listEtape = new ArrayList<>();
+    }
+
+    public Defi(String id, String titre, LocalDateTime dateDeCreation, Chami auteur, Categorie cat){
+        super();
+        this.id = id;
+        this.titre = titre;
+        this.dateDeCreation = dateDeCreation;
+        this.auteur = auteur;
+        this.categorie = cat;
         listEtape = new ArrayList<>();
     }
 
@@ -53,6 +64,8 @@ public class Defi// implements Comparator<Etape>{
         this.auteur = auteur;
         //auteur.addDefis(this);    
     }
+
+    
 
     public String getId() {
         return this.id;
@@ -81,6 +94,15 @@ public class Defi// implements Comparator<Etape>{
     public Categorie getCategorie(){
         return categorie;
     }
+
+    public void addEtape(Etape etape){
+        listEtape.add(etape);
+    }
+
+    public String toString(){
+        return "id : " + this.id + " - " + this.titre + " - ";
+    }
+
     /*public void setDateDeCreation(LocalDateTime dateDeCreation) {
         this.dateDeCreation = dateDeCreation;
     }*/

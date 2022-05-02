@@ -77,6 +77,9 @@ public class Chami {
         return email;
     }
 
+    public String toString(){
+        return login;
+    }
     /*@Override
     public boolean equals(Object obj) {
         // TODO Auto-generated method stub

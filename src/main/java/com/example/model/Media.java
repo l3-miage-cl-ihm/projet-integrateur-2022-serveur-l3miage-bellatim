@@ -18,8 +18,8 @@ public class Media extends Etape{
     @Column
     private TypeMEDIA typeMedia;
 
-    public Media(int id, int rang, String label, Defi def, String url, TypeMEDIA type) {
-        super(id, rang, label, def);
+    public Media(int rang, String label, Defi def, String url, TypeMEDIA type) {
+        super(rang, label, def);
         this.typeMedia = type;
         this.URL = url;
     }
