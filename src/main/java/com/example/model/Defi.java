@@ -8,13 +8,15 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+
 import java.time.LocalDateTime;
 
 @Entity
 @Table(name="defis", schema="public")
-public class Defi// implements Comparator<Etape>{
-{
-
+/*@JsonIdentityInfo(
+        generator = ObjectIdGenerators.PropertyGenerator.class,
+        property="id")*/
+public class Defi {
     @Id
     private String id;
 
