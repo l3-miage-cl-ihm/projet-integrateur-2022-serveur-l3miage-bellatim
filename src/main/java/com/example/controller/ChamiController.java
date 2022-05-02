@@ -42,11 +42,11 @@ public class ChamiController {
 
     @GetMapping("/")
     // public List<Chami> allUsers(@RequestHeader("Authorization") String jwt) {
-    public ResponseEntity<List<Chami>>allUsers(@RequestHeader("Authorization") String jwt) {
+    public List<Chami>allUsers(@RequestHeader("Authorization") String jwt) {
         try {
             FirebaseAuth.getInstance().verifyIdToken(jwt);
             List<Chami> listChami= chamiService.getAllChami();
-            return new ResponseEntity<List<Chami>>(listChami,HttpStatus.FOUND);
+            return new List<Chami>(listChami,HttpStatus.FOUND);
         } catch (FirebaseAuthException e) {
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Unauthorized", e);
         }
