@@ -7,7 +7,6 @@ import java.util.Optional;
 import com.example.model.Categorie;
 import com.example.model.Chami;
 import com.example.model.Defi;
-import com.example.model.Etape;
 import com.example.model.Indice;
 import com.example.model.Media;
 import com.example.model.Question;
@@ -27,7 +26,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
-import org.springframework.web.bind.annotation.RequestParam;
 
 
 @RestController
@@ -74,9 +72,6 @@ public class DefiController {
         if(!(defi.getId().equals(id))) {
             throw new ResponseStatusException(HttpStatus.PRECONDITION_FAILED, "L'id du défi passé en paramètre n'est pas le même que celui saisi.");
         }
-
-        System.out.println(defi.getCategorie());
-        System.out.print("_______________________________");
         return defiService.saveDefi(defi);
     }
 
