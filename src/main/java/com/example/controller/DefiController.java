@@ -53,6 +53,17 @@ public class DefiController {
 //OK
     }
 
+    @GetMapping("/chami/{userId}")
+    public List<Defi> defisByChami(@PathVariable(value="userId") String id, @RequestHeader("Authorization") String jwt){
+        try{
+            FirebaseAuth.getInstance().verifyIdToken(jwt);
+            List<Defi> lesDefis = defiService.getDefisByChami(id);
+            return lesDefis;
+        } catch (FirebaseAuthException e) {
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Unauthorized", e);
+        }
+    }
+
     @Transactional(readOnly = true)
     @GetMapping("/{defiId}")
     public Defi read(@PathVariable(value = "defiId") String id,@RequestHeader("Authorization") String jwt) {

@@ -34,4 +34,9 @@ public class DefiService {
         return defiRepository.save(defi);
     }
 
+    public List<Defi> getDefisByChami(final String id){
+        return defiRepository.findByChami(id);
+    }
+
+
 }
