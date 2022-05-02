@@ -19,6 +19,7 @@ public class FBInitilizer   {
 
             FirebaseOptions options = new FirebaseOptions.Builder()
                     .setCredentials(GoogleCredentials.fromStream(serviceAccount))
+                    //    .setCredentials(GoogleCredentials.getApplicationDefault())
                     .build();
 
             FirebaseApp.initializeApp(options);
