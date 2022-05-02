@@ -96,7 +96,6 @@ public class DefiController {
         } catch (FirebaseAuthException e) {
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Unauthorized", e);
         }
-        return defiService.saveDefi(defi);
     }
 
     @Autowired
