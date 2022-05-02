@@ -40,22 +40,6 @@ public class ChamiController {
     @Autowired                  //obligatoire pour spring
     private ChamiService chamiService;
 
-<<<<<<< HEAD
-    @GetMapping("/")            //suite url pour GET
-    /*cette fonction traite deux type d'URL différent : 
-            1:  en finissant l'url avec un / 
-                        => la fonction retourne tous les utilisateurs
-            2:  en finissant l'url avec /?emai=...
-                        => en remplacant ... par l'email d'un chami
-                        => retourne le chami s'il existe avec cet email
-    */
-    public List<Chami> allUsers(@RequestParam(required = false) String email) { 
-        List<Chami> chamiList = new ArrayList<Chami>() {
-            
-        };
-        if(email == null){
-            chamiList = chamiService.getAllChami();
-=======
     @GetMapping("/")
     // public List<Chami> allUsers(@RequestHeader("Authorization") String jwt) {
     public List<Chami>allUsers(@RequestHeader("Authorization") String jwt) {
@@ -65,7 +49,6 @@ public class ChamiController {
             return listChami;
         } catch (FirebaseAuthException e) {
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Unauthorized", e);
->>>>>>> masterBackup
         }
     }
     // public List<Chami> allUsers(@RequestHeader("Authorization") String jwt) 
@@ -98,15 +81,6 @@ public class ChamiController {
         return chamiList;
     }
 
-<<<<<<< HEAD
-    
-
-    @GetMapping("/{userId}") //finir l'url par /un_login_de_chami retourne le chami à partir son login s'il existe
-    public Chami read(@PathVariable(value="userId") String id){
-        Optional<Chami> chami = chamiService.getChami(id);
-        if(!chami.isPresent()) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Le chami n'existe pas");
-=======
     @GetMapping("/{userId}")
     public Chami read(@PathVariable(value="userId") String id, @RequestHeader("Authorization") String jwt) {
         try{
@@ -119,17 +93,9 @@ public class ChamiController {
         }
         catch(FirebaseAuthException e) {
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Unauthorized");
->>>>>>> masterBackup
         }
     }
 
-<<<<<<< HEAD
-    @PostMapping("/{userId}")   //finir l'url avec /un_login_de_chami créer un chami de login un_login_de_chami
-                                //pour créer le chami, il faut récupérer les données du body
-    public Chami create(@PathVariable(value="userId") String id, @RequestBody Chami chami) {
-        if(id.equals(chami.getLogin())){
-            return chamiService.saveChami(chami);
-=======
     @PostMapping("/{userId}")
     public Chami create(@PathVariable(value="userId") String id, @RequestBody Chami chami,@RequestHeader("Authorization") String jwt) {
         try{
@@ -140,36 +106,12 @@ public class ChamiController {
             else{
                 throw new ResponseStatusException(HttpStatus.PRECONDITION_FAILED, "Le login ne correspond pas");
             }
->>>>>>> masterBackup
         }
         catch(FirebaseAuthException e) {
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Unauthorized");
         }
     }
 
-<<<<<<< HEAD
-    @PutMapping("/{userId}")//modifie le chami
-    public Chami update(@PathVariable(value="userId") String id, @RequestBody Chami chami){
-        if(id.equals(chami.getLogin())){
-            Optional<Chami> chamiOpt = chamiService.getChami(id);
-            if(!chamiOpt.isPresent()) {
-                throw new ResponseStatusException(HttpStatus.PRECONDITION_FAILED, "Le chami n'existe pas");
-            }
-            //Chami chamiToUpdate = chamiOpt.get();
-            chamiService.deleteChami(id);
-            return chamiService.saveChami(chami);
-            }
-        else{
-            throw new ResponseStatusException(HttpStatus.PRECONDITION_FAILED, "Le login ne correspond pas");
-        }
-    }
-
-    @DeleteMapping("/{userId}")//supprime le chami
-    public void delete(@PathVariable(value="userId") String id){
-        Optional<Chami> chamiOpt = chamiService.getChami(id);
-        if(!chamiOpt.isPresent()) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Le chami n'existe pas");
-=======
     @PutMapping("/{userId}")
     public Chami update(@PathVariable(value="userId") String id, @RequestBody Chami chami,@RequestHeader("Authorization") String jwt){
         try{
@@ -203,7 +145,6 @@ public class ChamiController {
             chamiService.deleteChami(id);
         } catch(FirebaseAuthException e) {
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Unauthorized");
->>>>>>> masterBackup
         }
     }
     }
