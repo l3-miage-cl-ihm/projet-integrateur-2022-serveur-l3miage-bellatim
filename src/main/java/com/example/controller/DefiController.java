@@ -1,9 +1,18 @@
 package com.example.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import com.example.model.Categorie;
+import com.example.model.Chami;
 import com.example.model.Defi;
+import com.example.model.Etape;
+import com.example.model.Indice;
+import com.example.model.Media;
+import com.example.model.Question;
+import com.example.model.TypeMEDIA;
+import com.example.service.ChamiService;
 import com.example.service.DefiService;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +27,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
+import org.springframework.web.bind.annotation.RequestParam;
+
 
 @RestController
 @CrossOrigin
@@ -98,5 +109,38 @@ public class DefiController {
     @DeleteMapping("/{defiId}")
     public void delete(@PathVariable(value = "defiId") String id) {
         defiService.deleteDefi(id);
+    }
+   
+
+    ///////////////POUR TEST////////////////
+    @Autowired
+    private ChamiService chamiService;
+
+    @GetMapping("/test")
+    public Defi test() {
+        Chami chami = new Chami("monLog", 12, "mail@gmail.com");
+        chamiService.saveChami(chami);
+
+        Defi defi = new Defi("D135", "titre", null, chami, Categorie.CULTUREL, new ArrayList<>());
+        defi.addEtape(new Media(127, "monlabeldemedia", defi, "monurl", TypeMEDIA.PHOTO));
+        return defiService.saveDefi(defi);
+    }
+
+    @GetMapping("/testIndice")
+    public Defi testIndice() {
+        Chami chami = new Chami("monLog", 12, "mail@gmail.com");
+        chamiService.saveChami(chami);
+
+        Defi defi = new Defi("D135", "titre", null, chami, Categorie.CULTUREL, new ArrayList<>());
+        defi.addEtape(new Media(127, "monlabeldemedia", defi, "monurl", TypeMEDIA.PHOTO));
+        
+        Question question = new Question(13, "question 1", defi, 12);
+
+        Indice i1 = new Indice(14, "indice 1", defi, 3, question);
+        defi.addEtape(question);
+        defi.addEtape(i1);
+        
+        
+        return defiService.saveDefi(defi);
     }
 }

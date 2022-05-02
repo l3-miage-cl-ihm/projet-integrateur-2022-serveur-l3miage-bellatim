@@ -18,8 +18,8 @@ public class Question extends Etape {
     @Column
     private int point;
 
-    public Question(int id, int rang, String label,Defi def, int point) {
-        super(id, rang, label, def);
+    public Question(int rang, String label,Defi def, int point) {
+        super(rang, label, def);
         this.point = point;
     }
 

@@ -119,7 +119,12 @@ public class ChamiController {
         chamiService.deleteChami(id);
     }
 
+    @GetMapping("/test")
+    public Chami test() {
+        Chami chami = new Chami("monLog", 12, "mail@gmail.com");
+        return chamiService.saveChami(chami);
     }
+}
 
 
 

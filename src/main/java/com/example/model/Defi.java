@@ -81,6 +81,14 @@ public class Defi// implements Comparator<Etape>{
     public Categorie getCategorie(){
         return categorie;
     }
+
+    public void setEtape(List<Etape> l){
+        this.listEtape = l;
+    }
+
+    public void addEtape(Etape etape){
+        listEtape.add(etape);
+    }
     /*public void setDateDeCreation(LocalDateTime dateDeCreation) {
         this.dateDeCreation = dateDeCreation;
     }*/
@@ -88,10 +96,6 @@ public class Defi// implements Comparator<Etape>{
     /*public List<Etape> getDescription() {
         //getDescriptionTriee();
         return this.description;
-    }
-
-    public void addEtape(Etape etape){
-        description.add(etape);
     }
 
     public void removeEtape(Etape etape){

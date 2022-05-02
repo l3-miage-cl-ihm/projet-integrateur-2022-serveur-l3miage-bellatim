@@ -28,9 +28,8 @@ public class Etape {
     @JoinColumn(name = "defi_id")
     private Defi defi;
 
-    public Etape(int id, int rang, String label, Defi defi){
+    public Etape(int rang, String label, Defi defi){
         super();
-        this.id = id;
         this.rang = rang;
         this.label = label;
         this.defi = defi;
