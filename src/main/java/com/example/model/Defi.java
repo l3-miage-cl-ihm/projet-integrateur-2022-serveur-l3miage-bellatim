@@ -2,19 +2,14 @@ package com.example.model;
 import javax.persistence.*;
 import javax.persistence.metamodel.PluralAttribute.CollectionType;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
 import java.time.LocalDateTime;
 
 @Entity
 @Table(name="defis", schema="public")
-public class Defi// implements Comparator<Etape>{
-{
-
+/*@JsonIdentityInfo(
+        generator = ObjectIdGenerators.PropertyGenerator.class,
+        property="id")*/
+public class Defi {
     @Id
     private String id;
 
@@ -24,9 +19,10 @@ public class Defi// implements Comparator<Etape>{
     @Column(columnDefinition = "TIMESTAMP")         //type TIMESTAMP dans la base de données
     private LocalDateTime dateDeCreation;
 
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JsonBackReference
-    @JoinColumn(name="auteur_login")    //évite de donner tout le chamis. Seul le login de l'auteur est necessaire
+    @Column
+    private String description;
+
+    @ManyToOne
     private Chami auteur;
 
     @Column

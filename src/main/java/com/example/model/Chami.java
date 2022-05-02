@@ -5,11 +5,14 @@ import java.util.List;
 
 import javax.persistence.*;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 //ajouter lambok
 @Entity
 @Table(name="chamis", schema="public")
+/*@JsonIdentityInfo(
+        generator = ObjectIdGenerators.PropertyGenerator.class,
+        property="login")*/
 public class Chami {
 
     //le login est la clé d'un chami
@@ -19,10 +22,8 @@ public class Chami {
     @Column
     private int age;
 
-    //liste des défis créés
-    @OneToMany(mappedBy="auteur", cascade = CascadeType.ALL)    //mapped avec la colonne auteur dans la class Défi (clé étrangère)
-    //cascade répercute modifications
-    @JsonManagedReference       //evite de boucler à l'infini car un chamis à des défis et un défis à un auteur qui a des défis qui a u auteur...
+    @OneToMany(mappedBy="auteur", cascade = CascadeType.ALL)
+    @JsonIgnore
     private List<Defi> defis;
 
     @Column(unique = true)  //email est unique car il provient de firebase
