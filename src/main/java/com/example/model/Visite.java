@@ -2,11 +2,16 @@ package com.example.model;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -15,23 +20,29 @@ import javax.persistence.Table;
 public class Visite {
     
 
-    @Column
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
 
-    @ManyToMany(cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.ALL)
     private List<Chami> joueurs;
 
-    @OneToMany(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.ALL)
     private Defi defi;
+
+    @Column
+    private int rang; //pour reprendre le jeu en cas de besoin
+
 
     public Visite(){
         super();
         joueurs = new ArrayList<>();
     }
 
-    public Visite(List<Chami> j, Defi d){
+    public Visite(List<Chami> j, Defi d, int rang){
         this.joueurs = j;
         this.defi = d;
+        this.rang = rang;
     }
 
     public void addChami(Chami c){
@@ -52,5 +63,13 @@ public class Visite {
 
     public int getId(){
         return id;
+    }
+
+    public int getRang(){
+        return rang;
+    }
+
+    public void setRang(int r){
+        this.rang = r;
     }
 }
