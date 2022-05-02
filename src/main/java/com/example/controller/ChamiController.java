@@ -46,7 +46,7 @@ public class ChamiController {
         try {
             FirebaseAuth.getInstance().verifyIdToken(jwt);
             List<Chami> listChami= chamiService.getAllChami();
-            return new List<Chami>(listChami,HttpStatus.FOUND);
+            return listChami;
         } catch (FirebaseAuthException e) {
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Unauthorized", e);
         }
