@@ -17,13 +17,8 @@ public class Media extends Etape{
     @Column
     private String URL;
 
-    @Column
-    @Enumerated(EnumType.STRING)
-    private TypeMEDIA typeMedia;
-
-    public Media(int rang, String label, Defi def, String url, TypeMEDIA type) {
+    public Media(int rang, String label, Defi def, String url) {
         super(rang, label, def);
-        this.typeMedia = type;
         this.URL = url;
     }
 

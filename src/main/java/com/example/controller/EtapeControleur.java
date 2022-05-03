@@ -80,32 +80,38 @@ public class EtapeControleur {
         }catch(FirebaseAuthException e){
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED,"Unauthorized");
         }
-
     }
 
     @PutMapping(value="/{idEtape}")
-    public Etape update(@PathVariable(value = "idetape") int id, @RequestBody Etape etape) {
-        
-        if(id != etape.getId()){
-            throw new ResponseStatusException(HttpStatus.PRECONDITION_FAILED, "l'id de l'étape passé en paramètre est différent de celui saisi.");
+    public Etape update(@PathVariable(value = "idetape") int id, @RequestBody Etape etape, @RequestHeader("Authorization") String jwt) {
+        try{
+            FirebaseAuth.getInstance().verifyIdToken(jwt);
+            if(id != etape.getId()){
+                throw new ResponseStatusException(HttpStatus.PRECONDITION_FAILED, "l'id de l'étape passé en paramètre est différent de celui saisi.");
+            }
+            
+            Optional<Etape> etapeTMP = etapeService.getItem(id);
+            if(!etapeTMP.isPresent()){
+                throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Aucun item de description n'existe à cet id");
+            }
+            return etapeService.saveItem(etape);
+        } catch(FirebaseAuthException e){
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED,"Unauthorized");
         }
-
-        Optional<Etape> etapeTMP = etapeService.getItem(id);
-
-        if(!etapeTMP.isPresent()){
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Aucun item de description n'existe à cet id");
-        }
-
-        Etape newEtape = etapeTMP.get();
-        newEtape.setRang(etape.getRang());
-        newEtape.setLabel(etape.getLabel());
-
-        return etapeService.saveItem(newEtape);
     }
+
 
     @DeleteMapping("/{idEtape}")
-    public void delete(@PathVariable(value = "idEtape") int id){
+    public void delete(@PathVariable(value = "idEtape") int id, @RequestHeader("Authorization") String jwt){
+        try{
+            FirebaseAuth.getInstance().verifyIdToken(jwt);
         etapeService.deleteItem(id);
+    } catch(FirebaseAuthException e){
+        throw new ResponseStatusException(HttpStatus.UNAUTHORIZED,"Unauthorized");
     }
-    
+    }
+
 }
+
+    
+

@@ -9,6 +9,8 @@ import java.util.Optional;
 import com.example.service.ChamiService;
 import com.example.service.DefiService;
 import com.example.service.VisiteService;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseAuthException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -22,6 +24,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 
 
 
@@ -34,47 +37,82 @@ public class VisiteController {
     private VisiteService service;
 
     @GetMapping(value="/")
-    public List<Visite> allVisites() {
-        return service.getAllVisite();
+    public List<Visite> allVisites(@RequestHeader("Authorization") String jwt) {
+        try {
+            FirebaseAuth.getInstance().verifyIdToken(jwt);
+            List<Visite> listVisite = service.getAllVisite();
+            return listVisite;
+        } catch (FirebaseAuthException e) {
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Unauthorized", e);
+        }
     }
 
     @GetMapping("/{idVisite}")
-    public Visite read(@PathVariable(value = "idVisite") int id){
-        Optional<Visite> visite = service.getVisite(id);
-
-        if(!visite.isPresent())
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "La visite n'existe pas avec cet id");
-
-        return visite.get();
+    public Visite read(@PathVariable(value = "idVisite") int id, @RequestHeader("Authorization") String jwt){
+        try{
+            FirebaseAuth.getInstance().verifyIdToken(jwt);
+            Optional<Visite> visite = service.getVisite(id);
+            if(!visite.isPresent()) {
+                throw new ResponseStatusException(HttpStatus.NOT_FOUND, "La visite n'existe pas avec cet id");
+            }
+            return visite.get();
+        }
+        catch(FirebaseAuthException e) {
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Unauthorized");
+        }
     }
 
     @PostMapping(value="/{idVisite}")
-    public Visite create(@PathVariable(value = "idVisite") int id, @RequestBody Visite visite) {
-        if(id != visite.getId())
-            throw new ResponseStatusException(HttpStatus.PRECONDITION_FAILED, "L'id entré en paramètre est celui de la visite sont différent");
-        
-        return service.saveVisite(visite);
+    public Visite create(@PathVariable(value = "idVisite") int id, @RequestBody Visite visite, @RequestHeader("Authorization") String jwt) {
+        try{
+            FirebaseAuth.getInstance().verifyIdToken(jwt);
+            if(id == visite.getId()){
+                return service.saveVisite(visite);
+            }
+            else{
+                throw new ResponseStatusException(HttpStatus.PRECONDITION_FAILED, "L'id entré en paramètre est celui de la visite sont différent");
+            }
+        }
+        catch(FirebaseAuthException e) {
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Unauthorized");
+        }
     }
     
     @PutMapping(value = "/{idVisite}")
-    public Visite update(@PathVariable(value = "idVisite") int id, @RequestBody Visite visite){
-        if(id != visite.getId())
-            throw new ResponseStatusException(HttpStatus.PRECONDITION_FAILED, "L'id passé en paramètre n'est pas le même que celui de la visite");
-        
-        Optional<Visite> visiteTMP = service.getVisite(id);
-
-        if(!visiteTMP.isPresent())
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "la visite à modifier n'existe pas");
-
-        Visite visiteF = visiteTMP.get();
-        visiteF.setJoueur(visite.getJoueurs());
-        visiteF.setRang(visite.getRang());
-        return service.saveVisite(visiteF);
+    public Visite update(@PathVariable(value = "idVisite") int id, @RequestBody Visite visite, @RequestHeader("Authorization") String jwt){
+        try{
+            FirebaseAuth.getInstance().verifyIdToken(jwt);
+            if(id == visite.getId()){
+                Optional<Visite> visiteTMP = service.getVisite(id);
+                if(!visiteTMP.isPresent()) {
+                    throw new ResponseStatusException(HttpStatus.NOT_FOUND, "La visite à modifier n'existe pas");
+                }
+                Visite visiteF = visiteTMP.get();
+                visiteF.setJoueur(visite.getJoueurs());
+                visiteF.setRang(visite.getRang());
+                return service.saveVisite(visiteF);
+                }
+            else{
+                throw new ResponseStatusException(HttpStatus.PRECONDITION_FAILED, "L'id passé en paramètre n'est pas le même que celui de la visite");
+            }
+        }
+        catch(FirebaseAuthException e) {
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Unauthorized");
+        }
     }
     
     @DeleteMapping("/{idVisite}")
-    public void delete(@PathVariable(value = "idVisite") int id){
-        service.deleteVisite(id);
+    public void delete(@PathVariable(value = "idVisite") int id, @RequestHeader("Authorization") String jwt) {
+        try{
+            FirebaseAuth.getInstance().verifyIdToken(jwt);
+            Optional<Visite> visiteOpt = service.getVisite(id);
+            if(!visiteOpt.isPresent()) {
+                throw new ResponseStatusException(HttpStatus.NOT_FOUND, "La visite n'existe pas");
+            }
+            service.deleteVisite(id);
+        } catch(FirebaseAuthException e) {
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Unauthorized");
+        }
     }
 
 
@@ -104,7 +142,7 @@ public class VisiteController {
         Etape e3  = new Etape(3, "il faut chercher l'indice 3", d);
         Etape e4  = new Etape(4, "il faut chercher l'indice 4", d);
         Etape e5  = new Etape(5, "il faut chercher l'indice 5", d);
-        Media m1  = new Media(1, "regarde la photo 1", d, "maphoto.com", TypeMEDIA.PHOTO);
+        Media m1  = new Media(1, "regarde la photo 1", d, "maphoto.com");
 
         ArrayList<Etape> etapes = new ArrayList<>();
         etapes.add(e1);
