@@ -48,10 +48,6 @@ public class Defi {
         listEtape = new ArrayList<>();
     }
 
-<<<<<<< HEAD
-=======
-
->>>>>>> 2b71b15cd3b3b18900df8be58a8fc947853a81dd
     public Defi(String id, String titre, LocalDateTime dateDeCreation, Chami auteur, Categorie cat, List<Etape> listEtape) {
         super(); 
         this.id = id;
@@ -104,20 +100,6 @@ public class Defi {
         this.dateDeCreation = dateDeCreation;
     }*/
 
-<<<<<<< HEAD
-    /*public List<Etape> getDescription() {
-        //getDescriptionTriee();
-        return this.description;
-    }
-
-    public void removeEtape(Etape etape){
-        description.remove(etape);
-    }
-    public void setDescription(List<Etape> description) {
-        this.description = description;
-    }
-=======
->>>>>>> 2b71b15cd3b3b18900df8be58a8fc947853a81dd
 
     public void getDescriptionTriee(){
         Collections.sort(description, Etape.comparatorEtape);
@@ -127,14 +109,11 @@ public class Defi {
         return this.auteur;
     }
 
-<<<<<<< HEAD
-=======
     public void setEtape(List<Etape> l){
         this.listEtape = l;
     }
 
 
->>>>>>> 2b71b15cd3b3b18900df8be58a8fc947853a81dd
     public static Comparator<Etape> comparatorEtape = new Comparator<Etape>() {
         @Override
         public int compare(Etape e1, Etape e2){
@@ -146,10 +125,6 @@ public class Defi {
     };
 
 
-<<<<<<< HEAD
-=======
-
->>>>>>> 2b71b15cd3b3b18900df8be58a8fc947853a81dd
     /*public void setAuteur(Chami auteur) {
         this.auteur = auteur;
         auteur.addDefisSimple(this);
