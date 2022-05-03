@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -34,13 +35,13 @@ import org.springframework.web.bind.annotation.RequestHeader;
 public class VisiteController {
     
     @Autowired
-    private VisiteService service;
+    private VisiteService visiteService;
 
-    @GetMapping(value="/")
+    @GetMapping("/")
     public List<Visite> allVisites(@RequestHeader("Authorization") String jwt) {
         try {
             FirebaseAuth.getInstance().verifyIdToken(jwt);
-            List<Visite> listVisite = service.getAllVisite();
+            List<Visite> listVisite = visiteService.getAllVisite();
             return listVisite;
         } catch (FirebaseAuthException e) {
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Unauthorized", e);
@@ -51,7 +52,7 @@ public class VisiteController {
     public Visite read(@PathVariable(value = "idVisite") int id, @RequestHeader("Authorization") String jwt){
         try{
             FirebaseAuth.getInstance().verifyIdToken(jwt);
-            Optional<Visite> visite = service.getVisite(id);
+            Optional<Visite> visite = visiteService.getVisite(id);
             if(!visite.isPresent()) {
                 throw new ResponseStatusException(HttpStatus.NOT_FOUND, "La visite n'existe pas avec cet id");
             }
@@ -62,12 +63,12 @@ public class VisiteController {
         }
     }
 
-    @PostMapping(value="/{idVisite}")
+    @PostMapping("/{idVisite}")
     public Visite create(@PathVariable(value = "idVisite") int id, @RequestBody Visite visite, @RequestHeader("Authorization") String jwt) {
         try{
             FirebaseAuth.getInstance().verifyIdToken(jwt);
             if(id == visite.getId()){
-                return service.saveVisite(visite);
+                return visiteService.saveVisite(visite);
             }
             else{
                 throw new ResponseStatusException(HttpStatus.PRECONDITION_FAILED, "L'id entré en paramètre est celui de la visite sont différent");
@@ -77,20 +78,30 @@ public class VisiteController {
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Unauthorized");
         }
     }
+
+    @GetMapping("/{chamiId}")
+    public List<Visite> allVisitesByChami(@PathVariable("chamiId") String chamiId, @RequestHeader("Authorization") String jwt){
+        try{
+            FirebaseAuth.getInstance().verifyIdToken(jwt);
+            return visiteService.getAllVisitesByChami(chamiId);
+        } catch(FirebaseAuthException e){
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Unauthorized", e);
+        }
+    }
     
-    @PutMapping(value = "/{idVisite}")
+    @PutMapping("/{idVisite}")
     public Visite update(@PathVariable(value = "idVisite") int id, @RequestBody Visite visite, @RequestHeader("Authorization") String jwt){
         try{
             FirebaseAuth.getInstance().verifyIdToken(jwt);
             if(id == visite.getId()){
-                Optional<Visite> visiteTMP = service.getVisite(id);
+                Optional<Visite> visiteTMP = visiteService.getVisite(id);
                 if(!visiteTMP.isPresent()) {
                     throw new ResponseStatusException(HttpStatus.NOT_FOUND, "La visite à modifier n'existe pas");
                 }
                 Visite visiteF = visiteTMP.get();
                 visiteF.setJoueur(visite.getJoueurs());
                 visiteF.setRang(visite.getRang());
-                return service.saveVisite(visiteF);
+                return visiteService.saveVisite(visiteF);
                 }
             else{
                 throw new ResponseStatusException(HttpStatus.PRECONDITION_FAILED, "L'id passé en paramètre n'est pas le même que celui de la visite");
@@ -105,11 +116,11 @@ public class VisiteController {
     public void delete(@PathVariable(value = "idVisite") int id, @RequestHeader("Authorization") String jwt) {
         try{
             FirebaseAuth.getInstance().verifyIdToken(jwt);
-            Optional<Visite> visiteOpt = service.getVisite(id);
+            Optional<Visite> visiteOpt = visiteService.getVisite(id);
             if(!visiteOpt.isPresent()) {
                 throw new ResponseStatusException(HttpStatus.NOT_FOUND, "La visite n'existe pas");
             }
-            service.deleteVisite(id);
+            visiteService.deleteVisite(id);
         } catch(FirebaseAuthException e) {
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Unauthorized");
         }
@@ -155,7 +166,7 @@ public class VisiteController {
         d.setEtape(etapes);
 
         Visite visite = new Visite(joueurs, d, 0);
-        return service.saveVisite(visite);
+        return visiteService.saveVisite(visite);
 
     }
 }

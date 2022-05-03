@@ -28,7 +28,6 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 
 
 
@@ -93,6 +92,16 @@ public class ChamiController {
         }
         catch(FirebaseAuthException e) {
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Unauthorized");
+        }
+    }
+
+    @GetMapping("/{visiteId}")
+    public List<Chami> allChamisByVisite(@PathVariable("visiteId") int visiteId, @RequestHeader("Authorization") String jwt){
+        try{
+            FirebaseAuth.getInstance().verifyIdToken(jwt);
+            return chamiService.getAllChamisByVisite(visiteId);
+        } catch(FirebaseAuthException e){
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Unauthorized", e);
         }
     }
 

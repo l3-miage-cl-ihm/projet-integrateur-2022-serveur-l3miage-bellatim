@@ -5,7 +5,6 @@ import java.util.List;
 
 import javax.persistence.*;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 //ajouter lambok
@@ -31,7 +30,10 @@ public class Chami {
     //@JsonIgnore
     private List<Defi> defis;
 
-    @Column(unique = true)  //email est unique car il provient de firebase
+    @ManyToMany(cascade = CascadeType.ALL)
+    private List<Visite> visites;
+
+    @Column(unique = true)
     private String email;
 
     public Chami() {
