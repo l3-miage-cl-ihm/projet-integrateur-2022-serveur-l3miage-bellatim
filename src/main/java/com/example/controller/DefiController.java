@@ -24,6 +24,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
+
+//changer les retour en response entity
 @RestController
 @CrossOrigin
 @RequestMapping("/api/defis")
@@ -110,11 +112,14 @@ public class DefiController {
            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Le défi n'existe pas.");
         }
 
+        Defi leDefis = leDefiOpt.get();
+        // leDefis.setTitre(defi.getTitre());
+        return defiService.saveDefi(defi);
         //if(leDefiOpt.get().getAuteur().getLogin().equals(defi.getAuteur().getLogin())){
-            Defi leDefis = leDefiOpt.get();
-            leDefis.setDescription(defi.getDescription());
-            leDefis.setTitre(defi.getTitre());
-            return defiService.saveDefi(leDefis);
+            // leDefis.setDescription(defi.getDescription());
+            // leDefis.setTitre(defi.getTitre());
+            // return defiService.saveDefi(leDefis);
+            // leDefis=defi;
             //defiService.deleteDefi(id);
             //return defiService.saveDefi(defi);
         /*}

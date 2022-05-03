@@ -1,7 +1,11 @@
 package com.example.model;
 import javax.persistence.*;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import java.time.LocalDateTime;
+import java.util.Comparator;
+import java.util.List;
 
 @Entity
 @Table(name="defis", schema="public")
@@ -18,26 +22,36 @@ public class Defi {
     @Column(columnDefinition = "TIMESTAMP")
     private LocalDateTime dateDeCreation;
 
-    @Column
-    private String description;
-
     @ManyToOne
     private Chami auteur;
+
+    //garder desccription
+
+    @Column
+    @Enumerated(EnumType.STRING)
+    private Categorie categorie;
+
+    @OneToMany(mappedBy="defi", cascade = CascadeType.ALL)
+    @JsonManagedReference
+    private List<Etape> listEtape;
 
     public Defi() {
         super();
     }
 
-    public Defi(String id, String titre, LocalDateTime dateDeCreation, String description, Chami auteur) {
-        super(); // XXX ajout
+
+    public Defi(String id, String titre, LocalDateTime dateDeCreation, Chami auteur, Categorie cat, List<Etape> listEtape) {
+        super(); 
         this.id = id;
         this.titre = titre;
         this.dateDeCreation = dateDeCreation;
-        this.description = description;
-
+        this.listEtape = listEtape;
+        this.categorie = cat;
+        
         this.auteur = auteur;
         //auteur.addDefis(this);    
     }
+    
 
     public String getId() {
         return this.id;
@@ -63,17 +77,24 @@ public class Defi {
         this.dateDeCreation = dateDeCreation;
     }*/
 
-    public String getDescription() {
-        return this.description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
 
     public Chami getAuteur() {
         return this.auteur;
     }
+
+
+
+    public static Comparator<Etape> comparatorEtape = new Comparator<Etape>() {
+        @Override
+        public int compare(Etape e1, Etape e2){
+            if(e1.getRang() == e2.getRang())
+                return 0;   //il faudra mettre une erreur
+            else
+                return e1.getRang() > e2.getRang() ? -1 : 1;
+        }
+    };
+
+
 
     /*public void setAuteur(Chami auteur) {
         this.auteur = auteur;
