@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -33,8 +34,8 @@ public class VisiteController {
     @Autowired
     private VisiteService service;
 
-    @GetMapping(value="/")
-    public List<Visite> allVisites() {
+    @GetMapping("/")
+    public List<Visite> allVisites(@RequestHeader("Authorization") String jwt) {
         try {
             FirebaseAuth.getInstance().verifyIdToken(jwt);
             List<Visite> listVisite = service.getAllVisite();
@@ -59,7 +60,7 @@ public class VisiteController {
         }
     }
 
-    @PostMapping(value="/{idVisite}")
+    @PostMapping("/{idVisite}")
     public Visite create(@PathVariable(value = "idVisite") int id, @RequestBody Visite visite, @RequestHeader("Authorization") String jwt) {
         try{
             FirebaseAuth.getInstance().verifyIdToken(jwt);
@@ -75,7 +76,7 @@ public class VisiteController {
         }
     }
     
-    @PutMapping(value = "/{idVisite}")
+    @PutMapping("/{idVisite}")
     public Visite update(@PathVariable(value = "idVisite") int id, @RequestBody Visite visite, @RequestHeader("Authorization") String jwt){
         try{
             FirebaseAuth.getInstance().verifyIdToken(jwt);

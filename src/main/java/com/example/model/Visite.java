@@ -24,7 +24,7 @@ public class Visite {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
 
-    @OneToMany(cascade = CascadeType.ALL)
+    @ManyToMany(cascade = CascadeType.ALL)
     private List<Chami> joueurs;
 
     @ManyToOne(cascade = CascadeType.ALL)
