@@ -4,10 +4,6 @@ import java.util.List;
 import java.util.Optional;
 
 import com.example.model.Defi;
-import com.example.model.Indice;
-import com.example.model.Media;
-import com.example.model.Question;
-import com.example.model.TypeMEDIA;
 import com.example.service.ChamiService;
 import com.example.service.DefiService;
 import com.google.firebase.auth.FirebaseAuth;
@@ -48,15 +44,6 @@ public class DefiController {
         } catch (FirebaseAuthException e) {
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Unauthorized", e);
         }
-
-        /* XXX Pourquoi lever une exception ???
-        if (lesDefis.size() == 0) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Il n'y a pas de défis.");
-        }*/
-//il est écrit dans l'énoncé de lever une erreur
-// OK mais alors une erreur au sens HTTP...
-// Vérifiez que vous arrivez à peupler la base avec des requêtes
-//OK
     }
 
     @GetMapping("/chami/{userId}")
@@ -115,29 +102,8 @@ public class DefiController {
         if (!leDefiOpt.isPresent()) {
            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Le défi n'existe pas.");
         }
-
-        Defi leDefis = leDefiOpt.get();
-        // leDefis.setTitre(defi.getTitre());
         return defiService.saveDefi(defi);
-        //if(leDefiOpt.get().getAuteur().getLogin().equals(defi.getAuteur().getLogin())){
-<<<<<<< HEAD
-            Defi leDefis = leDefiOpt.get();
-            leDefis.setEtape(defi.getEtape());
-            leDefis.setTitre(defi.getTitre());
-            return defiService.saveDefi(leDefis);
-=======
-            // leDefis.setDescription(defi.getDescription());
-            // leDefis.setTitre(defi.getTitre());
-            // return defiService.saveDefi(leDefis);
-            // leDefis=defi;
->>>>>>> 2b71b15cd3b3b18900df8be58a8fc947853a81dd
-            //defiService.deleteDefi(id);
-            //return defiService.saveDefi(defi);
-        /*}
-        else{
-            throw new ResponseStatusException(HttpStatus.PRECONDITION_FAILED,"l'auteur est différent ");
-        }*/
-        // return leDefi.get();
+
     }
 
     @DeleteMapping("/{defiId}")

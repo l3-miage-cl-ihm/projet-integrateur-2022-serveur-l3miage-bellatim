@@ -39,9 +39,6 @@ public class DefiService {
     @Autowired ChamiRepository chamiRepository;
 
     public List<Defi> getDefisByChami(final String id){
-<<<<<<< HEAD
-        return defiRepository.findByAuteur(id);
-=======
         Optional<Chami> chami = chamiRepository.findById(id);
         if(chami.isPresent()){
             return defiRepository.findByAuteur(chami.get());
@@ -49,7 +46,6 @@ public class DefiService {
         else{
             return null;
         }
->>>>>>> 2b71b15cd3b3b18900df8be58a8fc947853a81dd
     }
 
 

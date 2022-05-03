@@ -96,21 +96,9 @@ public class Defi {
     public void addEtape(Etape etape){
         listEtape.add(etape);
     }
-    /*public void setDateDeCreation(LocalDateTime dateDeCreation) {
-        this.dateDeCreation = dateDeCreation;
-    }*/
-
-
-    public void getDescriptionTriee(){
-        Collections.sort(description, Etape.comparatorEtape);
-    }*/
 
     public Chami getAuteur() {
         return this.auteur;
-    }
-
-    public void setEtape(List<Etape> l){
-        this.listEtape = l;
     }
 
 
