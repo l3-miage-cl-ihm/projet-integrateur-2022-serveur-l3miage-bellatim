@@ -98,7 +98,7 @@ public class ChamiController {
     }
 
     @PostMapping("/{userId}")
-    public Chami create(@PathVariable(value="userId") String id, @RequestBody Chami chami,@RequestHeader("Authorization") String jwt) {
+    public Chami create(@PathVariable(value="userId") String id, @RequestBody Chami chami, @RequestHeader("Authorization") String jwt) {
         try{
             FirebaseAuth.getInstance().verifyIdToken(jwt);
             if(id.equals(chami.getLogin())){
