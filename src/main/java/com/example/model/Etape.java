@@ -18,7 +18,7 @@ public class Etape {
     private int id;
 
     @Column
-    private int rang;//
+    private int rang;//test
  
     @Column
     private String label;    
