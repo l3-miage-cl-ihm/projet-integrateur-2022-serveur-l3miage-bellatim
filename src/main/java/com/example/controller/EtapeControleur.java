@@ -5,6 +5,8 @@ import java.util.Optional;
 
 import com.example.model.Etape;
 import com.example.service.EtapeService;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseAuthException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -15,6 +17,7 @@ import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,6 +27,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 
 
 
+//ResponseEntity
 @RestController
 @CrossOrigin
 @RequestMapping(value="/api/etape")
@@ -33,24 +37,50 @@ public class EtapeControleur {
     private EtapeService etapeService;
 
     @GetMapping("/")
-    public List<Etape> allItems(){
-        return etapeService.getAllItem();
+    public List<Etape> allItems(@RequestHeader("Authorization") String jwt){
+        try{
+            FirebaseAuth.getInstance().verifyIdToken(jwt);
+            return etapeService.getAllItem();
+        } catch(FirebaseAuthException e){
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Unauthorized", e);
+        }
+    }
+
+    @GetMapping("/defi/{defiId}")
+    public List<Etape> allItemsByDefi(@PathVariable("defiId") String defiId, @RequestHeader("Authorization") String jwt){
+        try{
+            FirebaseAuth.getInstance().verifyIdToken(jwt);
+            return etapeService.getAllItemByDefi(defiId);
+        } catch(FirebaseAuthException e){
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Unauthorized", e);
+        }
     }
 
     @GetMapping("/{itemId}")
-    public Etape read(@PathVariable(value = "itemId") int id){
-        Optional<Etape> item = etapeService.getItem(id);
-
-        if(!item.isPresent()){
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Aucune étape n'existe à cet id");
+    public Etape read(@PathVariable(value = "itemId") int id, @RequestHeader("Authorization") String jwt){
+        
+        try{
+            FirebaseAuth.getInstance().verifyIdToken(jwt);
+            Optional<Etape> etapeOpt = etapeService.getItem(id);
+            if(!etapeOpt.isPresent()){
+                throw new ResponseStatusException(HttpStatus.NOT_FOUND, "No item found");
+            }
+            return etapeOpt.get();
+        }catch(FirebaseAuthException e){
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Unauthorized", e);
         }
 
-        return item.get();
     }
 
     @PostMapping("/create")
-    public Etape create(@RequestBody Etape etape){
-        return etapeService.saveItem(etape);
+    public Etape create(@RequestBody Etape etape, @RequestHeader("Authorization") String jwt){
+        try{
+            FirebaseAuth.getInstance().verifyIdToken(jwt);
+            return etapeService.saveItem(etape);
+        }catch(FirebaseAuthException e){
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED,"Unauthorized");
+        }
+
     }
 
     @PutMapping(value="/{idEtape}")
