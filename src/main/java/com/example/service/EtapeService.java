@@ -1,8 +1,11 @@
 package com.example.service;
 
+import com.example.model.Defi;
 import com.example.model.Etape;
+import com.example.repository.DefiRepository;
 import com.example.repository.EtapeRespository;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -29,5 +32,19 @@ public class EtapeService {
     
     public Etape saveItem(Etape item){
         return itemRepository.save(item);
+    }
+
+    @Autowired
+    private DefiRepository defiRepository;
+
+    public List<Etape> getAllItemByDefi(String defiId){
+        Optional<Defi> defiOpt = defiRepository.findById(defiId);
+        if(defiOpt.isPresent()){
+            return itemRepository.findByDefi(defiOpt.get());
+        }
+        else{
+            // return new ArrayList<Etape>();
+            return null;
+        }
     }
 }

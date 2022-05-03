@@ -25,7 +25,7 @@ public class Defi {
     @ManyToOne
     private Chami auteur;
 
-    //garder desccription
+    private String description;
 
     @Column
     @Enumerated(EnumType.STRING)
