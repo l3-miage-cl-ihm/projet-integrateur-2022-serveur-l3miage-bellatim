@@ -9,7 +9,7 @@ INSERT INTO Chamis (login, age, email) VALUES
 ('python38', 18, null),
 ('yes4moldus', 38, null);
 
-INSERT INTO Defis (id, date_de_creation, description, titre, auteur) VALUES
+INSERT INTO Defis (id, date_de_creation, description, titre, auteur_login) VALUES
 ('D127', '2021-03-15 16:03:00', '- Rendez vous à l''arrêt de bus "Maison du tourisme - Hubert Dubedout".\n- Cherche ce qu''il faut pour faire un méchoui.', 'Le Méchoui', 'carobis'),
 ('D145', '2021-04-01 15:03:00', '- Rendez vous à l''arrêt de bus "Grenoble - hôtel de ville".\n
 ', 'Le vert, je le mange !', 'escribis'),
