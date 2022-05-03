@@ -32,49 +32,77 @@ public class IndiceControleur {
     private IndiceService indiceService;
 
     @GetMapping("/")
-    public List<Indice> allItems(){
-        return indiceService.getAllIndice();
+    public List<Indice> allItems(@RequestHeader("Authorization") String jwt){
+        try {
+            FirebaseAuth.getInstance().verifyIdToken(jwt);
+            List<Indice> listIndice= indiceService.getAllIndice();
+            return listIndice;
+        } catch (FirebaseAuthException e) {
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Unauthorized", e);
+        }
     }
 
     @GetMapping("/{indiceID}")
-    public Indice read(@PathVariable(value = "indiceID") int id){
-        Optional<Indice> indice = indiceService.getIndice(id);
-
-        if(!indice.isPresent()){
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Aucun indice n'existe à cet id");
+    public Indice read(@PathVariable(value = "indiceID") int id, @RequestHeader("Authorization") String jwt){
+        try{
+            FirebaseAuth.getInstance().verifyIdToken(jwt);
+            Optional<Indice> indice = indiceService.getIndice(id);
+            if(!indice.isPresent()) {
+                throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Aucun indice n'existe pour cet id");
+            }
+            return indice.get();
         }
-
-        return indice.get();
+        catch(FirebaseAuthException e) {
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Unauthorized");
+        }
     }
 
     @PostMapping("/create")
-    public Indice create(int id, @RequestBody Indice indice){
-        return indiceService.saveIndice(indice);
+    public Indice create(@RequestBody Indice indice, @RequestHeader("Authorization") String jwt){
+        try{
+            FirebaseAuth.getInstance().verifyIdToken(jwt);
+            return indiceService.saveIndice(indice);
+        }
+        catch(FirebaseAuthException e) {
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Unauthorized");
+        }
     }
 
     @PutMapping(value="/{indiceID}")
     public Indice update(@PathVariable(value = "indiceID") int id, @RequestBody Indice indice) {
-        
-        if(id != indice.getId()){
-            throw new ResponseStatusException(HttpStatus.PRECONDITION_FAILED, "l'id de l'indice passé en paramètre est différent de celui saisi.");
+        try{
+            FirebaseAuth.getInstance().verifyIdToken(jwt);
+            if(id == indice.getId()){
+                Optional<Indice> indiceTMP = indiceService.getIndice(id);
+                if(!indiceTMP.isPresent()) {
+                    throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Aucun indice n'existe à cet id");
+                }
+                Indice newIndice = indiceTMP.get();
+                newIndice.setRang(indice.getRang());
+                newIndice.setLabel(indice.getLabel());
+                indiceService.deleteIndice(id);
+                return indiceService.saveIndice(indice);
+                }
+            else{
+                throw new ResponseStatusException(HttpStatus.PRECONDITION_FAILED, "L'id de l'indice passé en paramètre est différent de celui saisi.");
+            }
         }
-
-        Optional<Indice> indiceTMP = indiceService.getIndice(id);
-
-        if(!indiceTMP.isPresent()){
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Aucun indice n'existe à cet id");
+        catch(FirebaseAuthException e) {
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Unauthorized");
         }
-
-        Indice newIndice = indiceTMP.get();
-        newIndice.setRang(indice.getRang());
-        newIndice.setLabel(indice.getLabel());
-
-        return indiceService.saveIndice(newIndice);
     }
 
     @DeleteMapping("/{indiceID}")
     public void delete(@PathVariable(value = "indiceID") int id){
-        indiceService.deleteIndice(id);
+        try{
+            FirebaseAuth.getInstance().verifyIdToken(jwt);
+            Optional<Indice> indiceOpt = indiceService.getIndice(id);
+            if(!indiceOpt.isPresent()) {
+                throw new ResponseStatusException(HttpStatus.NOT_FOUND, "L'indice n'existe pas");
+            }
+            indiceService.deleteIndice(id);
+        } catch(FirebaseAuthException e) {
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Unauthorized");
+        }
     }
-    
 }
