@@ -82,6 +82,9 @@ public class Defi {
         return this.auteur;
     }
 
+    public void setEtape(List<Etape> l){
+        this.listEtape = l;
+    }
 
 
     public static Comparator<Etape> comparatorEtape = new Comparator<Etape>() {
