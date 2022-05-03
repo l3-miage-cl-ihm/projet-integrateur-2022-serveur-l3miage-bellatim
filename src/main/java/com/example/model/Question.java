@@ -7,6 +7,8 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -23,10 +25,14 @@ public class Question extends Etape {
     @OneToMany(cascade = CascadeType.ALL)
     private List<Indice> listeIndice;
 
-    public Question(int rang, String label,Defi def, int point, List<Indice> l) {
+    @Column
+    private String reponseAttendu;
+
+    public Question(int rang, String label,Defi def, int point, List<Indice> l, String repAttendu) {
         super(rang, label, def);
         this.point = point;
         this.listeIndice = l;
+        this.reponseAttendu = repAttendu;
     }
 
     public Question(){
@@ -39,6 +45,14 @@ public class Question extends Etape {
 
     public void removeIndice(Indice i){
         listeIndice.remove(i);
+    }
+
+    public void setReponseAttendu(String rep){
+        this.reponseAttendu = rep;
+    }
+
+    public String getReponseAttendu(){
+        return reponseAttendu;
     }
 
 }

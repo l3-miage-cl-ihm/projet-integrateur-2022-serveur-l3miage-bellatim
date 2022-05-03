@@ -153,7 +153,7 @@ public class VisiteController {
         Etape e3  = new Etape(3, "il faut chercher l'indice 3", d);
         Etape e4  = new Etape(4, "il faut chercher l'indice 4", d);
         Etape e5  = new Etape(5, "il faut chercher l'indice 5", d);
-        Media m1  = new Media(1, "regarde la photo 1", d, "maphoto.com", TypeMEDIA.PHOTO);
+        Media m1  = new Media(1, "regarde la photo 1", d, "maphoto.com");
 
         ArrayList<Etape> etapes = new ArrayList<>();
         etapes.add(e1);
