@@ -50,7 +50,6 @@ public class ChamiController {
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Unauthorized", e);
         }
     }
-    // public Li
     // public List<Chami> allUsers(@RequestHeader("Authorization") String jwt) 
         
         /*if(chamiList.size()==0) {
