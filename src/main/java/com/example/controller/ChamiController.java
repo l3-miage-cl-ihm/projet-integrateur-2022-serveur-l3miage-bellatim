@@ -96,6 +96,16 @@ public class ChamiController {
         }
     }
 
+    @GetMapping("/{visiteId}")
+    public List<Chami> allChamisByVisite(@PathVariable("visiteId") int visiteId, @RequestHeader("Authorization") String jwt){
+        try{
+            FirebaseAuth.getInstance().verifyIdToken(jwt);
+            return chamiService.getAllChamisByVisite(visiteId);
+        } catch(FirebaseAuthException e){
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Unauthorized", e);
+        }
+    }
+
     @PostMapping("/{userId}")
     public Chami create(@PathVariable(value="userId") String id, @RequestBody Chami chami, @RequestHeader("Authorization") String jwt) {
         try{

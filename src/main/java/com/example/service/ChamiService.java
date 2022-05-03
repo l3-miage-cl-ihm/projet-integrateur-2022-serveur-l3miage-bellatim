@@ -4,7 +4,9 @@ package com.example.service;
 import java.util.Optional;
 
 import com.example.model.Chami;
+import com.example.model.Visite;
 import com.example.repository.ChamiRepository;
+import com.example.repository.VisiteRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -39,6 +41,17 @@ public class ChamiService {
         return chamiRepository.save(chami);
     }
 
-   
+    @Autowired
+    private VisiteRepository visiteRepository;
+
+    public List<Chami> getAllChamisByVisite(int visiteId){
+        Optional<Visite> visiteOpt = visiteRepository.findById(visiteId);
+        if(visiteOpt.isPresent()){
+            return chamiRepository.findByVisitesId(visiteOpt.get().getId());
+        }
+        else{
+            return null;
+        }
+    }
     
 }

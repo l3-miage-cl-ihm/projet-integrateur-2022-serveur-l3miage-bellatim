@@ -25,8 +25,8 @@ public class Chami {
     @JsonIgnore
     private List<Defi> defis;
 
-    // @ManyToMany(cascade = CascadeType.ALL)
-    // private List<Visite> visites;
+    @ManyToMany(cascade = CascadeType.ALL)
+    private List<Visite> visites;
 
     @Column(unique = true)
     private String email;
