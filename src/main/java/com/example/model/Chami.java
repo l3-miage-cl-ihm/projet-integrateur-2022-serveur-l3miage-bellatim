@@ -25,7 +25,7 @@ public class Chami {
     @JsonIgnore
     private List<Defi> defis;
 
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany(mappedBy="joueurs",cascade = CascadeType.ALL)
     private List<Visite> visites;
 
     @Column(unique = true)

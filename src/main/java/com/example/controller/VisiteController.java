@@ -132,8 +132,7 @@ public class VisiteController {
 
 
     @GetMapping("/insert")
-    public Visite testVisite(){
-
+    public List<Visite> testVisite() {
 
         Chami c1 = new Chami("toto", 12, "toto@gmail.com");
         Chami c2 = new Chami("joe", 12, "joe@gmail.com");
@@ -165,8 +164,25 @@ public class VisiteController {
 
         d.setEtape(etapes);
 
-        Visite visite = new Visite(joueurs, d, 0);
-        return visiteService.saveVisite(visite);
+        Visite v1 = new Visite(joueurs, d, 0);
+        visiteService.saveVisite(v1);
+
+        List<Chami> joueurs2 = new ArrayList<>();
+        joueurs2.add(c2);
+        Defi d2 = new Defi("D021", "Lis un livre", null, c1, Categorie.CULTUREL, null);
+        Etape e6  = new Etape(1, "il faut chercher l'indice 1", d2);
+        ArrayList<Etape> etapes2 = new ArrayList<>();
+        etapes2.add(e6);
+        d2.setEtape(etapes2);
+        Visite v2 = new Visite(joueurs2, d2, 0);
+        List<Visite> lesVisites = new ArrayList<>();
+        lesVisites.add(v1);
+        lesVisites.add(v2);
+        visiteService.saveVisite(v2);
+
+        
+
+        return lesVisites;
 
     }
 }
