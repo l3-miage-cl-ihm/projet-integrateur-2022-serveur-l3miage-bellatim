@@ -9,7 +9,11 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import java.time.LocalDateTime;
+import java.util.Comparator;
+import java.util.List;
 
 @Entity
 @Table(name="defis", schema="public")
@@ -26,10 +30,10 @@ public class Defi {
     @Column(columnDefinition = "TIMESTAMP")         //type TIMESTAMP dans la base de données
     private LocalDateTime dateDeCreation;
 
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JsonBackReference
-    @JoinColumn(name="auteur_login")    //évite de donner tout le chamis. Seul le login de l'auteur est necessaire
+    @ManyToOne
     private Chami auteur;
+
+    //garder desccription
 
     @Column
     @Enumerated(EnumType.STRING)
@@ -44,6 +48,10 @@ public class Defi {
         listEtape = new ArrayList<>();
     }
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> 2b71b15cd3b3b18900df8be58a8fc947853a81dd
     public Defi(String id, String titre, LocalDateTime dateDeCreation, Chami auteur, Categorie cat, List<Etape> listEtape) {
         super(); 
         this.id = id;
@@ -55,6 +63,7 @@ public class Defi {
         this.auteur = auteur;
         //auteur.addDefis(this);    
     }
+    
 
     public String getId() {
         return this.id;
@@ -95,6 +104,7 @@ public class Defi {
         this.dateDeCreation = dateDeCreation;
     }*/
 
+<<<<<<< HEAD
     /*public List<Etape> getDescription() {
         //getDescriptionTriee();
         return this.description;
@@ -106,6 +116,8 @@ public class Defi {
     public void setDescription(List<Etape> description) {
         this.description = description;
     }
+=======
+>>>>>>> 2b71b15cd3b3b18900df8be58a8fc947853a81dd
 
     public void getDescriptionTriee(){
         Collections.sort(description, Etape.comparatorEtape);
@@ -115,6 +127,14 @@ public class Defi {
         return this.auteur;
     }
 
+<<<<<<< HEAD
+=======
+    public void setEtape(List<Etape> l){
+        this.listEtape = l;
+    }
+
+
+>>>>>>> 2b71b15cd3b3b18900df8be58a8fc947853a81dd
     public static Comparator<Etape> comparatorEtape = new Comparator<Etape>() {
         @Override
         public int compare(Etape e1, Etape e2){
@@ -126,6 +146,10 @@ public class Defi {
     };
 
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> 2b71b15cd3b3b18900df8be58a8fc947853a81dd
     /*public void setAuteur(Chami auteur) {
         this.auteur = auteur;
         auteur.addDefisSimple(this);

@@ -42,9 +42,13 @@ public class ChamiController {
 
     @GetMapping("/")
     // public List<Chami> allUsers(@RequestHeader("Authorization") String jwt) {
+<<<<<<< HEAD
 
     public List<Chami> allUsers(@RequestHeader("Authorization") String jwt) {
 
+=======
+    public List<Chami> allUsers(@RequestHeader("Authorization") String jwt) {
+>>>>>>> 2b71b15cd3b3b18900df8be58a8fc947853a81dd
         try {
             FirebaseAuth.getInstance().verifyIdToken(jwt);
             List<Chami> listChami= chamiService.getAllChami();
@@ -53,7 +57,11 @@ public class ChamiController {
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Unauthorized", e);
         }
     }
+<<<<<<< HEAD
 
+=======
+    // public Li
+>>>>>>> 2b71b15cd3b3b18900df8be58a8fc947853a81dd
     // public List<Chami> allUsers(@RequestHeader("Authorization") String jwt) 
         
         /*if(chamiList.size()==0) {
@@ -100,7 +108,7 @@ public class ChamiController {
     }
 
     @PostMapping("/{userId}")
-    public Chami create(@PathVariable(value="userId") String id, @RequestBody Chami chami,@RequestHeader("Authorization") String jwt) {
+    public Chami create(@PathVariable(value="userId") String id, @RequestBody Chami chami, @RequestHeader("Authorization") String jwt) {
         try{
             FirebaseAuth.getInstance().verifyIdToken(jwt);
             if(id.equals(chami.getLogin())){
