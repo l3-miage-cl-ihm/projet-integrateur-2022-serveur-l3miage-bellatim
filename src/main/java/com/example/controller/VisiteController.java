@@ -9,6 +9,8 @@ import java.util.Optional;
 import com.example.service.ChamiService;
 import com.example.service.DefiService;
 import com.example.service.VisiteService;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseAuthException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -22,6 +24,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 
 
 
@@ -34,7 +37,7 @@ public class VisiteController {
     private VisiteService service;
 
     @GetMapping(value="/")
-    public List<Visite> allVisites() {
+    public List<Visite> allVisites(@RequestHeader("Authorization") String jwt) {
         try {
             FirebaseAuth.getInstance().verifyIdToken(jwt);
             List<Visite> listVisite = service.getAllVisite();
@@ -99,7 +102,7 @@ public class VisiteController {
     }
     
     @DeleteMapping("/{idVisite}")
-    public void delete(@PathVariable(value = "idVisite") int id) {
+    public void delete(@PathVariable(value = "idVisite") int id, @RequestHeader("Authorization") String jwt) {
         try{
             FirebaseAuth.getInstance().verifyIdToken(jwt);
             Optional<Visite> visiteOpt = service.getVisite(id);
