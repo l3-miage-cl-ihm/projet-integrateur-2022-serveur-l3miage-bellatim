@@ -108,7 +108,7 @@ public class ChamiController {
         }
     }
 
-    @PostMapping("/{userId}")
+    @PostMapping(value="/{userId}", consumes="{application/json}")
     public Chami create(@PathVariable(value = "userId") String id, @RequestBody Chami chami,
             @RequestHeader("Authorization") String jwt) {
         try {
