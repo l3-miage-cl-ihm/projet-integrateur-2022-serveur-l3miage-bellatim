@@ -1,19 +1,13 @@
 package com.example.model;
 import javax.persistence.*;
-import javax.persistence.metamodel.PluralAttribute.CollectionType;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-
 import java.time.LocalDateTime;
-import java.util.Comparator;
-import java.util.List;
 
 @Entity
 @Table(name="defis", schema="public")
@@ -48,11 +42,12 @@ public class Defi {
         listEtape = new ArrayList<>();
     }
 
-    public Defi(String id, String titre, LocalDateTime dateDeCreation, Chami auteur, Categorie cat, List<Etape> listEtape) {
+    public Defi(String id, String titre, LocalDateTime dateDeCreation, String description, Chami auteur, Categorie cat, List<Etape> listEtape) {
         super(); 
         this.id = id;
         this.titre = titre;
         this.dateDeCreation = dateDeCreation;
+        this.description = description;
         this.listEtape = listEtape;
         this.categorie = cat;
         
@@ -75,6 +70,14 @@ public class Defi {
 
     public void setTitre(String titre) {
         this.titre = titre;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+    
+    public String getDescription() {
+        return this.description;
     }
     
     public LocalDateTime getDateDeCreation() {

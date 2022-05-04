@@ -6,8 +6,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import com.example.service.ChamiService;
-import com.example.service.DefiService;
 import com.example.service.VisiteService;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthException;
@@ -25,7 +23,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestHeader;
 
 
 
@@ -145,7 +142,7 @@ public class VisiteController {
         joueurs.add(c3);
         joueurs.add(c4);
 
-        Defi d = new Defi("D199", "fais du sport", null, c1, Categorie.SPORTIF, null);
+        Defi d = new Defi("D199", "fais du sport", null, "ceci est une description", c1, Categorie.SPORTIF, null);
 
         Etape e1  = new Etape(1, "il faut chercher l'indice 1", d);
         Etape e2  = new Etape(2, "il faut chercher l'indice 2", d);
@@ -169,7 +166,7 @@ public class VisiteController {
 
         List<Chami> joueurs2 = new ArrayList<>();
         joueurs2.add(c2);
-        Defi d2 = new Defi("D021", "Lis un livre", null, c1, Categorie.CULTUREL, null);
+        Defi d2 = new Defi("D021", "Lis un livre", null, "encore une description", c1, Categorie.CULTUREL, null);
         Etape e6  = new Etape(1, "il faut chercher l'indice 1", d2);
         ArrayList<Etape> etapes2 = new ArrayList<>();
         etapes2.add(e6);
