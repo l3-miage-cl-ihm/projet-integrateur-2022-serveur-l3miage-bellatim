@@ -11,13 +11,8 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-
-
-
-
 @Service
 public class ChamiService {
-    
 
     @Autowired
     private ChamiRepository chamiRepository;
@@ -26,7 +21,7 @@ public class ChamiService {
         return chamiRepository.findById(login);
     }
 
-    public Optional<Chami> getByEmail(String email){
+    public Optional<Chami> getByEmail(String email) {
         return chamiRepository.findByEmail(email);
     }
 
@@ -38,28 +33,27 @@ public class ChamiService {
         chamiRepository.deleteById(login);
     }
 
-    public Chami saveChami(Chami chami){
+    public Chami saveChami(Chami chami) {
         return chamiRepository.save(chami);
     }
 
     @Autowired
     private VisiteRepository visiteRepository;
 
-    public List<Chami> getAllChamisByVisite(int visiteId){
+    public List<Chami> getAllChamisByVisite(int visiteId) {
         Optional<Visite> visiteOpt = visiteRepository.findById(visiteId);
-        if(visiteOpt.isPresent()){
+        if (visiteOpt.isPresent()) {
             return chamiRepository.findByVisitesId(visiteOpt.get().getId());
-        }
-        else{
+        } else {
             return null;
         }
     }
 
-    public boolean isAllowed(String login, FirebaseToken token){
+    public boolean isAllowed(String login, FirebaseToken token) {
         Optional<Chami> chamiOpt = chamiRepository.findById(login);
-        if(chamiOpt.isPresent()){
+        if (chamiOpt.isPresent()) {
             Chami chami = chamiOpt.get();
-            if(chami.getEmail().equals(token.getEmail())){
+            if (chami.getEmail().equals(token.getEmail())) {
                 return true;
             }
         }
@@ -69,14 +63,14 @@ public class ChamiService {
     // public boolean uidVerification()
 
     // public boolean isAllowed(String id, FirebaseToken){
-    //     Optional<Chami> chamiOpt = chamiRepository.findById(id);
-    //     if(chamiOpt.isPresent()){
-    //         Chami chami = chamiOpt.get();
-    //         if(chami.getEmail().equals(token.getEmail())){
-    //             return true;
-    //         }
-    //     }
-    //     return false;
+    // Optional<Chami> chamiOpt = chamiRepository.findById(id);
+    // if(chamiOpt.isPresent()){
+    // Chami chami = chamiOpt.get();
+    // if(chami.getEmail().equals(token.getEmail())){
+    // return true;
     // }
-    
+    // }
+    // return false;
+    // }
+
 }

@@ -25,7 +25,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
-
 //changer les retour en response entity
 @RestController
 @CrossOrigin
@@ -41,7 +40,7 @@ public class DefiController {
     // 404 si pas de slash
     @GetMapping("/")
     public List<Defi> allDefis(@RequestHeader("Authorization") String jwt) {
-        try{
+        try {
             FirebaseAuth.getInstance().verifyIdToken(jwt);
             List<Defi> lesDefis = defiService.getAllDefis();
             return lesDefis;
@@ -50,17 +49,16 @@ public class DefiController {
         }
     }
 
-    
-    //autoriser pour tout le monde ?
+    // autoriser pour tout le monde ?
     @GetMapping("/chami/{userId}")
-    public List<Defi> defisByChami(@PathVariable(value="userId") String id, @RequestHeader("Authorization") String jwt){
-        try{
+    public List<Defi> defisByChami(@PathVariable(value = "userId") String id,
+            @RequestHeader("Authorization") String jwt) {
+        try {
             FirebaseToken token = FirebaseAuth.getInstance().verifyIdToken(jwt);
-            if(chamiService.isAllowed(id, token)){
+            if (chamiService.isAllowed(id, token)) {
                 List<Defi> lesDefis = defiService.getDefisByChami(id);
                 return lesDefis;
-            }
-            else{
+            } else {
                 throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Unauthorized");
             }
         } catch (FirebaseAuthException e) {
@@ -70,8 +68,8 @@ public class DefiController {
 
     @Transactional(readOnly = true)
     @GetMapping("/{defiId}")
-    public Defi read(@PathVariable(value = "defiId") String id,@RequestHeader("Authorization") String jwt) {
-        try{
+    public Defi read(@PathVariable(value = "defiId") String id, @RequestHeader("Authorization") String jwt) {
+        try {
             FirebaseAuth.getInstance().verifyIdToken(jwt);
             Optional<Defi> defi = defiService.getDefi(id);
             if (defi.isPresent()) {
@@ -86,11 +84,12 @@ public class DefiController {
 
     // XXX => à tester
     @PostMapping("/{defiId}")
-    public Defi create(@PathVariable(value = "defiId") String id, @RequestBody Defi defi,@RequestHeader("Authorization") String jwt) {
-        if(!(defi.getId().equals(id))) {
+    public Defi create(@PathVariable(value = "defiId") String id, @RequestBody Defi defi,
+            @RequestHeader("Authorization") String jwt) {
+        if (!(defi.getId().equals(id))) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Wrong id");
         }
-        try{
+        try {
             FirebaseAuth.getInstance().verifyIdToken(jwt);
             return defiService.saveDefi(defi);
         } catch (FirebaseAuthException e) {
@@ -98,38 +97,36 @@ public class DefiController {
         }
     }
 
-    
-
     @PutMapping("/{defiId}")
     public Defi update(@PathVariable(value = "defiId") String id, @RequestBody Defi defi) {
-        
-        if(!(defi.getId().equals(id))) {
-            throw new ResponseStatusException(HttpStatus.PRECONDITION_FAILED, "L'id du défi passé en paramètre n'est pas le même que celui saisi.");
+
+        if (!(defi.getId().equals(id))) {
+            throw new ResponseStatusException(HttpStatus.PRECONDITION_FAILED,
+                    "L'id du défi passé en paramètre n'est pas le même que celui saisi.");
         }
-        
+
         Optional<Defi> leDefiOpt = defiService.getDefi(id);
-        
+
         if (!leDefiOpt.isPresent()) {
-           throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Le défi n'existe pas.");
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Le défi n'existe pas.");
         }
         return defiService.saveDefi(defi);
 
     }
 
     @DeleteMapping("/{defiId}")
-    public void delete(@PathVariable(value = "defiId") String id,@RequestHeader("Authorization") String jwt) {
-        try{
+    public void delete(@PathVariable(value = "defiId") String id, @RequestHeader("Authorization") String jwt) {
+        try {
             FirebaseAuth.getInstance().verifyIdToken(jwt);
             Optional<Defi> defiopt = defiService.getDefi(id);
-            if(!defiopt.isPresent()){
+            if (!defiopt.isPresent()) {
                 throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Le défi n'existe pas.");
-            }
-            else{
+            } else {
                 defiService.deleteDefi(id);
             }
         } catch (FirebaseAuthException e) {
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Unauthorized", e);
         }
-        
+
     }
 }

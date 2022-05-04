@@ -7,6 +7,6 @@ import com.example.model.Etape;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface EtapeRespository extends JpaRepository<Etape, Integer>{
+public interface EtapeRespository extends JpaRepository<Etape, Integer> {
     List<Etape> findByDefi(Defi defis);
 }

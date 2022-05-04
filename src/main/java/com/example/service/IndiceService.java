@@ -15,19 +15,19 @@ public class IndiceService {
     @Autowired
     private IndiceRepository indiceRepository;
 
-    public Optional<Indice> getIndice(final int id){
+    public Optional<Indice> getIndice(final int id) {
         return indiceRepository.findById(id);
     }
 
-    public List<Indice> getAllIndice(){
+    public List<Indice> getAllIndice() {
         return indiceRepository.findAll();
     }
 
-    public void deleteIndice(final int id){
+    public void deleteIndice(final int id) {
         indiceRepository.deleteById(id);
     }
 
-    public Indice saveIndice(Indice media){
+    public Indice saveIndice(Indice media) {
         return indiceRepository.save(media);
     }
 }

@@ -22,27 +22,25 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @SpringBootApplication
 public class RestServer {
     public static void main(String[] args) {
-        
-         
-        
 
         // Lancement de Spring Boot
         SpringApplication.run(RestServer.class, args);
 
         // System.out.println("go Firebase");
-        //  try {
-        //     FileInputStream serviceAccount =
-        //     new FileInputStream("integrateur2022g5-firebase-adminsdk-5ncvw-49a213bd7a.json");
-        //  FirebaseOptions options = FirebaseOptions.builder()
-        //  .setCredentials(GoogleCredentials.fromStream(serviceAccount))
-        //  // .setDatabaseUrl("https://<DATABASE_NAME>.firebaseio.com/")
-        //  .build();
-         
-        //  FirebaseApp.initializeApp(options);
-        //  System.out.println("banco pour Firebase");
-        //  } catch (IOException e) {
-        //  System.err.println( "error: " + e.getLocalizedMessage() );
-        //  }
+        // try {
+        // FileInputStream serviceAccount =
+        // new
+        // FileInputStream("integrateur2022g5-firebase-adminsdk-5ncvw-49a213bd7a.json");
+        // FirebaseOptions options = FirebaseOptions.builder()
+        // .setCredentials(GoogleCredentials.fromStream(serviceAccount))
+        // // .setDatabaseUrl("https://<DATABASE_NAME>.firebaseio.com/")
+        // .build();
+
+        // FirebaseApp.initializeApp(options);
+        // System.out.println("banco pour Firebase");
+        // } catch (IOException e) {
+        // System.err.println( "error: " + e.getLocalizedMessage() );
+        // }
     }
 
 }

@@ -12,23 +12,23 @@ import java.util.List;
 
 @Service
 public class MediaService {
-    
+
     @Autowired
     private MediaRepository mediaRepository;
 
-    public Optional<Media> getMedia(final int id){
+    public Optional<Media> getMedia(final int id) {
         return mediaRepository.findById(id);
     }
 
-    public List<Media> getAllMedia(){
+    public List<Media> getAllMedia() {
         return mediaRepository.findAll();
     }
 
-    public void deleteMedia(final int id){
+    public void deleteMedia(final int id) {
         mediaRepository.deleteById(id);
     }
 
-    public Media saveMedia(Media media){
+    public Media saveMedia(Media media) {
         return mediaRepository.save(media);
     }
 }

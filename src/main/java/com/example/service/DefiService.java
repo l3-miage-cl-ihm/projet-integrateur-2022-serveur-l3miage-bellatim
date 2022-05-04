@@ -1,6 +1,5 @@
 package com.example.service;
 
-
 import java.util.Optional;
 
 import com.example.model.Chami;
@@ -13,10 +12,9 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-
 @Service
 public class DefiService {
-    
+
     @Autowired
     private DefiRepository defiRepository;
 
@@ -32,21 +30,20 @@ public class DefiService {
         defiRepository.deleteById(id);
     }
 
-    public Defi saveDefi(Defi defi){
+    public Defi saveDefi(Defi defi) {
         return defiRepository.save(defi);
     }
 
-    @Autowired ChamiRepository chamiRepository;
+    @Autowired
+    ChamiRepository chamiRepository;
 
-    public List<Defi> getDefisByChami(final String id){
+    public List<Defi> getDefisByChami(final String id) {
         Optional<Chami> chami = chamiRepository.findById(id);
-        if(chami.isPresent()){
+        if (chami.isPresent()) {
             return defiRepository.findByAuteur(chami.get());
-        }
-        else{
+        } else {
             return null;
         }
     }
-
 
 }

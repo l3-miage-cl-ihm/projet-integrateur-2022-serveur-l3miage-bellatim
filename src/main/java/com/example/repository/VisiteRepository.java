@@ -11,5 +11,5 @@ import org.springframework.stereotype.Repository;
 public interface VisiteRepository extends JpaRepository<Visite, Integer> {
 
     
-    List<Visite> findByJoueursLogin(String joueurId);
+    List<Visite> findByJoueursId(String joueurId);
 }

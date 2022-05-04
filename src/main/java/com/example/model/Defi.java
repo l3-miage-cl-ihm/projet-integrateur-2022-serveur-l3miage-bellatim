@@ -1,4 +1,5 @@
 package com.example.model;
+
 import javax.persistence.*;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
@@ -10,10 +11,12 @@ import java.util.List;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name="defis", schema="public")
-/*@JsonIdentityInfo(
-        generator = ObjectIdGenerators.PropertyGenerator.class,
-        property="id")*/
+@Table(name = "defis", schema = "public")
+/*
+ * @JsonIdentityInfo(
+ * generator = ObjectIdGenerators.PropertyGenerator.class,
+ * property="id")
+ */
 public class Defi {
     @Id
     private String id;
@@ -21,7 +24,7 @@ public class Defi {
     @Column
     private String titre;
 
-    @Column(columnDefinition = "TIMESTAMP")         //type TIMESTAMP dans la base de données
+    @Column(columnDefinition = "TIMESTAMP") // type TIMESTAMP dans la base de données
     private LocalDateTime dateDeCreation;
 
     @ManyToOne
@@ -33,7 +36,7 @@ public class Defi {
     @Enumerated(EnumType.STRING)
     private Categorie categorie;
 
-    @OneToMany(mappedBy="defi", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "defi", cascade = CascadeType.ALL)
     @JsonManagedReference
     private List<Etape> listEtape;
 
@@ -42,27 +45,29 @@ public class Defi {
         listEtape = new ArrayList<>();
     }
 
-    public Defi(String id, String titre, LocalDateTime dateDeCreation, String description, Chami auteur, Categorie cat, List<Etape> listEtape) {
-        super(); 
+    public Defi(String id, String titre, LocalDateTime dateDeCreation, String description, Chami auteur, Categorie cat,
+            List<Etape> listEtape) {
+        super();
         this.id = id;
         this.titre = titre;
         this.dateDeCreation = dateDeCreation;
         this.description = description;
         this.listEtape = listEtape;
         this.categorie = cat;
-        
+
         this.auteur = auteur;
-        //auteur.addDefis(this);    
+        // auteur.addDefis(this);
     }
-    
 
     public String getId() {
         return this.id;
     }
 
-    /*public void setId(String id) {
-        this.id = id;
-    }*/
+    /*
+     * public void setId(String id) {
+     * this.id = id;
+     * }
+     */
 
     public String getTitre() {
         return this.titre;
@@ -75,28 +80,28 @@ public class Defi {
     public void setDescription(String description) {
         this.description = description;
     }
-    
+
     public String getDescription() {
         return this.description;
     }
-    
+
     public LocalDateTime getDateDeCreation() {
         return this.dateDeCreation;
     }
 
-    public List<Etape> getEtape(){
+    public List<Etape> getEtape() {
         return listEtape;
     }
 
-    public Categorie getCategorie(){
+    public Categorie getCategorie() {
         return categorie;
     }
 
-    public void setEtape(List<Etape> l){
+    public void setEtape(List<Etape> l) {
         this.listEtape = l;
     }
 
-    public void addEtape(Etape etape){
+    public void addEtape(Etape etape) {
         listEtape.add(etape);
     }
 
@@ -104,24 +109,24 @@ public class Defi {
         return this.auteur;
     }
 
-
     public static Comparator<Etape> comparatorEtape = new Comparator<Etape>() {
         @Override
-        public int compare(Etape e1, Etape e2){
-            if(e1.getRang() == e2.getRang())
-                return 0;   //il faudra mettre une erreur
+        public int compare(Etape e1, Etape e2) {
+            if (e1.getRang() == e2.getRang())
+                return 0; // il faudra mettre une erreur
             else
                 return e1.getRang() > e2.getRang() ? -1 : 1;
         }
     };
 
-
-    /*public void setAuteur(Chami auteur) {
-        this.auteur = auteur;
-        auteur.addDefisSimple(this);
-    }
-
-    public void setSimpleAuteur(Chami auteur) {
-        this.auteur = auteur;
-    }*/
+    /*
+     * public void setAuteur(Chami auteur) {
+     * this.auteur = auteur;
+     * auteur.addDefisSimple(this);
+     * }
+     * 
+     * public void setSimpleAuteur(Chami auteur) {
+     * this.auteur = auteur;
+     * }
+     */
 }
