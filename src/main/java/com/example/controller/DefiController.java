@@ -82,7 +82,26 @@ public class DefiController {
         }
     }
 
+
+    // @PostMapping("/{userId}/{defiId}")
+    // public Defi createByChami(@PathVariable(value = "defiId") String id,@PathVariable(value="userId") String userId ,@RequestBody Defi defi, @RequestHeader("Authorization") String jwt) {
+    //     if (!(defi.getId().equals(id))) {
+    //         throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Wrong id");
+    //     }
+    //     try {
+    //         FirebaseToken token = FirebaseAuth.getInstance().verifyIdToken(jwt);
+    //         if(userId.equals(token.getUid())){
+    //             return defiService.saveDefi(defi);
+    //         }
+    //         return defiService.saveDefi(defi);
+    //     } catch (FirebaseAuthException e) {
+    //         throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Unauthorized", e);
+    //     }
+    // }
     // XXX => à tester
+
+    // verifie que l'ateur du défi est le proprietaire du jeton puis verifie que l'id est disponible
+    //puis creer le défi
     @PostMapping("/{defiId}")
     public Defi create(@PathVariable(value = "defiId") String id, @RequestBody Defi defi,
             @RequestHeader("Authorization") String jwt) {
@@ -90,8 +109,18 @@ public class DefiController {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Wrong id");
         }
         try {
-            FirebaseAuth.getInstance().verifyIdToken(jwt);
-            return defiService.saveDefi(defi);
+            
+            FirebaseToken token = FirebaseAuth.getInstance().verifyIdToken(jwt);
+            if(defi.getAuteur().getId().equals(token.getUid())){
+                Optional<Defi> defiOpt = defiService.getDefi(id);
+                if (defiOpt.isPresent()) {
+                    throw new ResponseStatusException(HttpStatus.CONFLICT, "Defi already exists");
+                }
+                return defiService.saveDefi(defi);
+            }
+            else{
+                throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Unauthorized");
+            }
         } catch (FirebaseAuthException e) {
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Unauthorized", e);
         }
