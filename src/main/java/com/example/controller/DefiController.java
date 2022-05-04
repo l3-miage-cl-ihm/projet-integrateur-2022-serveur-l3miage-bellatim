@@ -8,6 +8,7 @@ import com.example.service.ChamiService;
 import com.example.service.DefiService;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthException;
+import com.google.firebase.auth.FirebaseToken;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -34,6 +35,9 @@ public class DefiController {
     @Autowired
     private DefiService defiService;
 
+    @Autowired
+    private ChamiService chamiService;
+
     // 404 si pas de slash
     @GetMapping("/")
     public List<Defi> allDefis(@RequestHeader("Authorization") String jwt) {
@@ -46,12 +50,19 @@ public class DefiController {
         }
     }
 
+    
+    //autoriser pour tout le monde ?
     @GetMapping("/chami/{userId}")
     public List<Defi> defisByChami(@PathVariable(value="userId") String id, @RequestHeader("Authorization") String jwt){
         try{
-            FirebaseAuth.getInstance().verifyIdToken(jwt);
-            List<Defi> lesDefis = defiService.getDefisByChami(id);
-            return lesDefis;
+            FirebaseToken token = FirebaseAuth.getInstance().verifyIdToken(jwt);
+            if(chamiService.isAllowed(id, token)){
+                List<Defi> lesDefis = defiService.getDefisByChami(id);
+                return lesDefis;
+            }
+            else{
+                throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Unauthorized");
+            }
         } catch (FirebaseAuthException e) {
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Unauthorized", e);
         }
@@ -87,8 +98,7 @@ public class DefiController {
         }
     }
 
-    @Autowired
-    ChamiService chamiService;
+    
 
     @PutMapping("/{defiId}")
     public Defi update(@PathVariable(value = "defiId") String id, @RequestBody Defi defi) {

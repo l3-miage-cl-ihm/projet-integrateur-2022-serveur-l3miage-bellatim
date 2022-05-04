@@ -1,17 +1,18 @@
 
 package com.example.service;
 
-import java.util.Optional;
-
 import com.example.model.Chami;
 import com.example.model.Visite;
 import com.example.repository.ChamiRepository;
 import com.example.repository.VisiteRepository;
-
+import com.google.firebase.auth.FirebaseToken;
+import java.util.List;
+import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
+
+
 
 
 @Service
@@ -53,5 +54,29 @@ public class ChamiService {
             return null;
         }
     }
+
+    public boolean isAllowed(String login, FirebaseToken token){
+        Optional<Chami> chamiOpt = chamiRepository.findById(login);
+        if(chamiOpt.isPresent()){
+            Chami chami = chamiOpt.get();
+            if(chami.getEmail().equals(token.getEmail())){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    // public boolean uidVerification()
+
+    // public boolean isAllowed(String id, FirebaseToken){
+    //     Optional<Chami> chamiOpt = chamiRepository.findById(id);
+    //     if(chamiOpt.isPresent()){
+    //         Chami chami = chamiOpt.get();
+    //         if(chami.getEmail().equals(token.getEmail())){
+    //             return true;
+    //         }
+    //     }
+    //     return false;
+    // }
     
 }

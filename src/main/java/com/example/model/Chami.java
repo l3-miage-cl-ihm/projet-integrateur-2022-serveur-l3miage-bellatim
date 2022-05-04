@@ -17,6 +17,9 @@ public class Chami {
 
     //le login est la clé d'un chami
     @Id
+    private String id;
+
+    @Column(unique=true)
     private String login;
 
     @Column
@@ -26,7 +29,6 @@ public class Chami {
     @OneToMany(mappedBy="auteur", cascade = CascadeType.ALL)    //mapped avec la colonne auteur dans la class Défi (clé étrangère)
     //cascade répercute modifications
     @JsonManagedReference       //evite de boucler à l'infini car un chamis à des défis et un défis à un auteur qui a des défis qui a u auteur...
-
     //@JsonIgnore
     private List<Defi> defis;
 
@@ -41,12 +43,17 @@ public class Chami {
         defis = new ArrayList<Defi>();
     }
 
-    public Chami(String login, int age, String email) {
+    public Chami(String id,String login, int age, String email) {
         super();
+        this.id=id;
         this.login = login;
         this.age = age;
         this.email = email;
         defis = new ArrayList<Defi>();
+    }
+
+    public String getId(){
+        return this.id;
     }
 
     public String getLogin() {
