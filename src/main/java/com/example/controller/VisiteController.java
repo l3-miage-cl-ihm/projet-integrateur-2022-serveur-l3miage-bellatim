@@ -133,56 +133,56 @@ public class VisiteController {
 
     @GetMapping("/insert")
     public List<Visite> testVisite() {
+        return null;
+        // Chami c1 = new Chami("toto", 12, "toto@gmail.com");
+        // Chami c2 = new Chami("joe", 12, "joe@gmail.com");
+        // Chami c3 = new Chami("francois", 10, "francois@gmail.com");
+        // Chami c4 = new Chami("david", 9, "david@gmail.com");
 
-        Chami c1 = new Chami("toto", 12, "toto@gmail.com");
-        Chami c2 = new Chami("joe", 12, "joe@gmail.com");
-        Chami c3 = new Chami("francois", 10, "francois@gmail.com");
-        Chami c4 = new Chami("david", 9, "david@gmail.com");
+        // List<Chami> joueurs = new ArrayList<>();
+        // joueurs.add(c1);
+        // joueurs.add(c2);
+        // joueurs.add(c3);
+        // joueurs.add(c4);
 
-        List<Chami> joueurs = new ArrayList<>();
-        joueurs.add(c1);
-        joueurs.add(c2);
-        joueurs.add(c3);
-        joueurs.add(c4);
+        // Defi d = new Defi("D199", "fais du sport", null, c1, Categorie.SPORTIF, null);
 
-        Defi d = new Defi("D199", "fais du sport", null, c1, Categorie.SPORTIF, null);
+        // Etape e1  = new Etape(1, "il faut chercher l'indice 1", d);
+        // Etape e2  = new Etape(2, "il faut chercher l'indice 2", d);
+        // Etape e3  = new Etape(3, "il faut chercher l'indice 3", d);
+        // Etape e4  = new Etape(4, "il faut chercher l'indice 4", d);
+        // Etape e5  = new Etape(5, "il faut chercher l'indice 5", d);
+        // Media m1  = new Media(1, "regarde la photo 1", d, "maphoto.com");
 
-        Etape e1  = new Etape(1, "il faut chercher l'indice 1", d);
-        Etape e2  = new Etape(2, "il faut chercher l'indice 2", d);
-        Etape e3  = new Etape(3, "il faut chercher l'indice 3", d);
-        Etape e4  = new Etape(4, "il faut chercher l'indice 4", d);
-        Etape e5  = new Etape(5, "il faut chercher l'indice 5", d);
-        Media m1  = new Media(1, "regarde la photo 1", d, "maphoto.com");
+        // ArrayList<Etape> etapes = new ArrayList<>();
+        // etapes.add(e1);
+        // etapes.add(e2);
+        // etapes.add(e3);
+        // etapes.add(e4);
+        // etapes.add(e5);
+        // etapes.add(m1);
 
-        ArrayList<Etape> etapes = new ArrayList<>();
-        etapes.add(e1);
-        etapes.add(e2);
-        etapes.add(e3);
-        etapes.add(e4);
-        etapes.add(e5);
-        etapes.add(m1);
+        // d.setEtape(etapes);
 
-        d.setEtape(etapes);
+        // Visite v1 = new Visite(joueurs, d, 0);
+        // visiteService.saveVisite(v1);
 
-        Visite v1 = new Visite(joueurs, d, 0);
-        visiteService.saveVisite(v1);
-
-        List<Chami> joueurs2 = new ArrayList<>();
-        joueurs2.add(c2);
-        Defi d2 = new Defi("D021", "Lis un livre", null, c1, Categorie.CULTUREL, null);
-        Etape e6  = new Etape(1, "il faut chercher l'indice 1", d2);
-        ArrayList<Etape> etapes2 = new ArrayList<>();
-        etapes2.add(e6);
-        d2.setEtape(etapes2);
-        Visite v2 = new Visite(joueurs2, d2, 0);
-        List<Visite> lesVisites = new ArrayList<>();
-        lesVisites.add(v1);
-        lesVisites.add(v2);
-        visiteService.saveVisite(v2);
+        // List<Chami> joueurs2 = new ArrayList<>();
+        // joueurs2.add(c2);
+        // Defi d2 = new Defi("D021", "Lis un livre", null, c1, Categorie.CULTUREL, null);
+        // Etape e6  = new Etape(1, "il faut chercher l'indice 1", d2);
+        // ArrayList<Etape> etapes2 = new ArrayList<>();
+        // etapes2.add(e6);
+        // d2.setEtape(etapes2);
+        // Visite v2 = new Visite(joueurs2, d2, 0);
+        // List<Visite> lesVisites = new ArrayList<>();
+        // lesVisites.add(v1);
+        // lesVisites.add(v2);
+        // visiteService.saveVisite(v2);
 
         
 
-        return lesVisites;
+        // return lesVisites;
 
     }
 }
