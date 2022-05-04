@@ -14,7 +14,7 @@ public class Reponse {
     private int id;
 
     @Column
-    private Boolean valider;
+    private Boolean valide;
 
     @Column
     private TypeReponse typeReponse;
@@ -32,9 +32,9 @@ public class Reponse {
         super();
     }
 
-    public Reponse(Boolean valider, TypeReponse type, String val, Question question, Visite visite){
+    public Reponse(Boolean valide, TypeReponse type, String val, Question question, Visite visite){
         super();
-        this.valider = valider;
+        this.valide = valide;
         this.typeReponse = type;
         this.value = val;
         this.question = question;
@@ -42,11 +42,11 @@ public class Reponse {
     }
 
     public Boolean isValidate(){
-        return valider;
+        return valide;
     }
 
     public void setValidate(Boolean val){
-        this.valider = val;
+        this.valide = val;
     }
 
     public TypeReponse getTypeReponse(){
