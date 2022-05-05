@@ -13,35 +13,34 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class VisiteService {
-    
+
     @Autowired
     private VisiteRepository visiteRepository;
 
-    public Optional<Visite> getVisite(final int id){
+    public Optional<Visite> getVisite(final int id) {
         return visiteRepository.findById(id);
     }
 
-    public List<Visite> getAllVisite(){
+    public List<Visite> getAllVisite() {
         return visiteRepository.findAll();
     }
 
-    public void deleteVisite(int visite){
+    public void deleteVisite(int visite) {
         visiteRepository.deleteById(visite);
     }
 
-    public Visite saveVisite(Visite visite){
+    public Visite saveVisite(Visite visite) {
         return visiteRepository.save(visite);
     }
 
     @Autowired
     private ChamiRepository chamiRepository;
 
-    public List<Visite> getAllVisitesByChami(String chamiId){
+    public List<Visite> getAllVisitesByChami(String chamiId) {
         Optional<Chami> chamiOpt = chamiRepository.findById(chamiId);
-        if(chamiOpt.isPresent()){
-            return visiteRepository.findByJoueursLogin(chamiOpt.get().getLogin());
-        }
-        else{
+        if (chamiOpt.isPresent()) {
+            return visiteRepository.findByJoueursId(chamiOpt.get().getLogin());
+        } else {
             return null;
         }
     }

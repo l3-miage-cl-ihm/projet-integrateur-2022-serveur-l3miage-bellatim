@@ -1,23 +1,18 @@
 package com.example.model;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-
 @Entity
 @DiscriminatorValue("question")
-@Table(name="question", schema="public")
+@Table(name = "question", schema = "public")
 public class Question extends Etape {
-    
 
     @Column
     private int point;
@@ -28,30 +23,30 @@ public class Question extends Etape {
     @Column
     private String reponseAttendu;
 
-    public Question(int rang, String label,Defi def, int point, List<Indice> l, String repAttendu) {
+    public Question(int rang, String label, Defi def, int point, List<Indice> l, String repAttendu) {
         super(rang, label, def);
         this.point = point;
         this.listeIndice = l;
         this.reponseAttendu = repAttendu;
     }
 
-    public Question(){
+    public Question() {
         super();
     }
 
-    public void addIndice(Indice i){
+    public void addIndice(Indice i) {
         listeIndice.add(i);
     }
 
-    public void removeIndice(Indice i){
+    public void removeIndice(Indice i) {
         listeIndice.remove(i);
     }
 
-    public void setReponseAttendu(String rep){
+    public void setReponseAttendu(String rep) {
         this.reponseAttendu = rep;
     }
 
-    public String getReponseAttendu(){
+    public String getReponseAttendu() {
         return reponseAttendu;
     }
 

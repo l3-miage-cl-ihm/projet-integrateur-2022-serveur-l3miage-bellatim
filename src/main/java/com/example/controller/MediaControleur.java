@@ -18,61 +18,64 @@
 // import org.springframework.web.server.ResponseStatusException;
 // import org.springframework.web.bind.annotation.RequestMapping;
 // import org.springframework.web.bind.annotation.PutMapping;
-// // 
-
+// //
 
 // @RestController
 // @CrossOrigin
 // @RequestMapping(value="/api/media")
 // public class MediaControleur {
 
-//     @Autowired
-//     private MediaService mediaService;
+// @Autowired
+// private MediaService mediaService;
 
-//     @GetMapping("/")
-//     public List<Media> allItems(){
-//         return mediaService.getAllMedia();
-//     }
+// @GetMapping("/")
+// public List<Media> allItems(){
+// return mediaService.getAllMedia();
+// }
 
-//     @GetMapping("/{itemId}")
-//     public Media read(@PathVariable(value = "itemId") int id){
-//         Optional<Media> media = mediaService.getMedia(id);
+// @GetMapping("/{itemId}")
+// public Media read(@PathVariable(value = "itemId") int id){
+// Optional<Media> media = mediaService.getMedia(id);
 
-//         if(!media.isPresent()){
-//             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Aucun média n'existe à cet id");
-//         }
+// if(!media.isPresent()){
+// throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Aucun média n'existe
+// à cet id");
+// }
 
-//         return media.get();
-//     }
+// return media.get();
+// }
 
-//     @PostMapping("/create")
-//     public Media create(int id, @RequestBody Media media){
-//         return mediaService.saveMedia(media);
-//     }
+// @PostMapping("/create")
+// public Media create(int id, @RequestBody Media media){
+// return mediaService.saveMedia(media);
+// }
 
-//     @PutMapping(value="/{idmedia}")
-//     public Media update(@PathVariable(value = "idmedia") int id, @RequestBody Media media) {
-        
-//         if(id != media.getId()){
-//             throw new ResponseStatusException(HttpStatus.PRECONDITION_FAILED, "l'id du media passé en paramètre est différent de celui saisi.");
-//         }
+// @PutMapping(value="/{idmedia}")
+// public Media update(@PathVariable(value = "idmedia") int id, @RequestBody
+// Media media) {
 
-//         Optional<Media> mediaTMP = mediaService.getMedia(id);
+// if(id != media.getId()){
+// throw new ResponseStatusException(HttpStatus.PRECONDITION_FAILED, "l'id du
+// media passé en paramètre est différent de celui saisi.");
+// }
 
-//         if(!mediaTMP.isPresent()){
-//             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Aucun média n'existe à cet id");
-//         }
+// Optional<Media> mediaTMP = mediaService.getMedia(id);
 
-//         Media newmedia = mediaTMP.get();
-//         newmedia.setRang(media.getRang());
-//         newmedia.setLabel(media.getLabel());
+// if(!mediaTMP.isPresent()){
+// throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Aucun média n'existe
+// à cet id");
+// }
 
-//         return mediaService.saveMedia(newmedia);
-//     }
+// Media newmedia = mediaTMP.get();
+// newmedia.setRang(media.getRang());
+// newmedia.setLabel(media.getLabel());
 
-//     @DeleteMapping("/{idmedia}")
-//     public void delete(@PathVariable(value = "idmedia") int id){
-//         mediaService.deleteMedia(id);
-//     }
-    
+// return mediaService.saveMedia(newmedia);
+// }
+
+// @DeleteMapping("/{idmedia}")
+// public void delete(@PathVariable(value = "idmedia") int id){
+// mediaService.deleteMedia(id);
+// }
+
 // }

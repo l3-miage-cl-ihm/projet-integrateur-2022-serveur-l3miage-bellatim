@@ -11,26 +11,24 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class ReponseService {
- 
+
     @Autowired
     private ReponseRepository service;
 
-    public Optional<Reponse> getReponse(final int id){
+    public Optional<Reponse> getReponse(final int id) {
         return service.findById(id);
     }
 
-    public List<Reponse> getAllReponse(){
+    public List<Reponse> getAllReponse() {
         return service.findAll();
     }
 
-    public void deleteReponse(final int id){
+    public void deleteReponse(final int id) {
         service.deleteById(id);
     }
 
-    public Reponse saveReponse(Reponse rep){
+    public Reponse saveReponse(Reponse rep) {
         return service.save(rep);
     }
-
-
 
 }

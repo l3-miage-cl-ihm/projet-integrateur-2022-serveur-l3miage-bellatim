@@ -7,14 +7,14 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="Reponse", schema="public")
+@Table(name = "Reponse", schema = "public")
 public class Reponse {
-    
+
     @Id
     private int id;
 
     @Column
-    private Boolean valider;
+    private Boolean valide;
 
     @Column
     private TypeReponse typeReponse;
@@ -28,44 +28,44 @@ public class Reponse {
     @ManyToOne
     private Visite visite;
 
-    public Reponse(){
+    public Reponse() {
         super();
     }
 
-    public Reponse(Boolean valider, TypeReponse type, String val, Question question, Visite visite){
+    public Reponse(Boolean valide, TypeReponse type, String val, Question question, Visite visite) {
         super();
-        this.valider = valider;
+        this.valide = valide;
         this.typeReponse = type;
         this.value = val;
         this.question = question;
         this.visite = visite;
     }
 
-    public Boolean isValidate(){
-        return valider;
+    public Boolean isValidate() {
+        return valide;
     }
 
-    public void setValidate(Boolean val){
-        this.valider = val;
+    public void setValidate(Boolean val) {
+        this.valide = val;
     }
 
-    public TypeReponse getTypeReponse(){
+    public TypeReponse getTypeReponse() {
         return typeReponse;
     }
 
-    public String getValue(){
+    public String getValue() {
         return value;
     }
 
-    public void setValue(String val){
+    public void setValue(String val) {
         this.value = val;
     }
 
-    public Question getQuestion(){
+    public Question getQuestion() {
         return question;
     }
 
-    public Visite getVisite(){
+    public Visite getVisite() {
         return visite;
     }
 

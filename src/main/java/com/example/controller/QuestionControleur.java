@@ -19,60 +19,62 @@
 // import org.springframework.web.bind.annotation.RequestMapping;
 // import org.springframework.web.bind.annotation.PutMapping;
 
-
-
 // @RestController
 // @CrossOrigin
 // @RequestMapping(value="/api/question")
 // public class QuestionControleur {
 
-//     @Autowired
-//     private QuestionService questionService;
+// @Autowired
+// private QuestionService questionService;
 
-//     @GetMapping("/")
-//     public List<Question> allItems(){
-//         return questionService.getAllQuestion();
-//     }
+// @GetMapping("/")
+// public List<Question> allItems(){
+// return questionService.getAllQuestion();
+// }
 
-//     @GetMapping("/{questionID}")
-//     public Question read(@PathVariable(value = "questionID") int id){
-//         Optional<Question> question = questionService.getQuestion(id);
+// @GetMapping("/{questionID}")
+// public Question read(@PathVariable(value = "questionID") int id){
+// Optional<Question> question = questionService.getQuestion(id);
 
-//         if(!question.isPresent()){
-//             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Aucune question n'existe à cet id");
-//         }
+// if(!question.isPresent()){
+// throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Aucune question
+// n'existe à cet id");
+// }
 
-//         return question.get();
-//     }
+// return question.get();
+// }
 
-//     @PostMapping("/create")
-//     public Question create(@RequestBody Question question){
-//         return questionService.saveQuestion(question);
-//     }
+// @PostMapping("/create")
+// public Question create(@RequestBody Question question){
+// return questionService.saveQuestion(question);
+// }
 
-//     @PutMapping(value="/{questionID}")
-//     public Question update(@PathVariable(value = "questionID") int id, @RequestBody Question question) {
-        
-//         if(id != question.getId()){
-//             throw new ResponseStatusException(HttpStatus.PRECONDITION_FAILED, "l'id de la question passé en paramètre est différent de celui saisi.");
-//         }
+// @PutMapping(value="/{questionID}")
+// public Question update(@PathVariable(value = "questionID") int id,
+// @RequestBody Question question) {
 
-//         Optional<Question> questionTMP = questionService.getQuestion(id);
+// if(id != question.getId()){
+// throw new ResponseStatusException(HttpStatus.PRECONDITION_FAILED, "l'id de la
+// question passé en paramètre est différent de celui saisi.");
+// }
 
-//         if(!questionTMP.isPresent()){
-//             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Aucun média de description n'existe à cet id");
-//         }
+// Optional<Question> questionTMP = questionService.getQuestion(id);
 
-//         Question newQuestion = questionTMP.get();
-//         newQuestion.setRang(question.getRang());
-//         newQuestion.setLabel(question.getLabel());
+// if(!questionTMP.isPresent()){
+// throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Aucun média de
+// description n'existe à cet id");
+// }
 
-//         return questionService.saveQuestion(newQuestion);
-//     }
+// Question newQuestion = questionTMP.get();
+// newQuestion.setRang(question.getRang());
+// newQuestion.setLabel(question.getLabel());
 
-//     @DeleteMapping("/{questionID}")
-//     public void delete(@PathVariable(value = "questionID") int id){
-//         questionService.deleteQuestion(id);
-//     }
-    
+// return questionService.saveQuestion(newQuestion);
+// }
+
+// @DeleteMapping("/{questionID}")
+// public void delete(@PathVariable(value = "questionID") int id){
+// questionService.deleteQuestion(id);
+// }
+
 // }
