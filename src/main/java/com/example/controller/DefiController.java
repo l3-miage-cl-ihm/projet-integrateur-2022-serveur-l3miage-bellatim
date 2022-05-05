@@ -114,15 +114,15 @@ public class DefiController {
             //verifier titre existe pas
             FirebaseToken token = FirebaseAuth.getInstance().verifyIdToken(jwt);
             if(defi.getAuteur().getId().equals(token.getUid())){
-                // Optional<Defi> defiOpt = defiService.getDefi(id);
-                // if (defiOpt.isPresent()) {
-                //     throw new ResponseStatusException(HttpStatus.CONFLICT, "Defi already exists");
+                Optional<Defi> defiOpt = defiService.getDefiByTitre(defi.getTitre());
+                if (defiOpt.isPresent()) {
+                    throw new ResponseStatusException(HttpStatus.CONFLICT, "Defi already exists");
                 }
                 return defiService.saveDefi(defi);
-            // }
-            // else{
-            //     throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Unauthorized");
-            // }
+            }
+            else{
+                throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Unauthorized");
+            }
         } catch (FirebaseAuthException e) {
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Unauthorized", e);
         }
