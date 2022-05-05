@@ -1,11 +1,13 @@
 package com.example.controller;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 
 import com.example.model.Defi;
 import com.example.service.ChamiService;
 import com.example.service.DefiService;
+import com.example.service.SSEservice;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthException;
 import com.google.firebase.auth.FirebaseToken;
@@ -37,9 +39,12 @@ public class DefiController {
     @Autowired
     private ChamiService chamiService;
 
+    @Autowired
+    private SSEservice sseService;
+
     // 404 si pas de slash
     @GetMapping("/")
-    public List<Defi> allDefis(@RequestHeader("Authorization") String jwt) {
+    public List<Defi> allDefis(@RequestHeader("Authorization") String jwt) throws IOException{
         try {
             FirebaseAuth.getInstance().verifyIdToken(jwt);
             List<Defi> lesDefis = defiService.getAllDefis();
@@ -106,7 +111,7 @@ public class DefiController {
     @PostMapping("/create")
     // public Defi create(@PathVariable(value = "defiId") int id, @RequestBody Defi defi,
     public Defi create(@RequestBody Defi defi,
-            @RequestHeader("Authorization") String jwt) {
+            @RequestHeader("Authorization") String jwt) throws IOException{
         // if (!(defi.getId().equals(id))) {
         //     throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Wrong id");
         // }
@@ -118,6 +123,7 @@ public class DefiController {
                 if (defiOpt.isPresent()) {
                     throw new ResponseStatusException(HttpStatus.CONFLICT, "Defi already exists");
                 }
+                sseService.doNotify();
                 return defiService.saveDefi(defi);
             }
             else{
@@ -129,7 +135,7 @@ public class DefiController {
     }
 
     @PutMapping("/{defiId}")
-    public Defi update(@PathVariable(value = "defiId") int id, @RequestBody Defi defi) {
+    public Defi update(@PathVariable(value = "defiId") int id, @RequestBody Defi defi) throws IOException{
 
         // if (!(defi.getId().equals(id))) {
         if (!(defi.getId()==id)) {
@@ -142,18 +148,24 @@ public class DefiController {
         if (!leDefiOpt.isPresent()) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Le défi n'existe pas.");
         }
+        sseService.doNotify();
         return defiService.saveDefi(defi);
 
     }
 
+    //addDefiByChami
+
+    //addEtapeByDefiId
+
     @DeleteMapping("/{defiId}")
-    public void delete(@PathVariable(value = "defiId") int id, @RequestHeader("Authorization") String jwt) {
+    public void delete(@PathVariable(value = "defiId") int id, @RequestHeader("Authorization") String jwt) throws IOException {
         try {
             FirebaseAuth.getInstance().verifyIdToken(jwt);
             Optional<Defi> defiopt = defiService.getDefi(id);
             if (!defiopt.isPresent()) {
                 throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Le défi n'existe pas.");
             } else {
+                sseService.doNotify();
                 defiService.deleteDefi(id);
             }
         } catch (FirebaseAuthException e) {

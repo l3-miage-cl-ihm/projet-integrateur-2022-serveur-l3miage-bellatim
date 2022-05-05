@@ -2,9 +2,12 @@ package com.example.controller;
 
 import com.example.model.Chami;
 import com.example.service.ChamiService;
+import com.example.service.SSEservice;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthException;
 import com.google.firebase.auth.FirebaseToken;
+
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -33,6 +36,8 @@ import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 @RequestMapping("/api/chamis")
 public class ChamiController {
 
+    @Autowired
+    private SSEservice sseService;
 
     @Autowired
     private ChamiService chamiService;
@@ -113,7 +118,7 @@ public class ChamiController {
 
     @PostMapping("/{userId}")
     public Chami create(@PathVariable(value = "userId") String id, @RequestBody Chami chami,
-            @RequestHeader("Authorization") String jwt) {
+            @RequestHeader("Authorization") String jwt) throws IOException {
         try {
             FirebaseToken token = FirebaseAuth.getInstance().verifyIdToken(jwt);
             // if(token.getUid().equals(uid)){
@@ -124,7 +129,8 @@ public class ChamiController {
                     throw new ResponseStatusException(HttpStatus.CONFLICT, "Le chami existe déjà");
                 }
                 if (id.equals(chami.getId())) {
-                    return chamiService.saveChami(chami);
+                    sseService.doNotify();
+                    return chamiService.saveChami(chami); 
                 } else {
                     throw new ResponseStatusException(HttpStatus.PRECONDITION_FAILED, "Le login ne correspond pas");
                 }
@@ -138,7 +144,7 @@ public class ChamiController {
 
     @PutMapping("/{userId}")
     public Chami update(@PathVariable(value = "userId") String id, @RequestBody Chami chami,
-            @RequestHeader("Authorization") String jwt) {
+            @RequestHeader("Authorization") String jwt) throws IOException{
         try {
             FirebaseToken token = FirebaseAuth.getInstance().verifyIdToken(jwt);
             // if(chamiService.isAllowed(id,token)){
@@ -154,6 +160,8 @@ public class ChamiController {
                     // ajouter un id
                     // changer les attributs ?
                     // chamiService.deleteChami(id);
+                    //update les defi
+                    sseService.doNotify();
                     return chamiService.saveChami(chami);
                 } else {
                     throw new ResponseStatusException(HttpStatus.PRECONDITION_FAILED, "Le login ne correspond pas");
@@ -166,8 +174,10 @@ public class ChamiController {
         }
     }
 
+
+
     @DeleteMapping("/{userId}")
-    public void delete(@PathVariable(value = "userId") String id, @RequestHeader("Authorization") String jwt) {
+    public void delete(@PathVariable(value = "userId") String id, @RequestHeader("Authorization") String jwt) throws IOException{
         try {
 
             FirebaseToken token = FirebaseAuth.getInstance().verifyIdToken(jwt);
@@ -177,6 +187,7 @@ public class ChamiController {
                 if (!chamiOpt.isPresent()) {
                     throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Le chami n'existe pas");
                 }
+                sseService.doNotify();
                 chamiService.deleteChami(id);
             } else {
                 throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Unauthorized");
