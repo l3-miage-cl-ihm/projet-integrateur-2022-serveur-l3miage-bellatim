@@ -20,7 +20,7 @@ import java.time.LocalDateTime;
 public class Defi {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private String id;
+    private int id;
 
     @Column
     private String titre;
@@ -46,7 +46,7 @@ public class Defi {
         listEtape = new ArrayList<>();
     }
 
-    public Defi(String id, String titre, LocalDateTime dateDeCreation, String description, Chami auteur, Categorie cat,
+    public Defi(int id, String titre, LocalDateTime dateDeCreation, String description, Chami auteur, Categorie cat,
             List<Etape> listEtape) {
         super();
         this.id = id;
@@ -60,7 +60,7 @@ public class Defi {
         // auteur.addDefis(this);
     }
 
-    public String getId() {
+    public int getId() {
         return this.id;
     }
 

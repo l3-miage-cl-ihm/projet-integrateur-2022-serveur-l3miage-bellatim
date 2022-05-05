@@ -36,7 +36,7 @@ public class EtapeService {
     @Autowired
     private DefiRepository defiRepository;
 
-    public List<Etape> getAllItemByDefi(String defiId) {
+    public List<Etape> getAllItemByDefi(int defiId) {
         Optional<Defi> defiOpt = defiRepository.findById(defiId);
         if (defiOpt.isPresent()) {
             return itemRepository.findByDefi(defiOpt.get());

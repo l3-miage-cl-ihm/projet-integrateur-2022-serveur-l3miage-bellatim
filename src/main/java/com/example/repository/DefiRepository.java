@@ -9,7 +9,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface DefiRepository extends JpaRepository<Defi, String> {
+public interface DefiRepository extends JpaRepository<Defi, Integer> {
 
     List<Defi> findByAuteur(Chami chami);
 }

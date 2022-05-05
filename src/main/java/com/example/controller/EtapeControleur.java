@@ -42,7 +42,7 @@ public class EtapeControleur {
     }
 
     @GetMapping("/defi/{defiId}")
-    public List<Etape> allItemsByDefi(@PathVariable("defiId") String defiId,
+    public List<Etape> allItemsByDefi(@PathVariable("defiId") int defiId,
             @RequestHeader("Authorization") String jwt) {
         try {
             FirebaseAuth.getInstance().verifyIdToken(jwt);
