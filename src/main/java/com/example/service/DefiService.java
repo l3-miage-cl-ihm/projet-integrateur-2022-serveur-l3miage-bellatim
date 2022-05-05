@@ -46,4 +46,8 @@ public class DefiService {
         }
     }
 
+    public Optional<Defi> getDefiByTitre(String titre){
+        return defiRepository.findByTitre(titre);
+    }
+
 }
