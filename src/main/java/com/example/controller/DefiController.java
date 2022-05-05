@@ -55,12 +55,12 @@ public class DefiController {
             @RequestHeader("Authorization") String jwt) {
         try {
             FirebaseToken token = FirebaseAuth.getInstance().verifyIdToken(jwt);
-            if (chamiService.isAllowed(id, token)) {
+            // if (chamiService.isAllowed(id, token)) {
                 List<Defi> lesDefis = defiService.getDefisByChami(id);
                 return lesDefis;
-            } else {
-                throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Unauthorized");
-            }
+            // } else {
+                // throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Unauthorized");
+            // }
         } catch (FirebaseAuthException e) {
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Unauthorized", e);
         }
