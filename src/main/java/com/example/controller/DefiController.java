@@ -102,14 +102,14 @@ public class DefiController {
 
     // verifie que l'ateur du défi est le proprietaire du jeton puis verifie que l'id est disponible
     //puis creer le défi
-    @PostMapping("/{defiId}")
+    // @PostMapping("/{defiId}")
+    @PostMapping("/create")
     public Defi create(@PathVariable(value = "defiId") String id, @RequestBody Defi defi,
             @RequestHeader("Authorization") String jwt) {
-        if (!(defi.getId().equals(id))) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Wrong id");
-        }
+        // if (!(defi.getId().equals(id))) {
+        //     throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Wrong id");
+        // }
         try {
-            
             FirebaseToken token = FirebaseAuth.getInstance().verifyIdToken(jwt);
             if(defi.getAuteur().getId().equals(token.getUid())){
                 Optional<Defi> defiOpt = defiService.getDefi(id);
