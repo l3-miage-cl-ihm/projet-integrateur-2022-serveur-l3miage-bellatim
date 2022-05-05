@@ -46,7 +46,7 @@ INSERT INTO etape (type_etape, id, label, rang, url, point, reponse_attendu, cou
 ('mere', 20, 'Oublie le mouton. Retourne toi.', 20, '', 0, '', 0, 'D145'),
 ('mere', 21, 'Derrière toi tu vois la première tour en béton du monde ! (1924)', 21, '', 0, '', 0, 'D145'),
 ('mere', 22, 'Tour construite pour une exposition internationale [1].', 22, '', 0, '', 0, 'D145'),
-('image', 23, 'Affiche de l''exposition de la houille blanche en 1924', 23, 'defis/D145-I1.png', 0, '', 0, 'D145'),
+('media', 23, 'Affiche de l''exposition de la houille blanche en 1924', 23, 'defis/D145-I1.png', 0, '', 0, 'D145'),
 ('mere', 24 , 'Vas du coté de l''oiseau tout plat.',  1 , '',  0 , '',  0 , 'D128'),
 ('mere', 25 , 'Mais cherche aussi sur tes pas le renard tout plat.',  2 , '',  0 , '',  0 , 'D128'),
 ('question', 26 , 'Qu''a le renard entre les deux yeux ?',  3 , '',  3 , '',  0 , 'D128'),
