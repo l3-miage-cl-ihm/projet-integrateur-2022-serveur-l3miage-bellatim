@@ -41,7 +41,7 @@ public class EtapeControleur {
         }
     }
 
-    @GetMapping("/defi/{defiId}")
+    /*@GetMapping("/defi/{defiId}")
     public List<Etape> allItemsByDefi(@PathVariable("defiId") int defiId,
             @RequestHeader("Authorization") String jwt) {
         try {
@@ -50,7 +50,7 @@ public class EtapeControleur {
         } catch (FirebaseAuthException e) {
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Unauthorized", e);
         }
-    }
+    }*/
 
     @GetMapping("/{itemId}")
     public Etape read(@PathVariable(value = "itemId") int id, @RequestHeader("Authorization") String jwt) {
