@@ -125,13 +125,10 @@ public class DefiController {
                 if (defiOpt.isPresent()) {
                     throw new ResponseStatusException(HttpStatus.CONFLICT, "Defi already exists");
                 }
-<<<<<<< HEAD
                 System.out.println("defi.categorie : " + defi.getCategorie());
                 System.out.println("defi.titre : " + defi.getTitre());
                 defi.setDateCreation(LocalDateTime.now());
-=======
                 sseService.doNotify();
->>>>>>> 97438a951b09e74580c2e0a00122a1b5d7cafce9
                 return defiService.saveDefi(defi);
             }
             else{
