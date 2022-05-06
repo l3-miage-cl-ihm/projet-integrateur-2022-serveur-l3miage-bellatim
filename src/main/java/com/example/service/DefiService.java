@@ -18,7 +18,7 @@ public class DefiService {
     @Autowired
     private DefiRepository defiRepository;
 
-    public Optional<Defi> getDefi(final String id) {
+    public Optional<Defi> getDefi(final int id) {
         return defiRepository.findById(id);
     }
 
@@ -26,7 +26,7 @@ public class DefiService {
         return defiRepository.findAll();
     }
 
-    public void deleteDefi(final String id) {
+    public void deleteDefi(final int id) {
         defiRepository.deleteById(id);
     }
 
@@ -44,6 +44,10 @@ public class DefiService {
         } else {
             return null;
         }
+    }
+
+    public Optional<Defi> getDefiByTitre(String titre){
+        return defiRepository.findByTitre(titre);
     }
 
 }

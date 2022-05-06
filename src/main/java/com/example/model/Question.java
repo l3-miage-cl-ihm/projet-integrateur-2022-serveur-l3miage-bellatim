@@ -23,8 +23,8 @@ public class Question extends Etape {
     @Column
     private String reponseAttendu;
 
-    public Question(int rang, String label, Defi def, int point, List<Indice> l, String repAttendu) {
-        super(rang, label, def);
+    public Question(int rang, String label, int point, List<Indice> l, String repAttendu) {
+        super(rang, label);
         this.point = point;
         this.listeIndice = l;
         this.reponseAttendu = repAttendu;

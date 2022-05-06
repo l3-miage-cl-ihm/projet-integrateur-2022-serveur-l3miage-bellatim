@@ -20,7 +20,7 @@ import java.time.LocalDateTime;
 public class Defi {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private String id;
+    private int id;
 
     @Column
     private String titre;
@@ -36,9 +36,10 @@ public class Defi {
     @Column
     @Enumerated(EnumType.STRING)
     private Categorie categorie;
+    /*@Column
+    private String categorie;*/
 
-    @OneToMany(mappedBy = "defi", cascade = CascadeType.ALL)
-    @JsonManagedReference
+    @OneToMany(cascade = CascadeType.ALL)
     private List<Etape> listEtape;
 
     public Defi() {
@@ -46,7 +47,7 @@ public class Defi {
         listEtape = new ArrayList<>();
     }
 
-    public Defi(String id, String titre, LocalDateTime dateDeCreation, String description, Chami auteur, Categorie cat,
+    public Defi(int id, String titre, LocalDateTime dateDeCreation, String description, Chami auteur, Categorie cat,
             List<Etape> listEtape) {
         super();
         this.id = id;
@@ -60,7 +61,7 @@ public class Defi {
         // auteur.addDefis(this);
     }
 
-    public String getId() {
+    public int getId() {
         return this.id;
     }
 
@@ -89,7 +90,9 @@ public class Defi {
     public LocalDateTime getDateDeCreation() {
         return this.dateDeCreation;
     }
-
+    public void setDateCreation(LocalDateTime d){
+      this.dateDeCreation = d;
+    }
     public List<Etape> getEtape() {
         return listEtape;
     }
@@ -120,12 +123,13 @@ public class Defi {
         }
     };
 
+
     /*
      * public void setAuteur(Chami auteur) {
      * this.auteur = auteur;
      * auteur.addDefisSimple(this);
      * }
-     * 
+     *
      * public void setSimpleAuteur(Chami auteur) {
      * this.auteur = auteur;
      * }

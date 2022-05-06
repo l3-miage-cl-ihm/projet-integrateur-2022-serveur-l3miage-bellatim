@@ -13,8 +13,8 @@ public class Media extends Etape {
     @Column
     private String URL;
 
-    public Media(int rang, String label, Defi def, String url) {
-        super(rang, label, def);
+    public Media(int rang, String label, String url) {
+        super(rang, label);
         this.URL = url;
     }
 
