@@ -26,11 +26,15 @@ public class Question extends Etape {
     @Column
     private String reponseAttendu;
 
-    public Question(int rang, String label, Defi def, int point, List<Indice> l, String repAttendu) {
+    @Column
+    private TypeReponse typeReponseAttendu;
+
+    public Question(int rang, String label, Defi def, int point, List<Indice> l, String repAttendu, TypeReponse typeRepAttendu) {
         super(rang, label, def);
         this.point = point;
         this.listeIndice = l;
         this.reponseAttendu = repAttendu;
+        this.typeReponseAttendu = typeRepAttendu;
     }
 
     public Question() {
@@ -59,6 +63,10 @@ public class Question extends Etape {
 
     public String getReponseAttendu() {
         return reponseAttendu;
+    }
+
+    public TypeReponse getTypeReponseAttendu(){
+        return this.typeReponseAttendu;
     }
 
 }
