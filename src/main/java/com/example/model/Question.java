@@ -9,9 +9,12 @@ import javax.persistence.Entity;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonTypeName;
+
 @Entity
 @DiscriminatorValue("question")
-@Table(name = "question", schema = "public")
+//@Table(name = "question", schema = "public")
+@JsonTypeName("question")
 public class Question extends Etape {
 
     @Column
@@ -23,8 +26,8 @@ public class Question extends Etape {
     @Column
     private String reponseAttendu;
 
-    public Question(int rang, String label, int point, List<Indice> l, String repAttendu) {
-        super(rang, label);
+    public Question(int rang, String label, Defi def, int point, List<Indice> l, String repAttendu) {
+        super(rang, label, def);
         this.point = point;
         this.listeIndice = l;
         this.reponseAttendu = repAttendu;
@@ -44,6 +47,14 @@ public class Question extends Etape {
 
     public void setReponseAttendu(String rep) {
         this.reponseAttendu = rep;
+    }
+
+    public int getPoint(){
+        return this.point;
+    }
+
+    public List<Indice> getListeIndice(){
+        return this.listeIndice;
     }
 
     public String getReponseAttendu() {

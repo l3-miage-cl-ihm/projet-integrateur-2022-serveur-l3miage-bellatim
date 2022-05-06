@@ -24,7 +24,7 @@ Le défi consiste à jouer à l''escape game "Street art".',
 '', 'Le vert, je le mange !', 'b');
 
 INSERT INTO etape (type_etape, id, label, rang, url, point, reponse_attendu, cout, defi_id) VALUES
-('mere', 1, 'Rendez vous à l''arrêt de bus "Grenoblehôtel de ville".', 1, '', 0, '', 0, 145),
+('mere', 1, 'Rendez vous à l''arrêt de bus "Grenoble hôtel de ville".', 1, '', 0, '', 0, 145),
 ('mere', 2, 'Passe par "l''orangerie".', 2, '', 0, '', 0, 145),
 ('indice', 3, 'Vas du coté de Belledonne.', 3, '', 1, '', 0, 145),
 ('mere', 4, 'Les oranges te donneront de l''énergie.', 4, '', 0, '', 0, 145),
