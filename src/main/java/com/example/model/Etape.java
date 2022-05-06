@@ -5,12 +5,25 @@ import java.util.Comparator;
 import javax.persistence.*;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonSubTypes;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import com.fasterxml.jackson.annotation.JsonSubTypes.Type;
 
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name = "type_etape")
 @DiscriminatorValue("mere")
 @Entity
 @Table(name = "etape", schema = "public")
+@JsonTypeInfo(
+  use = JsonTypeInfo.Id.NAME, 
+  include = JsonTypeInfo.As.PROPERTY, 
+  property = "type_etape")
+@JsonSubTypes({ 
+  @Type(value = Media.class, name = "media"), 
+  @Type(value = Question.class, name = "question"), 
+  @Type(value = Etape.class, name = "mere"), 
+  @Type(value = Indice.class, name = "indice") 
+})
 public class Etape {
 
     @Id
