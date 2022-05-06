@@ -36,16 +36,10 @@ public class Etape {
     @Column
     private String label;
 
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JsonBackReference
-    @JoinColumn(name = "defi_id")
-    private Defi defi;
-
-    public Etape(int rang, String label, Defi defi) {
+    public Etape(int rang, String label) {
         super();
         this.rang = rang;
         this.label = label;
-        this.defi = defi;
     }
 
     public Etape() {
