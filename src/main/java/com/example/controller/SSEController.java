@@ -17,8 +17,8 @@ import java.util.concurrent.CopyOnWriteArrayList;
 
 import com.example.service.SSEservice;
 import org.springframework.http.HttpStatus;
-@CrossOrigin
 @RestController
+@CrossOrigin
 public class SSEController {
 
     @Autowired

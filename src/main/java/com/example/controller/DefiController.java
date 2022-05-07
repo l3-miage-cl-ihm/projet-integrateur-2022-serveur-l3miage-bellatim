@@ -135,22 +135,30 @@ public class DefiController {
     }
 
     @PutMapping("/{defiId}")
-    public Defi update(@PathVariable(value = "defiId") int id, @RequestBody Defi defi) throws IOException{
+    public Defi update(@PathVariable(value = "defiId") int id, @RequestBody Defi defi, @RequestHeader("Authorization") String jwt) throws IOException{
+        try{
+            FirebaseToken token = FirebaseAuth.getInstance().verifyIdToken(jwt);
+            if(!defi.getAuteur().getId().equals(token.getUid())){
+                throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Unauthorized");
+                }
+                
+            // if (!(defi.getId().equals(id))) {
+            if (!(defi.getId()==id)) {
+                throw new ResponseStatusException(HttpStatus.PRECONDITION_FAILED,
+                        "L'id du défi passé en paramètre n'est pas le même que celui saisi.");
+            }
 
-        // if (!(defi.getId().equals(id))) {
-        if (!(defi.getId()==id)) {
-            throw new ResponseStatusException(HttpStatus.PRECONDITION_FAILED,
-                    "L'id du défi passé en paramètre n'est pas le même que celui saisi.");
+            Optional<Defi> leDefiOpt = defiService.getDefi(id);
+
+            if (!leDefiOpt.isPresent()) {
+                throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Le défi n'existe pas.");
+            }
+            sseService.doNotify();
+            //set ?
+            return defiService.saveDefi(defi);
+        } catch (FirebaseAuthException e) {
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Unauthorized",e);
         }
-
-        Optional<Defi> leDefiOpt = defiService.getDefi(id);
-
-        if (!leDefiOpt.isPresent()) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Le défi n'existe pas.");
-        }
-        sseService.doNotify();
-        return defiService.saveDefi(defi);
-
     }
 
     //addDefiByChami
