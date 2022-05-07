@@ -5,11 +5,14 @@ import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonTypeName;
+
 @Entity
 @DiscriminatorValue("indice")
-@Table(name="indice", schema = "public")
+//@Table(name="indice", schema = "public")
+@JsonTypeName("indice")
 public class Indice extends Etape{
-    
+
 
     @Column
     private int cout;

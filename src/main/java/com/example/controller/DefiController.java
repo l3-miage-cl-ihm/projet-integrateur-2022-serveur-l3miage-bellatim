@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 
+import java.time.LocalDateTime;
+
 import com.example.model.Defi;
 import com.example.service.ChamiService;
 import com.example.service.DefiService;
@@ -123,6 +125,9 @@ public class DefiController {
                 if (defiOpt.isPresent()) {
                     throw new ResponseStatusException(HttpStatus.CONFLICT, "Defi already exists");
                 }
+                System.out.println("defi.categorie : " + defi.getCategorie());
+                System.out.println("defi.titre : " + defi.getTitre());
+                defi.setDateCreation(LocalDateTime.now());
                 sseService.doNotify();
                 return defiService.saveDefi(defi);
             }

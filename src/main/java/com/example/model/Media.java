@@ -5,9 +5,12 @@ import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonTypeName;
+
 @Entity
 @DiscriminatorValue("media")
-@Table(name = "media", schema = "public")
+//@Table(name = "media", schema = "public")
+@JsonTypeName("media")
 public class Media extends Etape {
 
     @Column
@@ -20,5 +23,8 @@ public class Media extends Etape {
 
     public Media() {
         super();
+    }
+    public String getURL(){
+        return this.URL;
     }
 }
