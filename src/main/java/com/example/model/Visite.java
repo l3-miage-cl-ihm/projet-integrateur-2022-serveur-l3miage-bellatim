@@ -21,10 +21,10 @@ public class Visite {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
 
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany
     private List<Chami> joueurs;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     private Defi defi;
 
     @Column

@@ -114,9 +114,6 @@ public class DefiController {
     // public Defi create(@PathVariable(value = "defiId") int id, @RequestBody Defi defi,
     public Defi create(@RequestBody Defi defi,
             @RequestHeader("Authorization") String jwt) throws IOException{
-        // if (!(defi.getId().equals(id))) {
-        //     throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Wrong id");
-        // }
         try {
             //verifier titre existe pas
             FirebaseToken token = FirebaseAuth.getInstance().verifyIdToken(jwt);

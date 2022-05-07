@@ -56,17 +56,12 @@ public class VisiteController {
         }
     }
 
-    @PostMapping("/{idVisite}")
-    public Visite create(@PathVariable(value = "idVisite") int id, @RequestBody Visite visite,
+    @PostMapping("/")
+    public Visite create(@RequestBody Visite visite,
             @RequestHeader("Authorization") String jwt) {
         try {
             FirebaseAuth.getInstance().verifyIdToken(jwt);
-            if (id == visite.getId()) {
-                return visiteService.saveVisite(visite);
-            } else {
-                throw new ResponseStatusException(HttpStatus.PRECONDITION_FAILED,
-                        "L'id entré en paramètre est celui de la visite sont différent");
-            }
+            return visiteService.saveVisite(visite);
         } catch (FirebaseAuthException e) {
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Unauthorized");
         }
