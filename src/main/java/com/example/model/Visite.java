@@ -34,16 +34,21 @@ public class Visite {
     @Column
     private LocalDateTime dateDebut;
 
+    @Column
+    private LocalDateTime dateFin;
+
     public Visite() {
         super();
         joueurs = new ArrayList<>();
     }
 
     public Visite(List<Chami> j, Defi d, int rang) {
+        super();
         this.joueurs = j;
         this.defi = d;
         this.rang = rang;
         this.dateDebut=LocalDateTime.now();
+        this.dateFin=null;
     }
 
     public void addChami(Chami c) {

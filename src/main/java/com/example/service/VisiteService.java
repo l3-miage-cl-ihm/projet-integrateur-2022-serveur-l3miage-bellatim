@@ -1,5 +1,6 @@
 package com.example.service;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 
@@ -9,13 +10,18 @@ import com.example.repository.ChamiRepository;
 import com.example.repository.VisiteRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 @Service
 public class VisiteService {
 
     @Autowired
     private VisiteRepository visiteRepository;
+
+    @Autowired
+    private SSEservice sseService;
 
     public Optional<Visite> getVisite(final int id) {
         return visiteRepository.findById(id);
@@ -29,19 +35,22 @@ public class VisiteService {
         visiteRepository.deleteById(visite);
     }
 
-    public Visite saveVisite(Visite visite) {
+    public Visite saveVisite(Visite visite) throws IOException{
+        sseService.doNotify();
         return visiteRepository.save(visite);
     }
 
+
+
     @Autowired
-    private ChamiRepository chamiRepository;
+    private ChamiService chamiService;
 
     public List<Visite> getAllVisitesByChamiId(String chamiId) {
-        Optional<Chami> chamiOpt = chamiRepository.findById(chamiId);
+        Optional<Chami> chamiOpt = chamiService.getChami(chamiId);
         if (chamiOpt.isPresent()) {
-            return visiteRepository.findByJoueursId(chamiOpt.get().getLogin());
+            return visiteRepository.findByJoueursId(chamiOpt.get().getId());
         } else {
-            return null;
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Visites not found");
         }
     }
 }

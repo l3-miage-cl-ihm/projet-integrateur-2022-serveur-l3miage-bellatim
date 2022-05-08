@@ -2,6 +2,7 @@ package com.example.controller;
 
 import com.example.model.*;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 
@@ -47,7 +48,7 @@ public class VisiteController {
         }
     }
 
-    @GetMapping("/{idVisite}")
+    @GetMapping("/play/{idVisite}")
     public Visite read(@PathVariable(value = "idVisite") int id, @RequestHeader("Authorization") String jwt) {
         try {
             FirebaseAuth.getInstance().verifyIdToken(jwt);
@@ -74,7 +75,7 @@ public class VisiteController {
 
     @PostMapping("/")
     public Visite create(@RequestBody VisiteDTO visiteDTO,
-            @RequestHeader("Authorization") String jwt) {
+            @RequestHeader("Authorization") String jwt) throws IOException {
         try {
             FirebaseAuth.getInstance().verifyIdToken(jwt);
             return visiteService.saveVisite(mapper.toVisite(visiteDTO));
@@ -100,7 +101,7 @@ public class VisiteController {
 
     @PutMapping("/{idVisite}")
     public Visite update(@PathVariable(value = "idVisite") int id, @RequestBody Visite visite,
-            @RequestHeader("Authorization") String jwt) {
+            @RequestHeader("Authorization") String jwt) throws IOException {
         try {
             FirebaseAuth.getInstance().verifyIdToken(jwt);
             if (id == visite.getId()) {
