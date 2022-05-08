@@ -1,0 +1,1 @@
+JDBC_DATABASE_URL=jdbc:postgresql://ec2-52-214-23-110.eu-west-1.compute.amazonaws.com:5432/d2hqimvd219601?sslmode=require&user=mcbsgworgshxyt&password=853e9d5edc799d320baf9da10443acd98352ff8ee261b201685079f07ce05da9

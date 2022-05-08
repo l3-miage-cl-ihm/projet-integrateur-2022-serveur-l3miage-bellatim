@@ -10,7 +10,7 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 //ajouter lambok
 @Entity
-@Table(name = "chamis", schema = "public")
+@Table(name = "chami", schema = "public")
 /*
  * @JsonIdentityInfo(
  * generator = ObjectIdGenerators.PropertyGenerator.class,

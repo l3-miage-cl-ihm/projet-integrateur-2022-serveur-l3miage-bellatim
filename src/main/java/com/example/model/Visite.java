@@ -1,5 +1,6 @@
 package com.example.model;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,6 +31,9 @@ public class Visite {
     @Column
     private int rang; // pour reprendre le jeu en cas de besoin
 
+    @Column
+    private LocalDateTime dateDebut;
+
     public Visite() {
         super();
         joueurs = new ArrayList<>();
@@ -39,6 +43,7 @@ public class Visite {
         this.joueurs = j;
         this.defi = d;
         this.rang = rang;
+        this.dateDebut=LocalDateTime.now();
     }
 
     public void addChami(Chami c) {

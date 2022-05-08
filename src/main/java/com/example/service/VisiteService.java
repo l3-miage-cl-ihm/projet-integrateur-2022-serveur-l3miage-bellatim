@@ -36,7 +36,7 @@ public class VisiteService {
     @Autowired
     private ChamiRepository chamiRepository;
 
-    public List<Visite> getAllVisitesByChami(String chamiId) {
+    public List<Visite> getAllVisitesByChamiId(String chamiId) {
         Optional<Chami> chamiOpt = chamiRepository.findById(chamiId);
         if (chamiOpt.isPresent()) {
             return visiteRepository.findByJoueursId(chamiOpt.get().getLogin());

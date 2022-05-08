@@ -5,9 +5,11 @@ import com.example.model.*;
 import java.util.List;
 import java.util.Optional;
 
+import com.example.service.Mapper;
 import com.example.service.VisiteService;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthException;
+import com.google.firebase.auth.FirebaseToken;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -30,6 +32,9 @@ public class VisiteController {
 
     @Autowired
     private VisiteService visiteService;
+
+    @Autowired 
+    private Mapper mapper;
 
     @GetMapping("/")
     public List<Visite> allVisites(@RequestHeader("Authorization") String jwt) {
@@ -56,12 +61,23 @@ public class VisiteController {
         }
     }
 
+    // @PostMapping("/")
+    // public Visite create(@RequestBody Visite visite,
+    //         @RequestHeader("Authorization") String jwt) {
+    //     try {
+    //         FirebaseAuth.getInstance().verifyIdToken(jwt);
+    //         return visiteService.saveVisite(visite);
+    //     } catch (FirebaseAuthException e) {
+    //         throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Unauthorized");
+    //     }
+    // }
+
     @PostMapping("/")
-    public Visite create(@RequestBody Visite visite,
+    public Visite create(@RequestBody VisiteDTO visiteDTO,
             @RequestHeader("Authorization") String jwt) {
         try {
             FirebaseAuth.getInstance().verifyIdToken(jwt);
-            return visiteService.saveVisite(visite);
+            return visiteService.saveVisite(mapper.toVisite(visiteDTO));
         } catch (FirebaseAuthException e) {
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Unauthorized");
         }
@@ -71,8 +87,12 @@ public class VisiteController {
     public List<Visite> allVisitesByChami(@PathVariable("chamiId") String chamiId,
             @RequestHeader("Authorization") String jwt) {
         try {
-            FirebaseAuth.getInstance().verifyIdToken(jwt);
-            return visiteService.getAllVisitesByChami(chamiId);
+            
+            FirebaseToken token = FirebaseAuth.getInstance().verifyIdToken(jwt);
+            if(!token.getUid().equals(chamiId)) {
+                throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Unauthorized");
+            }
+            return visiteService.getAllVisitesByChamiId(chamiId);
         } catch (FirebaseAuthException e) {
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Unauthorized", e);
         }
