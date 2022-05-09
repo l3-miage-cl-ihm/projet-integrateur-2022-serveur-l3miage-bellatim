@@ -5,9 +5,12 @@ import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonTypeName;
+
 @Entity
 @DiscriminatorValue("indice")
-@Table(name="indice", schema = "public")
+//@Table(name="indice", schema = "public")
+@JsonTypeName("indice")
 public class Indice extends Etape{
 
 
@@ -15,8 +18,8 @@ public class Indice extends Etape{
     private int cout;
 
 
-    public Indice(int rang, String label, int cout){
-        super(rang, label);
+    public Indice(int rang, String label, Defi def, int cout){
+        super(rang, label, def);
         this.cout = cout;
     }
 

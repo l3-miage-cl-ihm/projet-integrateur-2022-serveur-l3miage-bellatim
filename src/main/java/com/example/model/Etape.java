@@ -7,6 +7,7 @@ import javax.persistence.*;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import com.fasterxml.jackson.annotation.JsonTypeName;
 import com.fasterxml.jackson.annotation.JsonSubTypes.Type;
 
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
@@ -19,11 +20,12 @@ import com.fasterxml.jackson.annotation.JsonSubTypes.Type;
   include = JsonTypeInfo.As.PROPERTY, 
   property = "type_etape")
 @JsonSubTypes({ 
-  @Type(value = Media.class, name = "media"), 
-  @Type(value = Question.class, name = "question"), 
-  @Type(value = Etape.class, name = "mere"), 
-  @Type(value = Indice.class, name = "indice") 
+    @JsonSubTypes.Type(value = Media.class, name = "media"), 
+    @JsonSubTypes.Type(value = Question.class, name = "question"), 
+    @JsonSubTypes.Type(value = Etape.class, name = "mere"), 
+    @JsonSubTypes.Type(value = Indice.class, name = "indice") 
 })
+@JsonTypeName("mere")
 public class Etape {
 
     @Id
@@ -36,10 +38,16 @@ public class Etape {
     @Column
     private String label;
 
-    public Etape(int rang, String label) {
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JsonBackReference
+    @JoinColumn(name = "defi_id")
+    private Defi defi;
+
+    public Etape(int rang, String label, Defi defi) {
         super();
         this.rang = rang;
         this.label = label;
+        this.defi = defi;
     }
 
     public Etape() {

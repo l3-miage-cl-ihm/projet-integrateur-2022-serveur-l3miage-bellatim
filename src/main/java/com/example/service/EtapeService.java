@@ -33,10 +33,10 @@ public class EtapeService {
         return itemRepository.save(item);
     }
 
-    /*@Autowired
+    @Autowired
     private DefiRepository defiRepository;
 
-    /*public List<Etape> getAllItemByDefi(int defiId) {
+    public List<Etape> getAllItemByDefi(int defiId) {
         Optional<Defi> defiOpt = defiRepository.findById(defiId);
         if (defiOpt.isPresent()) {
             return itemRepository.findByDefi(defiOpt.get());
@@ -44,5 +44,5 @@ public class EtapeService {
             // return new ArrayList<Etape>();
             return null;
         }
-    }*/
+    }
 }
