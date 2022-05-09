@@ -1,6 +1,7 @@
 package com.example.controller;
 
 import java.io.IOException;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -123,6 +124,7 @@ public class DefiController {
                 if (defiOpt.isPresent()) {
                     throw new ResponseStatusException(HttpStatus.CONFLICT, "Defi already exists");
                 }
+                defi.setDateDeCreation(LocalDateTime.now());
                 sseService.doNotify();
                 return defiService.saveDefi(defi);
             }
