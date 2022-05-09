@@ -5,6 +5,7 @@ import java.util.List;
 public class VisiteDTO {
     
 
+    
     private String joueur;
 
     private int defi;
@@ -13,7 +14,12 @@ public class VisiteDTO {
 
 
  
-
+    public VisiteDTO(String joueur, int defi, int rang){
+        super();
+        this.joueur = joueur;
+        this.defi=defi;
+        this.rang=rang;
+    }
  
 
     public String getJoueur() {

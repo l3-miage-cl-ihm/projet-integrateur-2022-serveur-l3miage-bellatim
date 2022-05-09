@@ -31,24 +31,29 @@ public class Visite {
     @Column
     private int rang; // pour reprendre le jeu en cas de besoin
 
-    @Column
+    @Column(columnDefinition = "TIMESTAMP") // type TIMESTAMP dans la base de données
     private LocalDateTime dateDebut;
 
-    @Column
+    @Column(columnDefinition = "TIMESTAMP") // type TIMESTAMP dans la base de données
     private LocalDateTime dateFin;
 
     public Visite() {
         super();
         joueurs = new ArrayList<>();
+        this.dateDebut=LocalDateTime.now();
     }
 
-    public Visite(List<Chami> j, Defi d, int rang) {
+    public Visite(List<Chami> j, Defi d, int rang,LocalDateTime date) {
         super();
         this.joueurs = j;
         this.defi = d;
         this.rang = rang;
-        this.dateDebut=LocalDateTime.now();
+        this.dateDebut=date;
         this.dateFin=null;
+    }
+
+    public LocalDateTime getDateDebut(){
+        return dateDebut;
     }
 
     public void addChami(Chami c) {
@@ -77,5 +82,9 @@ public class Visite {
 
     public void setRang(int r) {
         this.rang = r;
+    }
+
+    public Defi getDefi(){
+        return this.defi;
     }
 }
