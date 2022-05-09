@@ -1,5 +1,6 @@
 package com.example.service;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -23,6 +24,18 @@ public class Mapper {
     @Autowired
     private DefiService dService;
 
+    public VisiteDTO toDTO(Visite visite) {
+        try{
+            int defiId = visite.getDefi().getId();
+            String joueurId = visite.getJoueurs().get(0).getId();
+            VisiteDTO visiteDTO = new VisiteDTO( joueurId, defiId,0);
+            return visiteDTO;
+        }catch(Exception e){
+            throw new ResponseStatusException(HttpStatus.PRECONDITION_FAILED, "Erreur");
+        }
+        
+    }
+
     public Visite toVisite(VisiteDTO vTDO){
             Optional<Defi> defiOpt = dService.getDefi(vTDO.getDefi());
             Defi defi;
@@ -43,7 +56,7 @@ public class Mapper {
             }
             List<Chami> chamiList = new ArrayList<Chami>();
             chamiList.add(chami);
-            Visite visite = new Visite (chamiList, defi, 1);
+            Visite visite = new Visite (chamiList, defi, 1,LocalDateTime.now());
             return visite;
     }
 }

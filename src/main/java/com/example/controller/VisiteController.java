@@ -99,6 +99,21 @@ public class VisiteController {
         }
     }
 
+    @GetMapping("/DTO/{chamiId}")
+    public List<VisiteDTO> allVisitesDTOByChami(@PathVariable("chamiId") String chamiId,
+            @RequestHeader("Authorization") String jwt) {
+        try {
+            
+            FirebaseToken token = FirebaseAuth.getInstance().verifyIdToken(jwt);
+            if(!token.getUid().equals(chamiId)) {
+                throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Unauthorized");
+            }
+            return visiteService.getAllVisitesDTOByChamiId(chamiId);
+        } catch (FirebaseAuthException e) {
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Unauthorized", e);
+        }
+    }
+
     @PutMapping("/{idVisite}")
     public Visite update(@PathVariable(value = "idVisite") int id, @RequestBody Visite visite,
             @RequestHeader("Authorization") String jwt) throws IOException {
