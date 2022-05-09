@@ -4,11 +4,9 @@ import java.util.Comparator;
 
 import javax.persistence.*;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.annotation.JsonTypeName;
-import com.fasterxml.jackson.annotation.JsonSubTypes.Type;
 
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name = "type_etape")
@@ -33,21 +31,20 @@ public class Etape {
     private int id;
 
     @Column
-    private int rang;// test
+    private int rang;
 
     @Column
     private String label;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    /*@ManyToOne(cascade = CascadeType.ALL)
     @JsonBackReference
     @JoinColumn(name = "defi_id")
-    private Defi defi;
+    private Defi defi;*/
 
-    public Etape(int rang, String label, Defi defi) {
+    public Etape(int rang, String label) {
         super();
         this.rang = rang;
         this.label = label;
-        this.defi = defi;
     }
 
     public Etape() {
