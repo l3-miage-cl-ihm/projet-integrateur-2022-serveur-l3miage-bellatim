@@ -156,6 +156,7 @@ public class DefiController {
             if (!leDefiOpt.isPresent()) {
                 throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Le défi n'existe pas.");
             }
+            defi.setDateCreation(LocalDateTime.now());
             sseService.doNotify();
             //set ?
             return defiService.saveDefi(defi);
