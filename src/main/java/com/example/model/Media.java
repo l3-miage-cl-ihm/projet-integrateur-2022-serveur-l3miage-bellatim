@@ -14,17 +14,17 @@ import com.fasterxml.jackson.annotation.JsonTypeName;
 public class Media extends Etape {
 
     @Column
-    private String URL;
+    private String url;
 
-    public Media(int rang, String label, Defi def, String url) {
-        super(rang, label, def);
-        this.URL = url;
+    public Media(int rang, String label, String url) {
+        super(rang, label);
+        this.url = url;
     }
 
     public Media() {
         super();
     }
     public String getURL(){
-        return this.URL;
+        return this.url;
     }
 }

@@ -24,17 +24,17 @@ public class Question extends Etape {
     private List<Indice> listeIndice;
 
     @Column
-    private String reponseAttendu;
+    private String reponse_attendu;
 
     @Column
-    private TypeReponse typeReponseAttendu;
+    private TypeReponse type_reponse_attendu;
 
-    public Question(int rang, String label, Defi def, int point, List<Indice> l, String repAttendu, TypeReponse typeRepAttendu) {
-        super(rang, label, def);
+    public Question(int rang, String label, int point, List<Indice> l, String repAttendu, TypeReponse typeRepAttendu) {
+        super(rang, label);
         this.point = point;
         this.listeIndice = l;
-        this.reponseAttendu = repAttendu;
-        this.typeReponseAttendu = typeRepAttendu;
+        this.reponse_attendu = repAttendu;
+        this.type_reponse_attendu = typeRepAttendu;
     }
 
     public Question() {
@@ -50,7 +50,7 @@ public class Question extends Etape {
     }
 
     public void setReponseAttendu(String rep) {
-        this.reponseAttendu = rep;
+        this.reponse_attendu = rep;
     }
 
     public int getPoint(){
@@ -62,11 +62,11 @@ public class Question extends Etape {
     }
 
     public String getReponseAttendu() {
-        return reponseAttendu;
+        return reponse_attendu;
     }
 
     public TypeReponse getTypeReponseAttendu(){
-        return this.typeReponseAttendu;
+        return this.type_reponse_attendu;
     }
 
 }

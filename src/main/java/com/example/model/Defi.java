@@ -39,8 +39,7 @@ public class Defi {
     /*@Column
     private String categorie;*/
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy="defi")
-    @JsonManagedReference()
+    @OneToMany(cascade = CascadeType.ALL)
     private List<Etape> listEtape;
 
     public Defi() {
@@ -57,7 +56,6 @@ public class Defi {
         this.description = description;
         this.listEtape = listEtape;
         this.categorie = cat;
-
         this.auteur = auteur;
         // auteur.addDefis(this);
     }

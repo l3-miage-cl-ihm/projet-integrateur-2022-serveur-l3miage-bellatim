@@ -18,8 +18,8 @@ public class Indice extends Etape{
     private int cout;
 
 
-    public Indice(int rang, String label, Defi def, int cout){
-        super(rang, label, def);
+    public Indice(int rang, String label, int cout){
+        super(rang, label);
         this.cout = cout;
     }
 
