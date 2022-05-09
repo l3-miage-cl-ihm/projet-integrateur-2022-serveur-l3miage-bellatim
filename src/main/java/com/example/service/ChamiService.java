@@ -17,8 +17,8 @@ public class ChamiService {
     @Autowired
     private ChamiRepository chamiRepository;
 
-    public Optional<Chami> getChami(final String login) {
-        return chamiRepository.findById(login);
+    public Optional<Chami> getChami(final String id) {
+        return chamiRepository.findById(id);
     }
 
     public Optional<Chami> getByEmail(String email) {

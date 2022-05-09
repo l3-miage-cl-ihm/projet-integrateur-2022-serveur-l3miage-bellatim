@@ -11,7 +11,7 @@ import java.util.List;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "defis", schema = "public")
+@Table(name = "defi", schema = "public")
 /*
  * @JsonIdentityInfo(
  * generator = ObjectIdGenerators.PropertyGenerator.class,

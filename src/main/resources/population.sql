@@ -1,8 +1,8 @@
-TRUNCATE TABLE defis CASCADE;
-TRUNCATE TABLE chamis CASCADE;
+TRUNCATE TABLE defi CASCADE;
+TRUNCATE TABLE chami CASCADE;
 TRUNCATE TABLE etape CASCADE;
 
-INSERT INTO Chamis (id, login, age, email) VALUES 
+INSERT INTO Chami (id, login, age, email) VALUES 
 ('a', 'carobis', 21, null),
 ('b', 'escribis', 43, null),
 ('c', 'momo', 38, 'mo@mo.com'),
@@ -10,7 +10,7 @@ INSERT INTO Chamis (id, login, age, email) VALUES
 ('e', 'python38', 18, null),
 ('f', 'yes4moldus', 38, null);
 
-INSERT INTO defis (id, categorie, date_de_creation, description, titre, auteur_id) VALUES
+INSERT INTO defi (id, categorie, date_de_creation, description, titre, auteur_id) VALUES
 (127, 'ENIGME', '2021-03-15 16:03', 
 'Pour le présentiel regarder la vidéo avant d''aller sur place.', 
 'Le Méchoui et l''Animal', 'a'),
