@@ -11,7 +11,7 @@ import java.util.List;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "defis", schema = "public")
+@Table(name = "defi", schema = "public")
 /*
  * @JsonIdentityInfo(
  * generator = ObjectIdGenerators.PropertyGenerator.class,
@@ -36,9 +36,11 @@ public class Defi {
     @Column
     @Enumerated(EnumType.STRING)
     private Categorie categorie;
+    /*@Column
+    private String categorie;*/
 
-    @OneToMany(mappedBy = "defi", cascade = CascadeType.ALL)
-    @JsonManagedReference
+    @OneToMany(cascade = CascadeType.ALL, mappedBy="defi")
+    @JsonManagedReference()
     private List<Etape> listEtape;
 
     public Defi() {
@@ -93,7 +95,9 @@ public class Defi {
     public LocalDateTime getDateDeCreation() {
         return this.dateDeCreation;
     }
-
+    public void setDateCreation(LocalDateTime d){
+      this.dateDeCreation = d;
+    }
     public List<Etape> getEtape() {
         return listEtape;
     }
@@ -124,12 +128,13 @@ public class Defi {
         }
     };
 
+
     /*
      * public void setAuteur(Chami auteur) {
      * this.auteur = auteur;
      * auteur.addDefisSimple(this);
      * }
-     * 
+     *
      * public void setSimpleAuteur(Chami auteur) {
      * this.auteur = auteur;
      * }

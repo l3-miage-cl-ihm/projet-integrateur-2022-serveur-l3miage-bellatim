@@ -17,24 +17,10 @@ import java.util.concurrent.CopyOnWriteArrayList;
 
 import com.example.service.SSEservice;
 import org.springframework.http.HttpStatus;
-@CrossOrigin
 @RestController
+@CrossOrigin
 public class SSEController {
 
-
-    // public static final List<SseEmitter> emitters = Collections.synchronizedList( new ArrayList<>());
-
-    // // @RequestMapping(path = "/stream", method = RequestMethod.GET)
-    // @GetMapping("/stream")
-    // public SseEmitter stream() throws IOException {
-
-    //     SseEmitter emitter = new SseEmitter();
-
-    //     emitters.add(emitter);
-    //     emitter.onCompletion(() -> emitters.remove(emitter));
-
-    //     return emitter;
-    // }
     @Autowired
     SSEservice service;
     

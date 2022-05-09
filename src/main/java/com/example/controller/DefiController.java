@@ -5,6 +5,8 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
+import java.time.LocalDateTime;
+
 import com.example.model.Defi;
 import com.example.service.ChamiService;
 import com.example.service.DefiService;
@@ -113,9 +115,6 @@ public class DefiController {
     // public Defi create(@PathVariable(value = "defiId") int id, @RequestBody Defi defi,
     public Defi create(@RequestBody Defi defi,
             @RequestHeader("Authorization") String jwt) throws IOException{
-        // if (!(defi.getId().equals(id))) {
-        //     throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Wrong id");
-        // }
         try {
             //verifier titre existe pas
             FirebaseToken token = FirebaseAuth.getInstance().verifyIdToken(jwt);
@@ -124,7 +123,9 @@ public class DefiController {
                 if (defiOpt.isPresent()) {
                     throw new ResponseStatusException(HttpStatus.CONFLICT, "Defi already exists");
                 }
-                defi.setDateDeCreation(LocalDateTime.now());
+                System.out.println("defi.categorie : " + defi.getCategorie());
+                System.out.println("defi.titre : " + defi.getTitre());
+                defi.setDateCreation(LocalDateTime.now());
                 sseService.doNotify();
                 return defiService.saveDefi(defi);
             }
@@ -137,22 +138,30 @@ public class DefiController {
     }
 
     @PutMapping("/{defiId}")
-    public Defi update(@PathVariable(value = "defiId") int id, @RequestBody Defi defi) throws IOException{
+    public Defi update(@PathVariable(value = "defiId") int id, @RequestBody Defi defi, @RequestHeader("Authorization") String jwt) throws IOException{
+        try{
+            FirebaseToken token = FirebaseAuth.getInstance().verifyIdToken(jwt);
+            if(!defi.getAuteur().getId().equals(token.getUid())){
+                throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Unauthorized");
+                }
+                
+            // if (!(defi.getId().equals(id))) {
+            if (!(defi.getId()==id)) {
+                throw new ResponseStatusException(HttpStatus.PRECONDITION_FAILED,
+                        "L'id du défi passé en paramètre n'est pas le même que celui saisi.");
+            }
 
-        // if (!(defi.getId().equals(id))) {
-        if (!(defi.getId()==id)) {
-            throw new ResponseStatusException(HttpStatus.PRECONDITION_FAILED,
-                    "L'id du défi passé en paramètre n'est pas le même que celui saisi.");
+            Optional<Defi> leDefiOpt = defiService.getDefi(id);
+
+            if (!leDefiOpt.isPresent()) {
+                throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Le défi n'existe pas.");
+            }
+            sseService.doNotify();
+            //set ?
+            return defiService.saveDefi(defi);
+        } catch (FirebaseAuthException e) {
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Unauthorized",e);
         }
-
-        Optional<Defi> leDefiOpt = defiService.getDefi(id);
-
-        if (!leDefiOpt.isPresent()) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Le défi n'existe pas.");
-        }
-        sseService.doNotify();
-        return defiService.saveDefi(defi);
-
     }
 
     //addDefiByChami

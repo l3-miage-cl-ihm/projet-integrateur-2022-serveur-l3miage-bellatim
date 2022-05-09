@@ -1,5 +1,6 @@
 package com.example.model;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,14 +22,20 @@ public class Visite {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
 
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany
     private List<Chami> joueurs;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     private Defi defi;
 
     @Column
     private int rang; // pour reprendre le jeu en cas de besoin
+
+    @Column
+    private LocalDateTime dateDebut;
+
+    @Column
+    private LocalDateTime dateFin;
 
     public Visite() {
         super();
@@ -36,9 +43,12 @@ public class Visite {
     }
 
     public Visite(List<Chami> j, Defi d, int rang) {
+        super();
         this.joueurs = j;
         this.defi = d;
         this.rang = rang;
+        this.dateDebut=LocalDateTime.now();
+        this.dateFin=null;
     }
 
     public void addChami(Chami c) {

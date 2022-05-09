@@ -1,8 +1,8 @@
-TRUNCATE TABLE defis CASCADE;
-TRUNCATE TABLE chamis CASCADE;
+TRUNCATE TABLE defi CASCADE;
+TRUNCATE TABLE chami CASCADE;
 TRUNCATE TABLE etape CASCADE;
 
-INSERT INTO Chamis (id, login, age, email) VALUES 
+INSERT INTO Chami (id, login, age, email) VALUES 
 ('a', 'carobis', 21, null),
 ('b', 'escribis', 43, null),
 ('c', 'momo', 38, 'mo@mo.com'),
@@ -10,21 +10,21 @@ INSERT INTO Chamis (id, login, age, email) VALUES
 ('e', 'python38', 18, null),
 ('f', 'yes4moldus', 38, null);
 
-INSERT INTO defis (id, categorie, date_de_creation, description, titre, auteur_id) VALUES
+INSERT INTO defi (id, categorie, date_de_creation, description, titre, auteur_id) VALUES
 (127, 'ENIGME', '2021-03-15 16:03', 
 'Pour le présentiel regarder la vidéo avant d''aller sur place.', 
 'Le Méchoui et l''Animal', 'a'),
 (128, 'ENIGME', '2021-04-03 22:42',
-' Possible uniquement en présentiel. ~ 2h30
- Télécharge l''application "Graaly" sur ton téléphone portable.
- Cette application est indispensable pour jouer.
- Le défi consiste à jouer à l''escape game "Street art".',
-  'Escape gameStreet art', 'a'),
+'Possible uniquement en présentiel. ~ 2h30
+Télécharge l''application "Graaly" sur ton téléphone portable.
+Cette application est indispensable pour jouer.
+Le défi consiste à jouer à l''escape game "Street art".',
+ 'Escape gameStreet art', 'a'),
 (145, 'ENIGME', '2021-04-01 15:03', 
 '', 'Le vert, je le mange !', 'b');
 
 INSERT INTO etape (type_etape, id, label, rang, url, point, reponse_attendu, cout, defi_id) VALUES
-('mere', 1, 'Rendez vous à l''arrêt de bus "Grenoblehôtel de ville".', 1, '', 0, '', 0, 145),
+('mere', 1, 'Rendez vous à l''arrêt de bus "Grenoble hôtel de ville".', 1, '', 0, '', 0, 145),
 ('mere', 2, 'Passe par "l''orangerie".', 2, '', 0, '', 0, 145),
 ('indice', 3, 'Vas du coté de Belledonne.', 3, '', 1, '', 0, 145),
 ('mere', 4, 'Les oranges te donneront de l''énergie.', 4, '', 0, '', 0, 145),

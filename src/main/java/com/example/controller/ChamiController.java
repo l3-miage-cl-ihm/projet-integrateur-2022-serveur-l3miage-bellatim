@@ -105,7 +105,7 @@ public class ChamiController {
         }
     }
 
-    @GetMapping("/{visiteId}")
+    @GetMapping("/visite/{visiteId}")
     public List<Chami> allChamisByVisite(@PathVariable("visiteId") int visiteId,
             @RequestHeader("Authorization") String jwt) {
         try {
@@ -172,7 +172,7 @@ public class ChamiController {
         } catch (FirebaseAuthException e) {
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Unauthorized");
         }
-    }
+    }//test
 
 
 
