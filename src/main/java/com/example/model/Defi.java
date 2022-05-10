@@ -31,6 +31,7 @@ public class Defi {
     @ManyToOne
     private Chami auteur;
 
+    @Column
     private String description;
 
     @Column
@@ -132,6 +133,9 @@ public class Defi {
         this.coordonnees = c;
     }
 
+    public String getCoordonnees(){
+        return coordonnees;
+    }
     public static Comparator<Etape> comparatorEtape = new Comparator<Etape>() {
         @Override
         public int compare(Etape e1, Etape e2) {

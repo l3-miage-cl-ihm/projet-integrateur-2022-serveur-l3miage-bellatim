@@ -125,6 +125,8 @@ public class DefiController {
                 }
                 defi.setDateCreation(LocalDateTime.now());
                 System.out.println("____________________________________");
+                System.out.println(defi.getCoordonnees());
+                System.out.println("____________________________________");
                 sseService.doNotify();
                 return defiService.saveDefi(defi);
             }
