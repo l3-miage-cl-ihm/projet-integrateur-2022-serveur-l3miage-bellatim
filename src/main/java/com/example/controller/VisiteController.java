@@ -84,6 +84,23 @@ public class VisiteController {
         }
     }
 
+    @PutMapping("/{idVisite}/reponse")
+    public Visite addReponse(@PathVariable("idVisite") int id, @RequestBody Reponse reponse,@RequestHeader("Authorization") String jwt) throws IOException{
+        try {
+            //verifier joueur
+            FirebaseToken token = FirebaseAuth.getInstance().verifyIdToken(jwt);
+            Optional<Visite> visite = visiteService.getVisite(id);
+            if (!visite.isPresent()) {
+                throw new ResponseStatusException(HttpStatus.NOT_FOUND, "La visite n'existe pas avec cet id");
+            }
+            Visite visiteToUpdate = visite.get();
+            visiteToUpdate.addReponse(reponse);
+            return visiteService.saveVisite(visiteToUpdate);
+        } catch (FirebaseAuthException e) {
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Unauthorized");
+        }
+    }
+
     @GetMapping("/{chamiId}")
     public List<Visite> allVisitesByChami(@PathVariable("chamiId") String chamiId,
             @RequestHeader("Authorization") String jwt) {
@@ -127,7 +144,7 @@ public class VisiteController {
                 Visite visiteF = visiteTMP.get();
                 visiteF.setJoueur(visite.getJoueurs());
                 visiteF.setRang(visite.getRang());
-                return visiteService.saveVisite(visiteF);
+                return visiteService.saveVisite(visite);
             } else {
                 throw new ResponseStatusException(HttpStatus.PRECONDITION_FAILED,
                         "L'id passé en paramètre n'est pas le même que celui de la visite");
