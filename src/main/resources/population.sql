@@ -19,7 +19,7 @@ INSERT INTO defi (id, categorie, date_de_creation, description, titre, auteur_id
 Télécharge l''application "Graaly" sur ton téléphone portable.
 Cette application est indispensable pour jouer.
 Le défi consiste à jouer à l''escape game "Street art".',
- 'Escape gameStreet art', 'a'),
+ 'Escape game Street art', 'a'),
 (145, 'ENIGME', '2021-04-01 15:03', 
 '', 'Le vert, je le mange !', 'b');
 
