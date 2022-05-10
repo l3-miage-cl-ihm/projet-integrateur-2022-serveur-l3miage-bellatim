@@ -124,6 +124,7 @@ public class DefiController {
                     throw new ResponseStatusException(HttpStatus.CONFLICT, "Defi already exists");
                 }
                 defi.setDateCreation(LocalDateTime.now());
+                System.out.println("____________________________________");
                 sseService.doNotify();
                 return defiService.saveDefi(defi);
             }
