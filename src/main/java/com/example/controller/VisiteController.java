@@ -84,6 +84,35 @@ public class VisiteController {
         }
     }
 
+    @GetMapping("/fin/{idVisite}")
+    public Visite finVisite(@PathVariable("idVisite") int id, @RequestHeader("Authorization") String jwt) throws IOException{
+        try{
+            //verifier joueur est dans liste des joueurs
+            FirebaseToken token = FirebaseAuth.getInstance().verifyIdToken(jwt);
+            String uid = token.getUid();
+            boolean ok=false;
+            List<Chami> listJoueur = visiteService.getVisite(id).get().getJoueurs();
+            for (Chami chami : listJoueur) {
+                if(chami.getId().equals(uid)){
+                    ok=true;
+                }
+            }
+            if(!ok){
+                throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Unauthorized");
+            }
+            Optional<Visite> visite = visiteService.getVisite(id);
+            if (!visite.isPresent()) {
+                throw new ResponseStatusException(HttpStatus.NOT_FOUND, "La visite n'existe pas avec cet id");
+            }
+            Visite visiteToEnd = visite.get();
+            visiteToEnd.finir();
+
+            return visiteService.saveVisite(visiteToEnd);
+        } catch (FirebaseAuthException e) {
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Unauthorized");
+        }
+    }
+
     @PutMapping("/{idVisite}/reponse")
     public Visite addReponse(@PathVariable("idVisite") int id, @RequestBody Reponse reponse,@RequestHeader("Authorization") String jwt) throws IOException{
         try {

@@ -31,6 +31,7 @@ public class Defi {
     @ManyToOne
     private Chami auteur;
 
+    @Column
     private String description;
 
     @Column
@@ -38,6 +39,12 @@ public class Defi {
     private Categorie categorie;
     /*@Column
     private String categorie;*/
+
+    @Column
+    private String image; //url de l'image
+
+    @Column
+    private String coordonnees;
 
     @OneToMany(cascade = CascadeType.ALL)
     private List<Etape> listEtape;
@@ -48,7 +55,7 @@ public class Defi {
     }
 
     public Defi(int id, String titre, LocalDateTime dateDeCreation, String description, Chami auteur, Categorie cat,
-            List<Etape> listEtape) {
+            List<Etape> listEtape, String img, String coord) {
         super();
         this.id = id;
         this.titre = titre;
@@ -57,6 +64,8 @@ public class Defi {
         this.listEtape = listEtape;
         this.categorie = cat;
         this.auteur = auteur;
+        this.image = img;
+        this.coordonnees = coord;
         // auteur.addDefis(this);
     }
 
@@ -76,6 +85,10 @@ public class Defi {
 
     public void setTitre(String titre) {
         this.titre = titre;
+    }
+
+    public void setDateDeCreation(LocalDateTime date) {
+        this.dateDeCreation = date;
     }
 
     public void setDescription(String description) {
@@ -112,6 +125,17 @@ public class Defi {
         return this.auteur;
     }
 
+    public void setImage(String i){
+        this.image = i;
+    }
+
+    public void setCoordonnees(String c){
+        this.coordonnees = c;
+    }
+
+    public String getCoordonnees(){
+        return coordonnees;
+    }
     public static Comparator<Etape> comparatorEtape = new Comparator<Etape>() {
         @Override
         public int compare(Etape e1, Etape e2) {

@@ -8,6 +8,7 @@ import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.*;
 
 import com.fasterxml.jackson.annotation.JsonTypeName;
 
@@ -23,36 +24,42 @@ public class Question extends Etape {
     private int point;
 
     @OneToMany(cascade = CascadeType.ALL)
-    private List<Indice> listeIndice;
+    private List<Indice> liste_indice;
 
     @Column
     private String reponse_attendu;
 
     @Column
+    @Enumerated(EnumType.STRING)
     private TypeReponse type_reponse_attendu;
 
     public Question(int rang, String label, int point, List<Indice> l, String repAttendu, TypeReponse typeRepAttendu) {
         super(rang, label);
         this.point = point;
-        this.listeIndice = l;
+        this.liste_indice = l;
         this.reponse_attendu = repAttendu;
         this.type_reponse_attendu = typeRepAttendu;
     }
 
     public Question() {
         super();
+        //this.liste_indice = new ArrayList<Indice>();
     }
 
     public void addIndice(Indice i) {
-        listeIndice.add(i);
+        liste_indice.add(i);
     }
 
     public void removeIndice(Indice i) {
-        listeIndice.remove(i);
+        liste_indice.remove(i);
     }
 
     public void setReponseAttendu(String rep) {
         this.reponse_attendu = rep;
+    }
+
+    public void setTypeReponseAttendu(TypeReponse t){
+      this.type_reponse_attendu = t;
     }
 
     public int getPoint(){
@@ -60,7 +67,11 @@ public class Question extends Etape {
     }
 
     public List<Indice> getListeIndice(){
-        return this.listeIndice;
+        return this.liste_indice;
+    }
+
+    public void setListeIndice(List<Indice> l){
+      this.liste_indice = l;
     }
 
     public String getReponseAttendu() {

@@ -80,6 +80,10 @@ public class Visite {
         return dateDebut;
     }
 
+    public LocalDateTime getDateFin(){
+        return dateFin;
+    }
+
     public void addChami(Chami c) {
         joueurs.add(c);
     }
@@ -110,5 +114,9 @@ public class Visite {
 
     public Defi getDefi(){
         return this.defi;
+    }
+
+    public void finir(){
+        this.dateFin = LocalDateTime.now();
     }
 }
