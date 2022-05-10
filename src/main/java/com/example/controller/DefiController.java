@@ -1,6 +1,7 @@
 package com.example.controller;
 
 import java.io.IOException;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -153,6 +154,7 @@ public class DefiController {
             if (!leDefiOpt.isPresent()) {
                 throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Le défi n'existe pas.");
             }
+            defi.setDateCreation(LocalDateTime.now());
             sseService.doNotify();
             //set ?
             return defiService.saveDefi(defi);

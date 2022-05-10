@@ -2,6 +2,8 @@ package com.example.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
@@ -11,6 +13,7 @@ import javax.persistence.Table;
 public class Reponse {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
 
     @Column
@@ -25,20 +28,19 @@ public class Reponse {
     @ManyToOne
     private Question question;
 
-    @ManyToOne
-    private Visite visite;
 
     public Reponse() {
         super();
     }
 
-    public Reponse(Boolean valide, TypeReponse type, String val, Question question, Visite visite) {
+    // public Reponse(Boolean valide, TypeReponse type, String val, Question question, Visite visite) {
+    public Reponse(Boolean valide, TypeReponse type, String val, Question question) {
         super();
         this.valide = valide;
         this.typeReponse = type;
         this.value = val;
         this.question = question;
-        this.visite = visite;
+        // this.visite = visite;
     }
 
     public Boolean isValidate() {
@@ -65,8 +67,8 @@ public class Reponse {
         return question;
     }
 
-    public Visite getVisite() {
-        return visite;
-    }
+    // public Visite getVisite() {
+    //     return visite;
+    // }
 
 }

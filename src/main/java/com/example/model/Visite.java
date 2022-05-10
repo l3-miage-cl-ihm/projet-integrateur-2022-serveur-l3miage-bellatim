@@ -12,7 +12,11 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import org.hibernate.annotations.Cascade;
+// import org.hibernate.annotations.CascadeType;
 
 @Entity
 @Table(name = "visite", schema = "public")
@@ -25,30 +29,55 @@ public class Visite {
     @ManyToMany
     private List<Chami> joueurs;
 
+    // @OneToMany
+    // @Cascade(CascadeType.SAVE_UPDATE)
+    @OneToMany(cascade=CascadeType.ALL)
+    private List<Reponse> reponses;
+
     @ManyToOne
     private Defi defi;
 
     @Column
     private int rang; // pour reprendre le jeu en cas de besoin
 
-    @Column
+    @Column(columnDefinition = "TIMESTAMP") // type TIMESTAMP dans la base de données
     private LocalDateTime dateDebut;
 
-    @Column
+    @Column(columnDefinition = "TIMESTAMP") // type TIMESTAMP dans la base de données
     private LocalDateTime dateFin;
 
     public Visite() {
         super();
         joueurs = new ArrayList<>();
+        reponses = new ArrayList<>();
+        this.dateDebut=LocalDateTime.now();
     }
 
-    public Visite(List<Chami> j, Defi d, int rang) {
+    public Visite(List<Chami> j, Defi d, int rang,LocalDateTime date) {
         super();
         this.joueurs = j;
         this.defi = d;
         this.rang = rang;
-        this.dateDebut=LocalDateTime.now();
+        this.dateDebut=date;
         this.dateFin=null;
+        this.reponses= new ArrayList<>();
+    }
+
+    public List<Reponse> getReponses(){
+        return reponses;
+    }
+
+    public void addReponse(Reponse reponse){
+        this.reponses.add(reponse);
+    }
+
+    public void setReponses(List<Reponse> reponses){
+        this.reponses=reponses;
+    }
+
+
+    public LocalDateTime getDateDebut(){
+        return dateDebut;
     }
 
     public void addChami(Chami c) {
@@ -77,5 +106,9 @@ public class Visite {
 
     public void setRang(int r) {
         this.rang = r;
+    }
+
+    public Defi getDefi(){
+        return this.defi;
     }
 }

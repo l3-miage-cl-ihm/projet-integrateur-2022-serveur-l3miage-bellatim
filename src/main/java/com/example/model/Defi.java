@@ -78,6 +78,10 @@ public class Defi {
         this.titre = titre;
     }
 
+    public void setDateDeCreation(LocalDateTime date) {
+        this.dateDeCreation = date;
+    }
+
     public void setDescription(String description) {
         this.description = description;
     }

@@ -1,11 +1,13 @@
 package com.example.service;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 import com.example.model.Chami;
 import com.example.model.Visite;
+import com.example.model.VisiteDTO;
 import com.example.repository.ChamiRepository;
 import com.example.repository.VisiteRepository;
 
@@ -23,8 +25,21 @@ public class VisiteService {
     @Autowired
     private SSEservice sseService;
 
+    @Autowired
+    private Mapper mapper;
+
     public Optional<Visite> getVisite(final int id) {
         return visiteRepository.findById(id);
+    }
+
+    public VisiteDTO getVisiteDTO(final int id){
+        Optional<Visite> visiteOpt = visiteRepository.findById(id);
+        Visite visite;
+        if(!visiteOpt.isPresent()){
+             throw new ResponseStatusException(HttpStatus.PRECONDITION_FAILED, "defi inexistant");
+        }
+        visite = visiteOpt.get();
+        return mapper.toDTO(visite);
     }
 
     public List<Visite> getAllVisite() {
@@ -36,6 +51,7 @@ public class VisiteService {
     }
 
     public Visite saveVisite(Visite visite) throws IOException{
+        
         sseService.doNotify();
         return visiteRepository.save(visite);
     }
@@ -52,5 +68,19 @@ public class VisiteService {
         } else {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Visites not found");
         }
+    }
+
+    public List<VisiteDTO> getAllVisitesDTOByChamiId(String chamiId){
+        Optional<Chami> chamiOpt = chamiService.getChami(chamiId);
+        if(!chamiOpt.isPresent()){
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Chami not found");
+        }
+        Chami chami = chamiOpt.get();
+        List<Visite> visites = visiteRepository.findByJoueursId(chami.getId());
+        List<VisiteDTO> visitesDTO = new ArrayList<VisiteDTO>();
+        for(Visite visite : visites){
+            visitesDTO.add(mapper.toDTO(visite));
+        }
+        return visitesDTO;
     }
 }
