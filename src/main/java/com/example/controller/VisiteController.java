@@ -104,10 +104,10 @@ public class VisiteController {
             if (!visite.isPresent()) {
                 throw new ResponseStatusException(HttpStatus.NOT_FOUND, "La visite n'existe pas avec cet id");
             }
-            Visite visiteToEnd = visite.get();
-            visiteToEnd.finir();
-
-            return visiteService.saveVisite(visiteToEnd);
+            // Visite visiteToEnd = visite.get();
+            // visiteService.finir(id);
+            // visiteToEnd.finir();
+            return visiteService.finir(id);
         } catch (FirebaseAuthException e) {
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Unauthorized");
         }

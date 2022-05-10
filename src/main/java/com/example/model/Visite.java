@@ -1,5 +1,6 @@
 package com.example.model;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -84,6 +85,10 @@ public class Visite {
         return dateFin;
     }
 
+    public void setDateFin(LocalDateTime date){
+        this.dateFin=date;
+    }
+
     public void addChami(Chami c) {
         joueurs.add(c);
     }
@@ -116,7 +121,7 @@ public class Visite {
         return this.defi;
     }
 
-    public void finir(){
-        this.dateFin = LocalDateTime.now();
-    }
+    // public void finir(){
+    //     this.dateFin = LocalDateTime.now();
+    // }
 }

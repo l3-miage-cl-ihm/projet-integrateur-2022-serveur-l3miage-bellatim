@@ -10,13 +10,14 @@ import java.util.List;
 
 import java.time.LocalDateTime;
 
-@Entity
-@Table(name = "defi", schema = "public")
+
 /*
  * @JsonIdentityInfo(
  * generator = ObjectIdGenerators.PropertyGenerator.class,
  * property="id")
  */
+@Entity
+@Table(name = "defi", schema = "public")
 public class Defi {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -146,6 +147,9 @@ public class Defi {
         }
     };
 
+    public String getImage(){
+        return this.image;
+    }
 
     /*
      * public void setAuteur(Chami auteur) {

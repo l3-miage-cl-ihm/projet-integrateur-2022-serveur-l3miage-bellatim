@@ -30,6 +30,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
+// import lombok.*;
+
+// @Data
 //changer les retour en response entity
 @RestController
 @CrossOrigin
@@ -173,14 +176,17 @@ public class DefiController {
     @DeleteMapping("/{defiId}")
     public void delete(@PathVariable(value = "defiId") int id, @RequestHeader("Authorization") String jwt) throws IOException {
         try {
-            FirebaseAuth.getInstance().verifyIdToken(jwt);
+            FirebaseToken token = FirebaseAuth.getInstance().verifyIdToken(jwt);
             Optional<Defi> defiopt = defiService.getDefi(id);
             if (!defiopt.isPresent()) {
                 throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Le défi n'existe pas.");
-            } else {
-                sseService.doNotify();
-                defiService.deleteDefi(id);
             }
+            if(!defiopt.get().getAuteur().getId().equals(token.getUid())){
+                throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Unauthorized");
+            }
+            sseService.doNotify();
+            defiService.deleteDefi(id);
+        
         } catch (FirebaseAuthException e) {
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Unauthorized", e);
         }

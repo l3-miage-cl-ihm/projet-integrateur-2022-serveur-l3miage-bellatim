@@ -1,6 +1,7 @@
 package com.example.service;
 
 import java.io.IOException;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -82,5 +83,15 @@ public class VisiteService {
             visitesDTO.add(mapper.toDTO(visite));
         }
         return visitesDTO;
+    }
+
+    public Visite finir(final int id){
+        Optional<Visite> visiteOpt = visiteRepository.findById(id);
+        if(!visiteOpt.isPresent()){
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Visite not found");
+        }
+        Visite visite = visiteOpt.get();
+        visite.setDateFin(LocalDateTime.now());
+        return visiteRepository.save(visite);
     }
 }

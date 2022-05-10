@@ -6,9 +6,10 @@ import java.util.List;
 import javax.persistence.*;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-
+// import com.fasterxml.jackson.annotation.JsonManagedReference;
+// import lombok.*;
 //ajouter lambok
+// @Data
 @Entity
 @Table(name = "chami", schema = "public")
 /*
@@ -38,6 +39,7 @@ public class Chami {
     private List<Defi> defis;
 
     @ManyToMany(mappedBy = "joueurs", cascade = CascadeType.ALL)
+    @JsonIgnore
     private List<Visite> visites;
 
     @Column(unique = true)
@@ -88,6 +90,14 @@ public class Chami {
 
     public void removeDefis(Defi defi) {
         defis.remove(defi);
+    }
+
+    public List<Visite> getVisites(){
+        return visites;
+    }
+
+    public void setVisites(List<Visite> visites){
+        this.visites=visites;
     }
 
     /*
