@@ -5,5 +5,5 @@ drop table visite cascade;
 drop table reponse cascade;
 drop table etape cascade;
 drop table etape_liste_indice cascade;
-drop table defi_list_etape;
+drop table defi_list_etape cascade;
 drop table visite_reponses;
