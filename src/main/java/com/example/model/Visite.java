@@ -12,7 +12,11 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import org.hibernate.annotations.Cascade;
+// import org.hibernate.annotations.CascadeType;
 
 @Entity
 @Table(name = "visite", schema = "public")
@@ -24,6 +28,11 @@ public class Visite {
 
     @ManyToMany
     private List<Chami> joueurs;
+
+    // @OneToMany
+    // @Cascade(CascadeType.SAVE_UPDATE)
+    @OneToMany(cascade=CascadeType.ALL)
+    private List<Reponse> reponses;
 
     @ManyToOne
     private Defi defi;
@@ -40,6 +49,7 @@ public class Visite {
     public Visite() {
         super();
         joueurs = new ArrayList<>();
+        reponses = new ArrayList<>();
         this.dateDebut=LocalDateTime.now();
     }
 
@@ -50,7 +60,21 @@ public class Visite {
         this.rang = rang;
         this.dateDebut=date;
         this.dateFin=null;
+        this.reponses= new ArrayList<>();
     }
+
+    public List<Reponse> getReponses(){
+        return reponses;
+    }
+
+    public void addReponse(Reponse reponse){
+        this.reponses.add(reponse);
+    }
+
+    public void setReponses(List<Reponse> reponses){
+        this.reponses=reponses;
+    }
+
 
     public LocalDateTime getDateDebut(){
         return dateDebut;

@@ -17,6 +17,8 @@ import com.fasterxml.jackson.annotation.JsonTypeName;
 @JsonTypeName("question")
 public class Question extends Etape {
 
+    //pas d'id au question
+
     @Column
     private int point;
 
