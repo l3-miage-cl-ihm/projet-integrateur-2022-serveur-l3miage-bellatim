@@ -22,7 +22,7 @@ Cette application est indispensable pour jouer.
 Le défi consiste à jouer à l''escape game "Street art".',
  'Escape gameStreet art', 'a'),
 (145, 'ENIGME', '2021-04-01 15:03', 
-'', 'Le vert, je le mange !', 'b');
+'', 'Le vert, je le mange !', 'b'),
 (021, 'SPORTIF', '2021-05-10 12:09', 
 'La Bastille est un fort militaire surplombant de 264 mètres la ville de Grenoble. Édifié durant la première partie du XIX e siècle et culminant à 476 mètres d''altitude sur les derniers contreforts du massif de la Chartreuse.', 'Prise de la Bastille', 'g');
 
@@ -57,7 +57,7 @@ INSERT INTO etape (type_etape, id, label, rang, url, point, reponse_attendu, cou
 ('mere', 28 , 'Trouve un troupeau de moutons et tourne à droite.',  5 , '',  0 , '',  0 ),
 ('question', 29 , 'Qu''y a t il à coté du troupeau de mouton ?',  6 , '',  2 , '',  0 ),
 ('mere', 30 , 'Ouvre l''application Graaly et choisi l''escape game "Street art" - bon jeu.',  7 , '',  0 , '',  0 ),
-('question', 31 , 'Quel outil a-t-il été emprunté à un artiste par un autre artiste ?',  8 , '',  40 , '',  0 )
+('question', 31 , 'Quel outil a-t-il été emprunté à un artiste par un autre artiste ?',  8 , '',  40 , '',  0 ),
 ('mere', 32, 'Un historien a perdu une page de son livre d’histoire regroupant des informations à propos du fort de la Bastille de Grenoble, aide-le à rassembler les informations qui lui manque.', 32, '', 0, '', 0),
 ('mere', 33, 'Part à la découverte d’un des plus beaux points de vue de Grenoble !', 33, '', 0, '', 0),
 ('mere', 34, 'Rendez-vous à l’arrêt de bus « Saint-Laurent ».', 34, '', 0, '', 0),

@@ -43,11 +43,11 @@ public class Reponse {
         // this.visite = visite;
     }
 
-    public Boolean isValidate() {
+    public Boolean getValide() {
         return valide;
     }
 
-    public void setValidate(Boolean val) {
+    public void setValide(Boolean val) {
         this.valide = val;
     }
 
