@@ -4,6 +4,7 @@ import java.util.Optional;
 
 import com.example.model.Chami;
 import com.example.model.Defi;
+import com.example.model.Visite;
 import com.example.repository.ChamiRepository;
 import com.example.repository.DefiRepository;
 
@@ -48,6 +49,17 @@ public class DefiService {
 
     public Optional<Defi> getDefiByTitre(String titre){
         return defiRepository.findByTitre(titre);
+    }
+
+    @Autowired
+    VisiteService visiteService;
+
+    public void removeVisitesByDefi(final int id) {
+        List<Visite> visites = visiteService.getAllVisitesByDefiId(id);
+        for (Visite visite : visites) {
+            visiteService.deleteVisite(visite.getId());
+        }
+        // defiRepository.deleteById(id);
     }
 
 }

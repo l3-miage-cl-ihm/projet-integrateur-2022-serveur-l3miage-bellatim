@@ -12,4 +12,5 @@ public interface VisiteRepository extends JpaRepository<Visite, Integer> {
 
     
     List<Visite> findByJoueursId(String joueurId);
+    List<Visite> findByDefiId(int defiId);
 }
