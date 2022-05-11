@@ -185,6 +185,7 @@ public class DefiController {
                 throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Unauthorized");
             }
             sseService.doNotify();
+            defiService.removeVisitesByDefi(id);
             defiService.deleteDefi(id);
         
         } catch (FirebaseAuthException e) {

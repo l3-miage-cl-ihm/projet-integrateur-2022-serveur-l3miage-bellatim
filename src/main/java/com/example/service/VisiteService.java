@@ -7,9 +7,11 @@ import java.util.List;
 import java.util.Optional;
 
 import com.example.model.Chami;
+import com.example.model.Defi;
 import com.example.model.Visite;
 import com.example.model.VisiteDTO;
 import com.example.repository.ChamiRepository;
+import com.example.repository.DefiRepository;
 import com.example.repository.VisiteRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,22 +28,22 @@ public class VisiteService {
     @Autowired
     private SSEservice sseService;
 
-    @Autowired
-    private Mapper mapper;
+    // @Autowired
+    // private Mapper mapper;
 
     public Optional<Visite> getVisite(final int id) {
         return visiteRepository.findById(id);
     }
 
-    public VisiteDTO getVisiteDTO(final int id){
-        Optional<Visite> visiteOpt = visiteRepository.findById(id);
-        Visite visite;
-        if(!visiteOpt.isPresent()){
-             throw new ResponseStatusException(HttpStatus.PRECONDITION_FAILED, "defi inexistant");
-        }
-        visite = visiteOpt.get();
-        return mapper.toDTO(visite);
-    }
+    // public VisiteDTO getVisiteDTO(final int id){
+    //     Optional<Visite> visiteOpt = visiteRepository.findById(id);
+    //     Visite visite;
+    //     if(!visiteOpt.isPresent()){
+    //          throw new ResponseStatusException(HttpStatus.PRECONDITION_FAILED, "defi inexistant");
+    //     }
+    //     visite = visiteOpt.get();
+    //     return mapper.toDTO(visite);
+    // }
 
     public List<Visite> getAllVisite() {
         return visiteRepository.findAll();
@@ -71,19 +73,31 @@ public class VisiteService {
         }
     }
 
-    public List<VisiteDTO> getAllVisitesDTOByChamiId(String chamiId){
-        Optional<Chami> chamiOpt = chamiService.getChami(chamiId);
-        if(!chamiOpt.isPresent()){
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Chami not found");
+    @Autowired
+    private DefiRepository defiRepository;
+
+    public List<Visite> getAllVisitesByDefiId(int id) {
+        Optional<Defi> defiOpt = defiRepository.findById(id);
+        if (defiOpt.isPresent()) {
+            return visiteRepository.findByDefiId(defiOpt.get().getId());
+        } else {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Visites not found");
         }
-        Chami chami = chamiOpt.get();
-        List<Visite> visites = visiteRepository.findByJoueursId(chami.getId());
-        List<VisiteDTO> visitesDTO = new ArrayList<VisiteDTO>();
-        for(Visite visite : visites){
-            visitesDTO.add(mapper.toDTO(visite));
-        }
-        return visitesDTO;
     }
+
+    // public List<VisiteDTO> getAllVisitesDTOByChamiId(String chamiId){
+    //     Optional<Chami> chamiOpt = chamiService.getChami(chamiId);
+    //     if(!chamiOpt.isPresent()){
+    //         throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Chami not found");
+    //     }
+    //     Chami chami = chamiOpt.get();
+    //     List<Visite> visites = visiteRepository.findByJoueursId(chami.getId());
+    //     List<VisiteDTO> visitesDTO = new ArrayList<VisiteDTO>();
+    //     for(Visite visite : visites){
+    //         visitesDTO.add(mapper.toDTO(visite));
+    //     }
+    //     return visitesDTO;
+    // }
 
     public Visite finir(final int id){
         Optional<Visite> visiteOpt = visiteRepository.findById(id);
