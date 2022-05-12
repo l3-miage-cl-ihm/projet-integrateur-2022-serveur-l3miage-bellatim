@@ -76,3 +76,4 @@ Un <ins>Chami</ins> <strong> participe </strong> à une <ins>Visite</ins>.<br>
 Une <ins>Visite</ins> possède un rang, une date de fin, une date de début, une liste de joueurs qui sont des <ins>Chami</ins> ainsi qu'une liste de <ins>Réponses</ins> qu'elle <strong>vérifie</strong>.<br>
 Une <ins>Réponse</ins> possède un type, une valeur et il est possible de savoir s'il est validé.<br>
 Une <ins>Réponse</ins> <strong>répond</strong> à une <ins>Question</ins><br>
+![image](https://github.com/l3-miage-cl-ihm/projet-integrateur-2022-serveur-l3miage-bellatim/blob/master2/src/modelisation/modele.png)
