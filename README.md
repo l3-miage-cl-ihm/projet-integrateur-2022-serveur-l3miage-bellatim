@@ -59,3 +59,8 @@ Configure Heroku Deploying mode to GitHub so that you can automatically deploy o
 For more information about using Java on Heroku, see these Dev Center articles:
 
 - [Java on Heroku](https://devcenter.heroku.com/categories/java)
+
+# Modèle de données
+Un Chami possède un login unique, un age et une adresse mail (faisant le lien avec firebase).
+Un Chami créer plusieurs Défis.
+Un <ins>Défi</ins> possède un titre, une date d création et un auteur qui est un Chami
