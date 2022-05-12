@@ -19,7 +19,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
  */
 public class Chami {
 
-    // le login est la clé d'un chami
+    // le login est la clé d'un chami ;d
     @Id
     private String id;
 
