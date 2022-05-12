@@ -1,5 +1,4 @@
 Groupe 5
-
 # Description api
 
 L'API expose des points CRUD à travers 4 controleurs différents: ChamiController, DefiController, VisiteController, et SSEController.
