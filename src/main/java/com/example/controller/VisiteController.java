@@ -38,6 +38,16 @@ public class VisiteController {
     @Autowired 
     private Mapper mapper;
 
+    
+    @Autowired
+    private ChamiService chamiService;
+
+    
+    /** 
+     * Retourne toutes les visite 
+     * @param jwt token d'authentification firebase
+     * @return Liste des visites
+     */
     @GetMapping("/")
     public List<Visite> allVisites(@RequestHeader("Authorization") String jwt) {
         try {
@@ -49,6 +59,13 @@ public class VisiteController {
         }
     }
 
+    
+    /** 
+     * Retoure une visite donnée
+     * @param id identifiant de la visite
+     * @param jwt token d'authentification firebase
+     * @return  
+     */
     @GetMapping("/play/{idVisite}")
     public Visite read(@PathVariable(value = "idVisite") int id, @RequestHeader("Authorization") String jwt) {
         try {
@@ -74,6 +91,12 @@ public class VisiteController {
     //     }
     // }
 
+    
+    /** 
+     * creer une nouvelle visite
+     * @param visite data transfer object
+     * @return visite créée
+     */
     @PostMapping("/")
     public Visite create(@RequestBody VisiteDTO visiteDTO,
             @RequestHeader("Authorization") String jwt) throws IOException {
@@ -85,6 +108,12 @@ public class VisiteController {
         }
     }
 
+    
+    /** 
+     * c
+     * @param createComplet
+     * @return 
+     */
     @PostMapping("/complet/")
     public Visite createComplet(@RequestBody Visite visite,
             @RequestHeader("Authorization") String jwt) throws IOException {
@@ -96,6 +125,14 @@ public class VisiteController {
         }
     }
 
+    
+    /** 
+     * Met fin a une visite en ajoutant une date de fin
+     * @param id
+     * @param jwt
+     * @return 
+     * @throws IOException
+     */
     @GetMapping("/fin/{idVisite}")
     public Visite finVisite(@PathVariable("idVisite") int id, @RequestHeader("Authorization") String jwt) throws IOException{
         try{
@@ -125,6 +162,15 @@ public class VisiteController {
         }
     }
 
+    
+    /** 
+     * Ajouter une réponse a une visite
+     * @param id identifiant de la visite
+     * @param reponse reponse à ajouter
+     * @param jwt token d'authentification
+     * @return Visite modifiée
+     * @throws IOException
+     */
     @PutMapping("/{idVisite}/reponse")
     public Visite addReponse(@PathVariable("idVisite") int id, @RequestBody Reponse reponse,@RequestHeader("Authorization") String jwt) throws IOException{
         try {
@@ -153,11 +199,19 @@ public class VisiteController {
         }
     }
 
-    @Autowired
-    private ChamiService chamiService;
 
+    
+    /** 
+     * Ajoute un chami a une visite
+     * @param id identifiant de la visite
+     * @param idChami identifiant du joueur
+     * @param reponse 
+     * @param jwt token d'authentification
+     * @return La visite modifiée
+     * @throws IOException
+     */
     @PutMapping("/{idVisite}/ajouterJoueur/{idChami}")
-    public Visite addJoueur(@PathVariable("idVisite") int id,@PathVariable("idVisite") String idChami, @RequestBody Reponse reponse,@RequestHeader("Authorization") String jwt) throws IOException{
+    public Visite addJoueur(@PathVariable("idVisite") int id,@PathVariable("idVisite") String idChami,@RequestHeader("Authorization") String jwt) throws IOException{
         try {
             //verifier joueur est dans liste des joueurs
             FirebaseToken token = FirebaseAuth.getInstance().verifyIdToken(jwt);
@@ -189,6 +243,12 @@ public class VisiteController {
         }
     }
 
+    
+    /** 
+     * Retourn les visites d'un chami
+     * @param "chamiId"
+     * @return 
+     */
     @GetMapping("/{chamiId}")
     public List<Visite> allVisitesByChami(@PathVariable("chamiId") String chamiId,
             @RequestHeader("Authorization") String jwt) {
@@ -219,6 +279,12 @@ public class VisiteController {
     //     }
     // }
 
+    
+    /** 
+     * Met a joure une visite donnée
+     * @param "idVisite"
+     * @return 
+     */
     @PutMapping("/{idVisite}")
     public Visite update(@PathVariable(value = "idVisite") int id, @RequestBody Visite visite,
             @RequestHeader("Authorization") String jwt) throws IOException {
@@ -242,6 +308,13 @@ public class VisiteController {
         }
     }
 
+    
+    /** 
+     * Supprime une visite
+     * @param id
+     * @param jwt
+     * @return 
+     */
     @DeleteMapping("/{idVisite}")
     public void delete(@PathVariable(value = "idVisite") int id, @RequestHeader("Authorization") String jwt) {
         try {
@@ -256,60 +329,5 @@ public class VisiteController {
         }
     }
 
-    //////////////// TEST///////////////
 
-    @GetMapping("/insert")
-    public List<Visite> testVisite() {
-        return null;
-        // Chami c1 = new Chami("toto", 12, "toto@gmail.com");
-        // Chami c2 = new Chami("joe", 12, "joe@gmail.com");
-        // Chami c3 = new Chami("francois", 10, "francois@gmail.com");
-        // Chami c4 = new Chami("david", 9, "david@gmail.com");
-
-        // List<Chami> joueurs = new ArrayList<>();
-        // joueurs.add(c1);
-        // joueurs.add(c2);
-        // joueurs.add(c3);
-        // joueurs.add(c4);
-
-        // Defi d = new Defi("D199", "fais du sport", null, c1, Categorie.SPORTIF,
-        // null);
-
-        // Etape e1 = new Etape(1, "il faut chercher l'indice 1", d);
-        // Etape e2 = new Etape(2, "il faut chercher l'indice 2", d);
-        // Etape e3 = new Etape(3, "il faut chercher l'indice 3", d);
-        // Etape e4 = new Etape(4, "il faut chercher l'indice 4", d);
-        // Etape e5 = new Etape(5, "il faut chercher l'indice 5", d);
-        // Media m1 = new Media(1, "regarde la photo 1", d, "maphoto.com");
-
-        // ArrayList<Etape> etapes = new ArrayList<>();
-        // etapes.add(e1);
-        // etapes.add(e2);
-        // etapes.add(e3);
-        // etapes.add(e4);
-        // etapes.add(e5);
-        // etapes.add(m1);
-
-        // d.setEtape(etapes);
-
-        // Visite v1 = new Visite(joueurs, d, 0);
-        // visiteService.saveVisite(v1);
-
-        // List<Chami> joueurs2 = new ArrayList<>();
-        // joueurs2.add(c2);
-        // Defi d2 = new Defi("D021", "Lis un livre", null, c1, Categorie.CULTUREL,
-        // null);
-        // Etape e6 = new Etape(1, "il faut chercher l'indice 1", d2);
-        // ArrayList<Etape> etapes2 = new ArrayList<>();
-        // etapes2.add(e6);
-        // d2.setEtape(etapes2);
-        // Visite v2 = new Visite(joueurs2, d2, 0);
-        // List<Visite> lesVisites = new ArrayList<>();
-        // lesVisites.add(v1);
-        // lesVisites.add(v2);
-        // visiteService.saveVisite(v2);
-
-        // return lesVisites;
-
-    }
 }
