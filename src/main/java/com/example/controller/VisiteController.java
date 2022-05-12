@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 
+import com.example.service.ChamiService;
 import com.example.service.Mapper;
 import com.example.service.VisiteService;
 import com.google.firebase.auth.FirebaseAuth;
@@ -84,6 +85,17 @@ public class VisiteController {
         }
     }
 
+    @PostMapping("/complet/")
+    public Visite createComplet(@RequestBody Visite visite,
+            @RequestHeader("Authorization") String jwt) throws IOException {
+        try {
+            FirebaseAuth.getInstance().verifyIdToken(jwt);
+            return visiteService.saveVisite(visite);
+        } catch (FirebaseAuthException e) {
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Unauthorized");
+        }
+    }
+
     @GetMapping("/fin/{idVisite}")
     public Visite finVisite(@PathVariable("idVisite") int id, @RequestHeader("Authorization") String jwt) throws IOException{
         try{
@@ -135,6 +147,42 @@ public class VisiteController {
             }
             Visite visiteToUpdate = visite.get();
             visiteToUpdate.addReponse(reponse);
+            return visiteService.saveVisite(visiteToUpdate);
+        } catch (FirebaseAuthException e) {
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Unauthorized");
+        }
+    }
+
+    @Autowired
+    private ChamiService chamiService;
+
+    @PutMapping("/{idVisite}/ajouterJoueur/{idChami}")
+    public Visite addJoueur(@PathVariable("idVisite") int id,@PathVariable("idVisite") String idChami, @RequestBody Reponse reponse,@RequestHeader("Authorization") String jwt) throws IOException{
+        try {
+            //verifier joueur est dans liste des joueurs
+            FirebaseToken token = FirebaseAuth.getInstance().verifyIdToken(jwt);
+            String uid = token.getUid();
+            boolean ok=false;
+            List<Chami> listJoueur = visiteService.getVisite(id).get().getJoueurs();
+            for (Chami chami : listJoueur) {
+                if(chami.getId().equals(uid)){
+                    ok=true;
+                }
+            }
+            if(!ok){
+                throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Unauthorized");
+            }
+            Optional<Visite> visite = visiteService.getVisite(id);
+            if (!visite.isPresent()) {
+                throw new ResponseStatusException(HttpStatus.NOT_FOUND, "La visite n'existe pas avec cet id");
+            }
+            Visite visiteToUpdate = visite.get();
+
+            Optional<Chami> chamiOPT = chamiService.getChami(idChami);
+            if(!chamiOPT.isPresent()){
+                throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Le chami n'existe pas avec cet id");
+            }
+            visiteToUpdate.addChami(chamiOPT.get());
             return visiteService.saveVisite(visiteToUpdate);
         } catch (FirebaseAuthException e) {
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Unauthorized");
